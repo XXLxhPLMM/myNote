@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>&#x539F;&#x751F;AJAX</title>
+        <style>
+</style>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css" integrity="sha384-yFRtMMDnQtDRO8rLpMIKrtPCD5jdktao2TV19YiZYWMDkUR5GQZR/NOVTdquEx1j" crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        
+        <script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+        
+    </head>
+    <body class="vscode-body vscode-light">
+        <ul>
+<li><a href="#%E5%8E%9F%E7%94%9Fajax">原生AJAX</a></li>
+<li><a href="#jqurey-ajax">jQurey ajax</a>
+<ul>
+<li><a href="#%E5%AE%9A%E4%B9%89%E5%92%8C%E7%94%A8%E6%B3%95">定义和用法</a></li>
+<li><a href="#%E8%AF%AD%E6%B3%95">语法</a></li>
+</ul>
+</li>
+<li><a href="#fetch">Fetch</a>
+<ul>
+<li><a href="#%E6%94%AF%E6%8C%81%E7%9A%84%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0">支持的请求参数</a></li>
+<li><a href="#%E4%B8%8A%E4%BC%A0-json-%E6%95%B0%E6%8D%AE">上传 JSON 数据</a></li>
+<li><a href="#%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6">上传文件</a></li>
+<li><a href="#%E4%B8%8A%E4%BC%A0%E5%A4%9A%E4%B8%AA%E6%96%87%E4%BB%B6">上传多个文件</a></li>
+<li><a href="#%E9%80%90%E8%A1%8C%E5%A4%84%E7%90%86%E6%96%87%E6%9C%AC%E6%96%87%E4%BB%B6">逐行处理文本文件</a></li>
+<li><a href="#%E6%A3%80%E6%B5%8B%E8%AF%B7%E6%B1%82%E6%98%AF%E5%90%A6%E6%88%90%E5%8A%9F">检测请求是否成功</a></li>
+</ul>
+</li>
+<li><a href="#axious">axious</a></li>
+<li><a href="#%E8%A1%A8%E5%8D%95%E5%BC%82%E6%AD%A5%E6%8F%90%E4%BA%A4">表单异步提交</a></li>
+<li><a href="#javascript-headers%E5%AF%B9%E8%B1%A1">javascript Headers对象</a></li>
+<li><a href="#body">Body</a></li>
+<li><a href="#xmlhttprequestupload">XMLHttpRequest.upload</a></li>
+<li><a href="#ajax%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E8%BF%9B%E5%BA%A6%E6%9D%A1xhr">ajax文件上传进度条XHR</a></li>
+<li><a href="#jquery-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E8%BF%9B%E5%BA%A6%E6%9D%A1">jQuery 文件上传进度条</a></li>
+<li><a href="#%E6%95%B0%E6%8D%AE%E7%BC%93%E5%86%B2">数据缓冲</a>
+<ul>
+<li><a href="#arraybuffer%E5%AF%B9%E8%B1%A1">arrayBuffer对象</a></li>
+<li><a href="#typearray">typeArray</a></li>
+<li><a href="#dataview">DataView</a></li>
+</ul>
+</li>
+<li><a href="#filereader">FileReader</a></li>
+</ul>
+<h1 id="原生ajax">原生AJAX</h1>
+<h1 id="jqurey-ajax">jQurey ajax</h1>
+<h2 id="定义和用法">定义和用法</h2>
+<p>ajax() 方法用于执行 AJAX（异步 HTTP）请求。</p>
+<p>所有的 jQuery AJAX 方法都使用 ajax() 方法。该方法通常用于其他方法不能完成的请求。</p>
+<h2 id="语法">语法</h2>
+<blockquote>
+<p>$.ajax({name:value, name:value, ... })</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>值/描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>async</td>
+<td>布尔值，表示请求是否异步处理。默认是 true。</td>
+</tr>
+<tr>
+<td>beforeSend(xhr)</td>
+<td>发送请求前运行的函数。</td>
+</tr>
+<tr>
+<td>cache</td>
+<td>布尔值，表示浏览器是否缓存被请求页面。默认是 true。</td>
+</tr>
+<tr>
+<td>complete(xhr,status)</td>
+<td>请求完成时运行的函数（在请求成功或失败之后均调用，即在 success 和 error 函数之后）。</td>
+</tr>
+<tr>
+<td>contentType</td>
+<td>发送数据到服务器时所使用的内容类型。默认是：&quot;application/x-www-form-urlencoded&quot;。</td>
+</tr>
+<tr>
+<td>context</td>
+<td>为所有 AJAX 相关的回调函数规定 &quot;this&quot; 值。</td>
+</tr>
+<tr>
+<td>data</td>
+<td>规定要发送到服务器的数据。</td>
+</tr>
+<tr>
+<td>dataFilter(data,type)</td>
+<td>用于处理 XMLHttpRequest 原始响应数据的函数。</td>
+</tr>
+<tr>
+<td>dataType</td>
+<td>预期的服务器响应的数据类型。</td>
+</tr>
+<tr>
+<td>error(xhr,status,error)</td>
+<td>如果请求失败要运行的函数。</td>
+</tr>
+<tr>
+<td>global</td>
+<td>布尔值，规定是否为请求触发全局 AJAX 事件处理程序。默认是 true。</td>
+</tr>
+<tr>
+<td>ifModified</td>
+<td>布尔值，规定是否仅在最后一次请求以来响应发生改变时才请求成功。默认是 false。</td>
+</tr>
+<tr>
+<td>jsonp</td>
+<td>在一个 jsonp 中重写回调函数的字符串。</td>
+</tr>
+<tr>
+<td>jsonpCallback</td>
+<td>在一个 jsonp 中规定回调函数的名称。</td>
+</tr>
+<tr>
+<td>password</td>
+<td>规定在 HTTP 访问认证请求中使用的密码。</td>
+</tr>
+<tr>
+<td>processData</td>
+<td>布尔值，规定通过请求发送的数据是否转换为查询字符串。默认是 true。</td>
+</tr>
+<tr>
+<td>scriptCharset</td>
+<td>规定请求的字符集。</td>
+</tr>
+<tr>
+<td>success(result,status,xhr)</td>
+<td>当请求成功时运行的函数。</td>
+</tr>
+<tr>
+<td>timeout</td>
+<td>设置本地的请求超时时间（以毫秒计）。</td>
+</tr>
+<tr>
+<td>traditional</td>
+<td>布尔值，规定是否使用参数序列化的传统样式。</td>
+</tr>
+<tr>
+<td>type</td>
+<td>规定请求的类型（GET 或 POST）。</td>
+</tr>
+<tr>
+<td>url</td>
+<td>规定发送请求的 URL。默认是当前页面。</td>
+</tr>
+<tr>
+<td>username</td>
+<td>规定在 HTTP 访问认证请求中使用的用户名。</td>
+</tr>
+<tr>
+<td>xhr</td>
+<td>用于创建 XMLHttpRequest 对象的函数。</td>
+</tr>
+</tbody>
+</table>
+<h1 id="fetch">Fetch</h1>
+<p><code>Fetch API</code> 提供了一个 <code>JavaScript</code> 接口，用于访问和操纵 <code>HTTP</code> 管道的一些具体部分，例如请求和响应。它还提供了一个全局 <code>fetch()</code> 方法，该方法提供了一种简单，合理的方式来跨网络异步获取资源。</p>
+<p>这种功能以前是使用 <code>XMLHttpRequest</code> 实现的。Fetch 提供了一个更理想的替代方案，可以很容易地被其他技术使用，例如  <code>Service Workers</code>。<code>Fetch</code> 还提供了专门的逻辑空间来定义其他与 <code>HTTP</code> 相关的概念，例如 <code>CORS</code> 和 <code>HTTP</code> 的扩展。</p>
+<p>请注意，<code>fetch</code> 规范与 <code>jQuery.ajax()</code> 主要有以下的不同：</p>
+<p>当接收到一个代表错误的 <code>HTTP 状</code>态码时，从 <code>fetch()</code> 返回的<code>Promise</code>不会被标记为 <code>reject</code>，即使响应的 <code>HTTP</code> 状态码是 <code>404 </code>或 <code>500</code>。相反，它会将<code> Promise</code> 状态标记为 <code>resolve </code>（如果响应的 <code>HTTP</code> 状态码不在 <code>200 - 299</code> 的范围内，则设置 <code>resolve</code> 返回值的 <code>ok</code> 属性为 <code>false</code> ），仅当网络故障时或请求被阻止时，才会标记为 <code>reject</code>。
+<code>fetch</code> 不会发送跨域 <code>cookies</code>，除非你使用了 <code>credentials</code> 的初始化选项。（自2018 年 8 月以后，默认的 <code>credentials</code> 政策变更为 <code>same-origin</code>。<code>Firefox</code> 也在 <code>61.0b13</code> 版本中进行了修改）</p>
+<p>一个基本的 fetch 请求设置起来很简单。看看下面的代码：</p>
+<pre><code class="language-js"><div>fetch(<span class="hljs-string">&#x27;http://example.com/movies.json&#x27;</span>)
+  .then(<span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> response.json())
+  .then(<span class="hljs-function"><span class="hljs-params">data</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(data));
+</div></code></pre>
+<p>这里我们通过网络获取一个 JSON 文件并将其打印到控制台。最简单的用法是只提供一个参数用来指明想 <code>fetch()</code> 到的资源路径，然后返回一个包含响应结果的<code> promise</code>（一个 <code>Response</code> 对象）。</p>
+<p>当然它只是一个<code> HTTP</code> 响应，而不是真的 <code>JSON</code>。为了获取JSON的内容，我们需要使用 <code>json()</code> 方法（该方法返回一个将响应 <code>body</code> 解析成 JSON 的 <code>promise</code>）。</p>
+<h2 id="支持的请求参数">支持的请求参数</h2>
+<p><code>fetch()</code> 接受第二个可选参数，一个可以控制不同配置的 <code>init</code> 对象：</p>
+<p>参考 fetch()，查看所有可选的配置和更多描述。</p>
+<pre><code class="language-js"><div><span class="hljs-comment">// Example POST method implementation:</span>
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">postData</span>(<span class="hljs-params">url = <span class="hljs-string">&#x27;&#x27;</span>, data = {}</span>) </span>{
+  <span class="hljs-comment">// Default options are marked with *</span>
+  <span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> fetch(url, {
+    <span class="hljs-attr">method</span>: <span class="hljs-string">&#x27;POST&#x27;</span>, <span class="hljs-comment">// *GET, POST, PUT, DELETE, etc.</span>
+    <span class="hljs-attr">mode</span>: <span class="hljs-string">&#x27;cors&#x27;</span>, <span class="hljs-comment">// no-cors, *cors, same-origin</span>
+    <span class="hljs-attr">cache</span>: <span class="hljs-string">&#x27;no-cache&#x27;</span>, <span class="hljs-comment">// *default, no-cache, reload, force-cache, only-if-cached</span>
+    <span class="hljs-attr">credentials</span>: <span class="hljs-string">&#x27;same-origin&#x27;</span>, <span class="hljs-comment">// include, *same-origin, omit</span>
+    <span class="hljs-attr">headers</span>: {
+      <span class="hljs-string">&#x27;Content-Type&#x27;</span>: <span class="hljs-string">&#x27;application/json&#x27;</span>
+      <span class="hljs-comment">// &#x27;Content-Type&#x27;: &#x27;application/x-www-form-urlencoded&#x27;,</span>
+    },
+    <span class="hljs-attr">redirect</span>: <span class="hljs-string">&#x27;follow&#x27;</span>, <span class="hljs-comment">// manual, *follow, error</span>
+    <span class="hljs-attr">referrerPolicy</span>: <span class="hljs-string">&#x27;no-referrer&#x27;</span>, <span class="hljs-comment">// no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url</span>
+    <span class="hljs-attr">body</span>: <span class="hljs-built_in">JSON</span>.stringify(data) <span class="hljs-comment">// body data type must match &quot;Content-Type&quot; header</span>
+  });
+  <span class="hljs-keyword">return</span> response.json(); <span class="hljs-comment">// parses JSON response into native JavaScript objects</span>
+}
+
+postData(<span class="hljs-string">&#x27;https://example.com/answer&#x27;</span>, { <span class="hljs-attr">answer</span>: <span class="hljs-number">42</span> })
+  .then(<span class="hljs-function"><span class="hljs-params">data</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(data); <span class="hljs-comment">// JSON data parsed by `data.json()` call</span>
+  });
+</div></code></pre>
+<p>注意：<code>mode: &quot;no-cors&quot;</code> 仅允许使用一组有限的 HTTP 请求头：</p>
+<ul>
+<li><code>Accept</code></li>
+<li><code>Accept-Language</code></li>
+<li><code>Content-Language</code></li>
+<li><code>Content-Type</code> 允许使用的值为：<code>application/x-www-form-urlencoded、multipart/form-data</code> 或 <code>text/plain</code></li>
+</ul>
+<h2 id="上传-json-数据">上传 JSON 数据</h2>
+<p>使用 fetch() <code>POST</code> JSON数据</p>
+<pre><code class="language-js"><div><span class="hljs-keyword">const</span> data = { <span class="hljs-attr">username</span>: <span class="hljs-string">&#x27;example&#x27;</span> };
+
+fetch(<span class="hljs-string">&#x27;https://example.com/profile&#x27;</span>, {
+  <span class="hljs-attr">method</span>: <span class="hljs-string">&#x27;POST&#x27;</span>, <span class="hljs-comment">// or &#x27;PUT&#x27; &#x27;GET&#x27;</span>
+  <span class="hljs-attr">headers</span>: {
+    <span class="hljs-string">&#x27;Content-Type&#x27;</span>: <span class="hljs-string">&#x27;application/json&#x27;</span>,
+  },
+  <span class="hljs-attr">body</span>: <span class="hljs-built_in">JSON</span>.stringify(data),
+})
+.then(<span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> response.json())
+.then(<span class="hljs-function"><span class="hljs-params">data</span> =&gt;</span> {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;Success:&#x27;</span>, data);
+})
+.catch(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> {
+  <span class="hljs-built_in">console</span>.error(<span class="hljs-string">&#x27;Error:&#x27;</span>, error);
+});
+</div></code></pre>
+<h2 id="上传文件">上传文件</h2>
+<p>可以通过 HTML <input type="file" /> 元素，FormData() 和 fetch() 上传文件。</p>
+<pre><code class="language-js"><div><span class="hljs-keyword">const</span> formData = <span class="hljs-keyword">new</span> FormData();
+<span class="hljs-keyword">const</span> fileField = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&#x27;input[type=&quot;file&quot;]&#x27;</span>);
+
+formData.append(<span class="hljs-string">&#x27;username&#x27;</span>, <span class="hljs-string">&#x27;abc123&#x27;</span>);
+formData.append(<span class="hljs-string">&#x27;avatar&#x27;</span>, fileField.files[<span class="hljs-number">0</span>]);
+
+fetch(<span class="hljs-string">&#x27;https://example.com/profile/avatar&#x27;</span>, {
+  <span class="hljs-attr">method</span>: <span class="hljs-string">&#x27;PUT&#x27;</span>,
+  <span class="hljs-attr">body</span>: formData
+})
+.then(<span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> response.json())
+.then(<span class="hljs-function"><span class="hljs-params">result</span> =&gt;</span> {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;Success:&#x27;</span>, result);
+})
+.catch(<span class="hljs-function"><span class="hljs-params">error</span> =&gt;</span> {
+  <span class="hljs-built_in">console</span>.error(<span class="hljs-string">&#x27;Error:&#x27;</span>, error);
+});
+</div></code></pre>
+<h2 id="上传多个文件">上传多个文件</h2>
+<p>可以通过 HTML <input type="file" multiple /> 元素，FormData() 和 fetch() 上传文件。</p>
+<pre><code class="language-js"><div><span class="hljs-keyword">const</span> formData = <span class="hljs-keyword">new</span> FormData();
+<span class="hljs-keyword">const</span> photos = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&#x27;input[type=&quot;file&quot;][multiple]&#x27;</span>);
+
+formData.append(<span class="hljs-string">&#x27;title&#x27;</span>, <span class="hljs-string">&#x27;My Vegas Vacation&#x27;</span>);
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; photos.files.length; i++) {
+  formData.append(<span class="hljs-string">`photos_<span class="hljs-subst">${i}</span>`</span>, photos.files[i]);
+}
+
+fetch(<span class="hljs-string">&#x27;https://example.com/posts&#x27;</span>, {
+  <span class="hljs-attr">method</span>: <span class="hljs-string">&#x27;POST&#x27;</span>,
+  <span class="hljs-attr">body</span>: formData,
+})
+.then(<span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> response.json())
+.then(<span class="hljs-function"><span class="hljs-params">result</span> =&gt;</span> {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;Success:&#x27;</span>, result);
+})
+.catch(<span class="hljs-function"><span class="hljs-params">error</span> =&gt;</span> {
+  <span class="hljs-built_in">console</span>.error(<span class="hljs-string">&#x27;Error:&#x27;</span>, error);
+});
+</div></code></pre>
+<h2 id="逐行处理文本文件">逐行处理文本文件</h2>
+<p>从响应中读取的分块不是按行分割的，并且是 <code>Uint8Array</code> 数组类型（不是字符串类型）。如果你想通过 <code>fetch()</code> 获取一个文本文件并逐行处理它，那需要自行处理这些复杂情况。以下示例展示了一种创建行迭代器来处理的方法（简单起见，假设文本是 <code>UTF-8</code> 编码的，且不处理 <code>fetch()</code> 的错误）。</p>
+<pre><code class="language-js"><div><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span>* <span class="hljs-title">makeTextFileLineIterator</span>(<span class="hljs-params">fileURL</span>) </span>{
+  <span class="hljs-keyword">const</span> utf8Decoder = <span class="hljs-keyword">new</span> TextDecoder(<span class="hljs-string">&#x27;utf-8&#x27;</span>);
+  <span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> fetch(fileURL);
+  <span class="hljs-keyword">const</span> reader = response.body.getReader();
+  <span class="hljs-keyword">let</span> { <span class="hljs-attr">value</span>: chunk, <span class="hljs-attr">done</span>: readerDone } = <span class="hljs-keyword">await</span> reader.read();
+  chunk = chunk ? utf8Decoder.decode(chunk) : <span class="hljs-string">&#x27;&#x27;</span>;
+
+  <span class="hljs-keyword">const</span> re = <span class="hljs-regexp">/\n|\r|\r\n/gm</span>;
+  <span class="hljs-keyword">let</span> startIndex = <span class="hljs-number">0</span>;
+  <span class="hljs-keyword">let</span> result;
+
+  <span class="hljs-keyword">for</span> (;;) {
+    <span class="hljs-keyword">let</span> result = re.exec(chunk);
+    <span class="hljs-keyword">if</span> (!result) {
+      <span class="hljs-keyword">if</span> (readerDone) {
+        <span class="hljs-keyword">break</span>;
+      }
+      <span class="hljs-keyword">let</span> remainder = chunk.substr(startIndex);
+      ({ <span class="hljs-attr">value</span>: chunk, <span class="hljs-attr">done</span>: readerDone } = <span class="hljs-keyword">await</span> reader.read());
+      chunk = remainder + (chunk ? utf8Decoder.decode(chunk) : <span class="hljs-string">&#x27;&#x27;</span>);
+      startIndex = re.lastIndex = <span class="hljs-number">0</span>;
+      <span class="hljs-keyword">continue</span>;
+    }
+    <span class="hljs-keyword">yield</span> chunk.substring(startIndex, result.index);
+    startIndex = re.lastIndex;
+  }
+  <span class="hljs-keyword">if</span> (startIndex &lt; chunk.length) {
+    <span class="hljs-comment">// last line didn&#x27;t end in a newline char</span>
+    <span class="hljs-keyword">yield</span> chunk.substr(startIndex);
+  }
+}
+
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">run</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">for</span> <span class="hljs-keyword">await</span> (<span class="hljs-keyword">let</span> line <span class="hljs-keyword">of</span> makeTextFileLineIterator(urlOfFile)) {
+    processLine(line);
+  }
+}
+
+run();
+</div></code></pre>
+<h2 id="检测请求是否成功">检测请求是否成功</h2>
+<p>如果遇到网络故障或服务端的 CORS 配置错误时，fetch() promise 将会 reject，带上一个 TypeError 对象。虽然这个情况经常是遇到了权限问题或类似问题——比如 404 不是一个网络故障。想要精确的判断 fetch() 是否成功，需要包含 promise resolved 的情况，此时再判断 Response.ok 是否为 true。类似以下代码：</p>
+<pre><code class="language-js"><div>fetch(<span class="hljs-string">&#x27;flowers.jpg&#x27;</span>)
+  .then(<span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> {
+    <span class="hljs-keyword">if</span> (!response.ok) {
+      <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">&#x27;Network response was not OK&#x27;</span>);
+    }
+    <span class="hljs-keyword">return</span> response.blob();
+  })
+  .then(<span class="hljs-function"><span class="hljs-params">myBlob</span> =&gt;</span> {
+    myImage.src = URL.createObjectURL(myBlob);
+  })
+  .catch(<span class="hljs-function"><span class="hljs-params">error</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.error(<span class="hljs-string">&#x27;There has been a problem with your fetch operation:&#x27;</span>, error);
+  });
+</div></code></pre>
+<h1 id="axious">axious</h1>
+<h1 id="表单异步提交">表单异步提交</h1>
+<h1 id="javascript-headers对象">javascript Headers对象</h1>
+<p>使用 <code>Headers</code> 的接口，你可以通过 <code>Headers()</code> 构造函数来创建一个你自己的 <code>headers</code> 对象。一个 headers 对象是一个简单的多键值对</p>
+<pre><code class="language-js"><div><span class="hljs-keyword">const</span> content = <span class="hljs-string">&#x27;Hello World&#x27;</span>;
+<span class="hljs-keyword">const</span> myHeaders = <span class="hljs-keyword">new</span> Headers();
+myHeaders.append(<span class="hljs-string">&#x27;Content-Type&#x27;</span>, <span class="hljs-string">&#x27;text/plain&#x27;</span>);
+myHeaders.append(<span class="hljs-string">&#x27;Content-Length&#x27;</span>, content.length.toString());
+myHeaders.append(<span class="hljs-string">&#x27;X-Custom-Header&#x27;</span>, <span class="hljs-string">&#x27;ProcessThisImmediately&#x27;</span>);
+</div></code></pre>
+<p>也可以传入一个多维数组或者对象字面量：</p>
+<pre><code class="language-js"><div><span class="hljs-keyword">const</span> myHeaders = <span class="hljs-keyword">new</span> Headers({
+  <span class="hljs-string">&#x27;Content-Type&#x27;</span>: <span class="hljs-string">&#x27;text/plain&#x27;</span>,
+  <span class="hljs-string">&#x27;Content-Length&#x27;</span>: content.length.toString(),
+  <span class="hljs-string">&#x27;X-Custom-Header&#x27;</span>: <span class="hljs-string">&#x27;ProcessThisImmediately&#x27;</span>
+});
+</div></code></pre>
+<p>它的内容可以被获取：</p>
+<pre><code class="language-js"><div><span class="hljs-built_in">console</span>.log(myHeaders.has(<span class="hljs-string">&#x27;Content-Type&#x27;</span>)); <span class="hljs-comment">// true</span>
+<span class="hljs-built_in">console</span>.log(myHeaders.has(<span class="hljs-string">&#x27;Set-Cookie&#x27;</span>)); <span class="hljs-comment">// false</span>
+myHeaders.set(<span class="hljs-string">&#x27;Content-Type&#x27;</span>, <span class="hljs-string">&#x27;text/html&#x27;</span>);
+myHeaders.append(<span class="hljs-string">&#x27;X-Custom-Header&#x27;</span>, <span class="hljs-string">&#x27;AnotherValue&#x27;</span>);
+
+<span class="hljs-built_in">console</span>.log(myHeaders.get(<span class="hljs-string">&#x27;Content-Length&#x27;</span>)); <span class="hljs-comment">// 11</span>
+<span class="hljs-built_in">console</span>.log(myHeaders.get(<span class="hljs-string">&#x27;X-Custom-Header&#x27;</span>)); <span class="hljs-comment">// [&#x27;ProcessThisImmediately&#x27;, &#x27;AnotherValue&#x27;]</span>
+
+myHeaders.delete(<span class="hljs-string">&#x27;X-Custom-Header&#x27;</span>);
+<span class="hljs-built_in">console</span>.log(myHeaders.get(<span class="hljs-string">&#x27;X-Custom-Header&#x27;</span>)); <span class="hljs-comment">// null</span>
+</div></code></pre>
+<h1 id="body">Body</h1>
+<p>不管是请求还是响应都能够包含 body 对象。body 也可以是以下任意类型的实例。</p>
+<ul>
+<li>ArrayBuffer</li>
+<li>ArrayBufferView (Uint8Array等)</li>
+<li>Blob/File</li>
+<li>string</li>
+<li>URLSearchParams</li>
+<li>FormData</li>
+</ul>
+<p>Body 类定义了以下方法（这些方法都被 Request 和 Response所实现）以获取 body 内容。这些方法都会返回一个被解析后的 Promise 对象和数据。</p>
+<pre><code class="language-js"><div>Request.arrayBuffer() (en-US) / Response.arrayBuffer()
+Request.blob() (en-US) / Response.blob()
+Request.formData() (en-US) / Response.formData()
+Request.json() (en-US) / Response.json()
+Request.text() (en-US) / Response.text()
+</div></code></pre>
+<p>相比于XHR，这些方法让非文本化数据的使用更加简单。</p>
+<p>请求体可以由传入 body 参数来进行设置：</p>
+<pre><code class="language-js"><div><span class="hljs-keyword">const</span> form = <span class="hljs-keyword">new</span> FormData(<span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">&#x27;login-form&#x27;</span>));
+fetch(<span class="hljs-string">&#x27;/login&#x27;</span>, {
+  <span class="hljs-attr">method</span>: <span class="hljs-string">&#x27;POST&#x27;</span>,
+  <span class="hljs-attr">body</span>: form
+});
+</div></code></pre>
+<p>request 和 response（包括 fetch() 方法）都会试着自动设置 Content-Type。如果没有设置 Content-Type 值，发送的请求也会自动设值。</p>
+<h1 id="xmlhttprequestupload">XMLHttpRequest.upload</h1>
+<p><code>XMLHttpRequest.upload</code> 属性返回一个 <code>XMLHttpRequestUpload</code>对象，用来表示上传的进度。这个对象是不透明的，但是作为一个<code>XMLHttpRequestEventTarget</code>，可以通过对其绑定事件来追踪它的进度。</p>
+<p>可以被绑定在upload对象上的事件监听器如下：</p>
+<table>
+<thead>
+<tr>
+<th>事件</th>
+<th>相应属性的信息类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>onloadstart</td>
+<td>获取开始</td>
+</tr>
+<tr>
+<td>onprogress</td>
+<td>数据传输进行中</td>
+</tr>
+<tr>
+<td>onabort</td>
+<td>获取操作终止</td>
+</tr>
+<tr>
+<td>onerror</td>
+<td>获取失败</td>
+</tr>
+<tr>
+<td>onload</td>
+<td>获取成功</td>
+</tr>
+<tr>
+<td>ontimeout</td>
+<td>获取操作在用户规定的时间内未完成</td>
+</tr>
+<tr>
+<td>onloadend</td>
+<td>获取完成（不论成功与否）</td>
+</tr>
+</tbody>
+</table>
+<h1 id="ajax文件上传进度条xhr">ajax文件上传进度条XHR</h1>
+<pre><code class="language-html"><div><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-meta-keyword">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;en&quot;</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>上传文件(显示进度与速度)<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="css">
+        <span class="hljs-selector-class">.boxFile</span> {
+            <span class="hljs-attribute">width</span>: <span class="hljs-number">645px</span>;
+            <span class="hljs-attribute">height</span>: <span class="hljs-number">500px</span>;
+        }
+        <span class="hljs-selector-tag">img</span> {
+            <span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span>;
+            <span class="hljs-attribute">height</span>: <span class="hljs-number">100%</span>;
+        }
+    </span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;file&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;myfile&quot;</span>&gt;</span>
+    进度<span class="hljs-tag">&lt;<span class="hljs-name">progress</span> <span class="hljs-attr">max</span>=<span class="hljs-string">&quot;100&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;0&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">progress</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;persent&quot;</span>&gt;</span>0%<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+    速度 <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;speed&quot;</span>&gt;</span>0b/s<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn&quot;</span>&gt;</span>上传文件<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn&quot;</span>&gt;</span>取消文件<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;boxFile&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
+        <span class="hljs-comment">// XMLHttpRequest 对象用于在后台与服务器交换数据。</span>
+        <span class="hljs-comment">// 实例化 XMLHttpRequest 对象</span>
+        <span class="hljs-keyword">let</span> xhr = <span class="hljs-keyword">new</span> XMLHttpRequest();
+        <span class="hljs-keyword">let</span> stime; <span class="hljs-comment">//存储时间</span>
+        <span class="hljs-keyword">let</span> sloaded; <span class="hljs-comment">// 存储上传的内容</span>
+        <span class="hljs-keyword">let</span> btns = <span class="hljs-built_in">document</span>.querySelectorAll(<span class="hljs-string">&quot;.btn&quot;</span>);
+        <span class="hljs-comment">// 点击&quot;上传文件&quot;</span>
+        btns[<span class="hljs-number">0</span>].onclick = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+            <span class="hljs-keyword">let</span> file = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&quot;.myfile&quot;</span>).files[<span class="hljs-number">0</span>];<span class="hljs-comment">//</span>
+            <span class="hljs-built_in">console</span>.log(file);
+            <span class="hljs-keyword">let</span> form = <span class="hljs-keyword">new</span> FormData(); <span class="hljs-comment">//实例化FormData对象</span>
+            
+            <span class="hljs-comment">// 向form中添加新的属性值，如果对应的属性值存在也不会覆盖原值，而是新增一个值，</span>
+            <span class="hljs-comment">// 如果属性不存在则新增一项属性值。</span>
+            form.append(<span class="hljs-string">&quot;myfiles&quot;</span>, file); 
+
+            xhr.open(<span class="hljs-string">&quot;post&quot;</span>, <span class="hljs-string">&quot;/fileUpload&quot;</span>,<span class="hljs-literal">true</span>); <span class="hljs-comment">//初始化请求</span>
+
+            xhr.onload = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+                <span class="hljs-built_in">console</span>.log(xhr.responseText);
+            }
+            <span class="hljs-comment">/* onreadystatechange：存有处理服务器响应的函数，每当 readyState 改变时，
+               函数就会被执行。readyState：存有服务器响应的状态信息。status存响应状态码*/</span>
+            xhr.onreadystatechange = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+                <span class="hljs-keyword">if</span> (xhr.readyState == <span class="hljs-number">4</span> &amp;&amp; xhr.status == <span class="hljs-number">200</span>) {
+                    <span class="hljs-keyword">let</span> resText = xhr.responseText;
+                    <span class="hljs-keyword">let</span> imgEl = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">&quot;img&quot;</span>);
+                    imgEl.src = resText;
+                    imgEl.onload = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+                        <span class="hljs-comment">// document.body.appendChild(this);//上传图片后，页面会出现两张一样的图片</span>
+                        <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&quot;.boxFile&quot;</span>).appendChild(<span class="hljs-built_in">this</span>); <span class="hljs-comment">//img标签外面加一个父级div标签就好了</span>
+                    }
+                }
+            }
+
+            xhr.upload.onloadstart = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+                <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;开始上传&quot;</span>);
+                stime = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>().getTime();
+                sloaded = <span class="hljs-number">0</span>;
+            }
+            xhr.upload.onprogress = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">evt</span>) </span>{
+                <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;上传中......&quot;</span>);
+                <span class="hljs-comment">// 当前上传文件的文件大小：evt.loaded</span>
+                <span class="hljs-comment">// 需要上传的总文件的大小：evt.total</span>
+                <span class="hljs-comment">// 上传进度</span>
+                <span class="hljs-comment">//上传文件的百分比</span>
+                <span class="hljs-comment">//toFixed(参数)：保留几位小数  参数是整型的数值，数值是几就保留几位小数</span>
+                <span class="hljs-keyword">let</span> persent = ((evt.loaded / evt.total) * <span class="hljs-number">100</span>).toFixed(<span class="hljs-number">0</span>);   
+                <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&quot;progress&quot;</span>).value = persent;
+                <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&quot;.persent&quot;</span>).innerHTML = persent + <span class="hljs-string">&quot;%&quot;</span>;
+
+                <span class="hljs-comment">// 上传速度</span>
+                <span class="hljs-comment">// 上传结束时间</span>
+                <span class="hljs-keyword">let</span> endTime = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>().getTime();
+
+                <span class="hljs-comment">// 1、时间差（时间段）</span>
+                <span class="hljs-keyword">let</span> dTime = (endTime - stime) / <span class="hljs-number">1000</span>; <span class="hljs-comment">//毫秒换算成秒</span>
+
+                <span class="hljs-comment">// 2、当前时间段内上传的文件大小</span>
+                <span class="hljs-keyword">let</span> dloaded = evt.loaded - sloaded;
+
+                <span class="hljs-comment">// 3、当前速度= 当前上传文件的内容/当前时间差</span>
+                <span class="hljs-keyword">let</span> speed = dloaded / dTime;
+
+                <span class="hljs-comment">// 重置上传开始时间与文件大小(分时段上传的)</span>
+                stime = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>().getTime();
+                sloaded = evt.loaded;
+
+                <span class="hljs-comment">// 基本单位：字节b</span>
+                <span class="hljs-comment">// 1mb=1024kb    1kb=1024b</span>
+                <span class="hljs-comment">// b/s</span>
+                <span class="hljs-keyword">let</span> unit = <span class="hljs-string">&quot;b/s&quot;</span>; <span class="hljs-comment">//不足1kb，以b/s来计算速度</span>
+                <span class="hljs-comment">// kb/s</span>
+                <span class="hljs-keyword">if</span> (speed / <span class="hljs-number">1024</span> &gt; <span class="hljs-number">1</span>) { <span class="hljs-comment">//当大小超过1024b(即1kb时)，以kb/s来计算速度</span>
+                    unit = <span class="hljs-string">&quot;kb/s&quot;</span>;
+                    speed = speed / <span class="hljs-number">1024</span>;
+                }
+                <span class="hljs-comment">// mb/s  </span>
+                <span class="hljs-keyword">if</span> (speed / <span class="hljs-number">1024</span> &gt; <span class="hljs-number">1</span>) { <span class="hljs-comment">//当大小超过1024Kb(即1mb时)，以mb/s来计算速度</span>
+                    unit = <span class="hljs-string">&quot;mb/s&quot;</span>;
+                    speed = speed / <span class="hljs-number">1024</span>;
+                }
+                <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&quot;.speed&quot;</span>).innerHTML = speed.toFixed(<span class="hljs-number">2</span>) + unit;
+            }
+            xhr.upload.onload = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+                <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;上传成功&quot;</span>);
+            }
+            xhr.upload.onerror = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+                <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;上传失败&quot;</span>);
+            }
+            xhr.send(form);<span class="hljs-comment">//发送请求</span>
+        }
+        <span class="hljs-comment">// 点击&quot;取消上传&quot;</span>
+        <span class="hljs-comment">// xhr.abort()：终止请求，调用后即可取消文件上传操作</span>
+        btns[<span class="hljs-number">1</span>].onclick = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+            xhr.abort();
+        }
+    </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span>
+</div></code></pre>
+<h1 id="jquery-文件上传进度条">jQuery 文件上传进度条</h1>
+<pre><code class="language-js"><div>$(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+	<span class="hljs-comment">// 图片上传. </span>
+            $(<span class="hljs-string">&quot;#upload&quot;</span>).click(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+                <span class="hljs-keyword">if</span>(!validUpload()) <span class="hljs-keyword">return</span>; <span class="hljs-comment">// 验证图片格式。</span>
+                $(<span class="hljs-string">&quot;#file&quot;</span>).upload({
+                    <span class="hljs-attr">action</span>: hy.url+<span class="hljs-string">&quot;/upload/uploadTeacherIMG.action&quot;</span>,
+                    <span class="hljs-attr">oncomplete</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">result</span>) </span>{
+                        <span class="hljs-keyword">var</span> mess = result.responseText;
+                        <span class="hljs-comment">// 上传成功处理.更换页面显示图片。</span>
+                        <span class="hljs-keyword">if</span>(result.status == <span class="hljs-number">200</span>){
+                            $(<span class="hljs-string">&quot;#teacherImg&quot;</span>).attr(<span class="hljs-string">&quot;src&quot;</span>,hy.url+<span class="hljs-string">&quot;/FileTemp/&quot;</span>+mess.split(<span class="hljs-string">&quot;:&quot;</span>)[<span class="hljs-number">1</span>]);
+                             $.ligerDialog.success(<span class="hljs-string">&quot;图片已上传成功,请完善教师其它信息.&quot;</span>);
+                         }<span class="hljs-keyword">else</span> 
+                             $.ligerDialog.error(mess); 
+                    },<span class="hljs-attr">onprogress</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>) </span>{
+                        $(<span class="hljs-string">&quot;#progress&quot;</span>).html(<span class="hljs-string">&quot;上传进度:&quot;</span>+(e.loaded / e.total *<span class="hljs-number">100</span> ).toFixed(<span class="hljs-number">2</span>) + <span class="hljs-string">&quot;%&quot;</span>);
+                    }
+                });
+            });
+      });
+</div></code></pre>
+<h1 id="数据缓冲">数据缓冲</h1>
+<h2 id="arraybuffer对象">arrayBuffer对象</h2>
+<h2 id="typearray">typeArray</h2>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>单个元素值的范围</th>
+<th>大小(bytes)</th>
+<th>描述</th>
+<th>Web IDL 类型</th>
+<th>C 语言中的等价类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Int8Array</td>
+<td>-128 到 127</td>
+<td>1</td>
+<td>8 位二进制有符号整数</td>
+<td>byte</td>
+<td>int8_t</td>
+</tr>
+<tr>
+<td>Uint8Array</td>
+<td>0 到 255</td>
+<td>1</td>
+<td>8 位无符号整数（超出范围后从另一边界循环）</td>
+<td>octet</td>
+<td>uint8_t</td>
+</tr>
+<tr>
+<td>Uint8ClampedArray</td>
+<td>0 到 255</td>
+<td>1</td>
+<td>8 位无符号整数（超出范围后为边界值）</td>
+<td>octet</td>
+<td>uint8_t</td>
+</tr>
+<tr>
+<td>Int16Array</td>
+<td>-32768 到 32767</td>
+<td>2</td>
+<td>16 位二进制有符号整数</td>
+<td>short</td>
+<td>int16_t</td>
+</tr>
+<tr>
+<td>Uint16Array</td>
+<td>0 到 65535</td>
+<td>2</td>
+<td>16 位无符号整数</td>
+<td>unsigned short</td>
+<td>uint16_t</td>
+</tr>
+<tr>
+<td>Int32Array</td>
+<td>-2147483648 到 2147483647</td>
+<td>4</td>
+<td>32 位二进制有符号整数</td>
+<td>long</td>
+<td>int32_t</td>
+</tr>
+<tr>
+<td>Uint32Array</td>
+<td>0 到 4294967295</td>
+<td>4</td>
+<td>32 位无符号整数</td>
+<td>unsigned long</td>
+<td>uint32_t</td>
+</tr>
+<tr>
+<td>Float32Array</td>
+<td>-3.4E38 到 3.4E38 最小正数为：1.2E-38</td>
+<td>4</td>
+<td>32 位 IEEE 浮点数（7 位有效数字，如 1.1234567）</td>
+<td>unrestricted float</td>
+<td>float</td>
+</tr>
+<tr>
+<td>Float64Array</td>
+<td>-1.8E308 到 1.8E308 最小正数为：5E-324</td>
+<td>8</td>
+<td>64 位 IEEE 浮点数（16 有效数字，如 1.123...15)</td>
+<td>unrestricted double</td>
+<td>double</td>
+</tr>
+<tr>
+<td>BigInt64Array</td>
+<td>-2^63 到 2^63-1</td>
+<td>8</td>
+<td>64 位二进制有符号整数</td>
+<td>bigint</td>
+<td>int64_t (signed long long)</td>
+</tr>
+<tr>
+<td>BigUint64Array</td>
+<td>0 到 2^64 - 1</td>
+<td>8</td>
+<td>64 位无符号整数</td>
+<td>bigint</td>
+<td>uint64_t (unsigned long long)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="dataview">DataView</h2>
+<h1 id="filereader">FileReader</h1>
+<p>用于读取Blob</p>
+
+    </body>
+    </html>

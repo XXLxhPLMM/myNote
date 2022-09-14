@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>MybatisPlus and SpringBoot</title>
+        <style>
+</style>
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        
+        
+        
+    </head>
+    <body class="vscode-body vscode-light">
+        <ul>
+<li><a href="#mybatisplus-and-springboot">MybatisPlus and SpringBoot</a>
+<ul>
+<li><a href="#%E9%85%8D%E7%BD%AE">配置</a>
+<ul>
+<li><a href="#%E5%8E%9F%E7%94%9F">原生</a></li>
+<li><a href="#spring">Spring</a></li>
+<li><a href="#springboot">SpringBoot</a></li>
+</ul>
+</li>
+<li><a href="#%E6%8C%87%E5%AE%9Amapperxml%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84">指定Mapper.xml文件路径</a>
+<ul>
+<li><a href="#srpingboot">SrpingBoot</a></li>
+</ul>
+</li>
+<li><a href="#%E5%88%AB%E5%90%8D">别名</a>
+<ul>
+<li><a href="#springboot-1">SpringBoot</a></li>
+</ul>
+</li>
+<li><a href="#db%E7%AD%96%E7%95%A5%E9%85%8D%E7%BD%AE">DB策略配置</a>
+<ul>
+<li><a href="#idtype">idType</a></li>
+<li><a href="#tableprefix">tablePrefix</a></li>
+</ul>
+</li>
+<li><a href="#%E6%9D%A1%E4%BB%B6%E6%9E%84%E9%80%A0%E5%99%A8">条件构造器</a></li>
+<li><a href="#%E6%8C%87%E5%AE%9A%E8%BF%90%E8%A1%8C%E7%AB%AF%E5%8F%A3">指定运行端口</a></li>
+<li><a href="#%E4%BE%9D%E8%B5%96">依赖</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="mybatisplus-and-springboot">MybatisPlus and SpringBoot</h1>
+<h2 id="配置">配置</h2>
+<h3 id="原生">原生</h3>
+<blockquote>
+<p>使用<code>myBatis-config.xml</code>文件进行配置
+使用 mybatisplus的配置类进行配置</p>
+</blockquote>
+<h3 id="spring">Spring</h3>
+<pre><code class="language-xml"><div><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;sqlSessionFactory&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+</div></code></pre>
+<h3 id="springboot">SpringBoot</h3>
+<pre><code class="language-properties"><div> <span class="hljs-meta">mybatis-plus.config-location</span>=<span class="hljs-string">classpath:mybatis-config.xml</span>
+</div></code></pre>
+<h2 id="指定mapperxml文件路径">指定Mapper.xml文件路径</h2>
+<h3 id="srpingboot">SrpingBoot</h3>
+<pre><code class="language-properties"><div><span class="hljs-meta">mybatis-plus.mapper-locations</span>=<span class="hljs-string">classpath*:myabtis/*.xml</span>
+</div></code></pre>
+<h2 id="别名">别名</h2>
+<h3 id="springboot-1">SpringBoot</h3>
+<pre><code class="language-properties"><div><span class="hljs-meta">mybatis-plus.type-aliases-package</span>=<span class="hljs-string">包名</span>
+</div></code></pre>
+<h2 id="db策略配置">DB策略配置</h2>
+<h3 id="idtype">idType</h3>
+<ul>
+<li>类型: com.baomidou.mybatisplus.annotation.IdType</li>
+<li>默认值: ID_WORKER</li>
+</ul>
+<p>全局默认主键类型.设置后,可以省略实体对象中的@TableId(type = IdType.AUTO)配置</p>
+<p>SpringBoot:</p>
+<pre><code class="language-properties"><div><span class="hljs-meta">mybatis-plus.global-config.db-config.id-type</span>=<span class="hljs-string">auto</span>
+</div></code></pre>
+<p>Spring</p>
+<pre><code class="language-xml"><div>
+</div></code></pre>
+<h3 id="tableprefix">tablePrefix</h3>
+<p>数据表前缀</p>
+<h2 id="条件构造器">条件构造器</h2>
+<h2 id="指定运行端口">指定运行端口</h2>
+<blockquote>
+<p>第一配置文件中添加server.port=9090</p>
+</blockquote>
+<blockquote>
+<p>第二在命令行中指定启动端口，比如传入参数一server. port=9000     java -jar bootsample. jar -- server.port=9000</p>
+</blockquote>
+<blockquote>
+<p>第三传入虚拟机系统属性java - Dserver.port=9000 -jar bootsample.jar</p>
+</blockquote>
+<h2 id="依赖">依赖</h2>
+
+    </body>
+    </html>

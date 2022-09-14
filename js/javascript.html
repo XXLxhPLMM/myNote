@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>&#x4E8B;&#x4EF6;</title>
+        <style>
+</style>
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        
+        
+        
+    </head>
+    <body class="vscode-body vscode-light">
+        <ul>
+<li><a href="#%E4%BA%8B%E4%BB%B6">事件</a>
+<ul>
+<li><a href="#%E6%B3%A8%E5%86%8C%E4%BA%8B%E4%BB%B6">注册事件</a></li>
+<li><a href="#%E5%88%A0%E9%99%A4%E4%BA%8B%E4%BB%B6">删除事件</a></li>
+<li><a href="#dom%E4%BA%8B%E4%BB%B6%E6%B5%81">Dom事件流</a></li>
+<li><a href="#%E4%BA%8B%E4%BB%B6%E5%AF%B9%E8%B1%A1">事件对象</a>
+<ul>
+<li><a href="#%E4%BA%8B%E4%BB%B6%E5%AF%B9%E8%B1%A1%E5%B1%9E%E6%80%A7%E5%92%8C%E6%96%B9%E6%B3%95">事件对象属性和方法</a></li>
+<li><a href="#%E4%BA%8B%E4%BB%B6%E5%A7%94%E6%89%98">事件委托</a></li>
+</ul>
+</li>
+<li><a href="#%E5%B8%B8%E7%94%A8%E9%BC%A0%E6%A0%87%E4%BA%8B%E4%BB%B6">常用鼠标事件</a>
+<ul>
+<li><a href="#%E8%8E%B7%E5%8F%96%E9%BC%A0%E6%A0%87%E5%9D%90%E6%A0%87">获取鼠标坐标</a></li>
+</ul>
+</li>
+<li><a href="#%E8%8E%B7%E5%BE%97%E5%8F%AF%E8%A7%86%E5%8C%BA%E5%9F%9F%E5%A4%84%E4%BA%8E%E9%A1%B5%E9%9D%A2%E7%9A%84%E9%82%A3%E4%B8%AA%E4%BD%8D%E7%BD%AE">获得可视区域处于页面的那个位置</a></li>
+<li><a href="#%E9%94%AE%E7%9B%98%E4%BA%8B%E4%BB%B6">键盘事件</a>
+<ul>
+<li><a href="#%E8%8E%B7%E5%8F%96%E7%94%A8%E6%88%B7%E6%8C%89%E4%B8%8B%E9%82%A3%E4%B8%AA%E6%8C%89%E9%94%AE">获取用户按下那个按键</a></li>
+</ul>
+</li>
+<li><a href="#%E6%96%87%E6%9C%AC%E9%80%89%E4%B8%AD%E4%BA%8B%E4%BB%B6">文本选中事件</a>
+<ul>
+<li><a href="#%E8%8E%B7%E5%8F%96%E9%80%89%E4%B8%AD%E7%9A%84%E6%96%87%E6%9C%AC">获取选中的文本</a></li>
+<li><a href="#%E8%87%AA%E5%AE%9A%E4%B9%89-%E5%8F%B3%E9%94%AE%E8%8F%9C%E5%8D%95">自定义 右键菜单</a></li>
+</ul>
+</li>
+<li><a href="#"></a></li>
+</ul>
+</li>
+<li><a href="#javascript-%E6%8E%A7%E5%88%B6%E6%B5%8F%E8%A7%88%E5%99%A8%E5%85%A8%E5%B1%8F">JavaScript 控制浏览器全屏</a>
+<ul>
+<li><a href="#%E5%BC%80%E5%90%AF%E5%85%A8%E5%B1%8F">开启全屏</a></li>
+<li><a href="#%E9%80%80%E5%87%BA%E5%85%A8%E5%B1%8F">退出全屏</a></li>
+<li><a href="#%E5%85%A8%E5%B1%8F%E5%88%A4%E6%96%AD">全屏判断</a></li>
+<li><a href="#%E5%85%A8%E5%B1%8F%E6%A8%A1%E5%BC%8F%E4%B8%8B%E6%8E%A7%E5%88%B6css">全屏模式下控制css</a></li>
+</ul>
+</li>
+<li><a href="#clientheightoffsetheightscrollheight%E7%9A%84%E5%8C%BA%E5%88%AB">clientHeight、offsetHeight、scrollHeight的区别</a>
+<ul>
+<li><a href="#clientheight">clientHeight</a></li>
+<li><a href="#offsetheight">offsetHeight</a></li>
+<li><a href="#scrollheight">scrollHeight</a></li>
+<li><a href="#offsetleft">offsetLeft</a></li>
+<li><a href="#%E6%B3%A8%E6%84%8F%E7%82%B9">注意点</a></li>
+</ul>
+</li>
+<li><a href="#%E9%BC%A0%E6%A0%87%E4%BD%8D%E7%BD%AE">鼠标位置</a></li>
+<li><a href="#web-api">Web API</a>
+<ul>
+<li><a href="#-1"></a></li>
+</ul>
+</li>
+<li><a href="#arguments-%E5%85%B3%E9%94%AE%E5%AD%97">arguments 关键字</a></li>
+</ul>
+<h1 id="事件">事件</h1>
+<h2 id="注册事件">注册事件</h2>
+<blockquote>
+<p>node.事件类型=事件回调函数 同一事件具有唯一性重复使用会进行事件覆盖</p>
+</blockquote>
+<pre><code class="language-js"><div>node.oncilck=()={
+
+}
+</div></code></pre>
+<blockquote>
+<p>事件监听器 addEventListener  使用此方法事件会被串联</p>
+</blockquote>
+<pre><code class="language-js"><div>node.addEventListener(<span class="hljs-string">&quot;事件类型&quot;</span>,回调方法(){
+
+})
+</div></code></pre>
+<h2 id="删除事件">删除事件</h2>
+<blockquote>
+<p>传统方式 node.事件类型=null</p>
+</blockquote>
+<pre><code class="language-js"><div>node.onclick=<span class="hljs-literal">null</span>
+</div></code></pre>
+<blockquote>
+<p>事件监听器 node.removeEventListener(type,func) 使用非匿名函数的类型</p>
+</blockquote>
+<pre><code class="language-js"><div>node.removeEventlistener(<span class="hljs-string">&quot;click&quot;</span>,<span class="hljs-string">&quot;函数名&quot;</span>)
+</div></code></pre>
+<h2 id="dom事件流">Dom事件流</h2>
+<blockquote>
+<p>事件传播的过程叫做<code>Dom事件流</code>
+<img src="https://img.gejiba.com/images/a96c8b12bdbee94429af99cc01790aea.png" alt="a96c8b12bdbee94429af99cc01790aea.png"></p>
+</blockquote>
+<blockquote>
+<p>removeEventlistener(&quot;click&quot;,&quot;函数名&quot;) 这个函数如果没有第3个参数 或者第3个参数 为false 那就是冒泡阶段
+<br/> 如果 第3个参数为 true 就是捕获事件流
+<br/> 有些事件是不会 冒泡的 比如说 onblur onfocus onmouseenter onmouseleave</p>
+</blockquote>
+<h2 id="事件对象">事件对象</h2>
+<blockquote>
+<p>可以往事件回调函数中添加参数 用来得到事件对象</p>
+</blockquote>
+<pre><code class="language-js"><div><span class="hljs-comment">/* 这个时候的event 就是事件对象 */</span>
+div.onclick=<span class="hljs-function">(<span class="hljs-params">event</span>)=&gt;</span>{
+
+}
+div.removeEventlistener(<span class="hljs-string">&quot;click&quot;</span>,<span class="hljs-function">(<span class="hljs-params">event</span>)=&gt;</span>{
+
+})
+<span class="hljs-comment">/* 兼容性处理  */</span>
+e = e || <span class="hljs-built_in">window</span>.event
+</div></code></pre>
+<h3 id="事件对象属性和方法">事件对象属性和方法</h3>
+<table>
+<thead>
+<tr>
+<th>事件对象属性方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>e.target</code></td>
+<td>返回触发事件的对象   标准</td>
+</tr>
+<tr>
+<td><code>e.srcElement</code></td>
+<td>返回触发事件的对象   非标准标准 ie678</td>
+</tr>
+<tr>
+<td><code>e.type</code></td>
+<td>返回事件的类型 比如 click 不</td>
+</tr>
+<tr>
+<td><code>e.cancelBubble</code></td>
+<td>该属性阻止事件冒泡 非标准 ie678</td>
+</tr>
+<tr>
+<td><code>e.returnValue</code></td>
+<td>阻止默认事件 非标准 IE678</td>
+</tr>
+<tr>
+<td><code>e.prenentDefalut()</code></td>
+<td>阻止默认事件 标准</td>
+</tr>
+<tr>
+<td><code>e.stopPropagation()</code></td>
+<td>阻止事件冒泡 标准</td>
+</tr>
+</tbody>
+</table>
+<h3 id="事件委托">事件委托</h3>
+<blockquote>
+<p>一般方法使用的是 循环添加事件</p>
+</blockquote>
+<pre><code class="language-html"><div><span class="hljs-tag">&lt;<span class="hljs-name">body</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;body&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;div&quot;</span> <span class="hljs-attr">width</span>=<span class="hljs-string">&quot;100px&quot;</span> <span class="hljs-attr">height</span>=<span class="hljs-string">&quot;100px&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>b<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;div&quot;</span> <span class="hljs-attr">width</span>=<span class="hljs-string">&quot;100px&quot;</span> <span class="hljs-attr">height</span>=<span class="hljs-string">&quot;100px&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>h<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
+<span class="hljs-keyword">var</span> o= <span class="hljs-built_in">document</span>.querySelectorAll(<span class="hljs-string">&quot;div&quot;</span>)
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> k <span class="hljs-keyword">in</span> o) {
+        o[k].onclick=<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">this</span>)
+    }
+    }
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</div></code></pre>
+<blockquote>
+<p>使用事件委托 e.target 获取触发事件的对象</p>
+</blockquote>
+<pre><code class="language-html"><div><span class="hljs-tag">&lt;<span class="hljs-name">body</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;body&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;div&quot;</span> <span class="hljs-attr">width</span>=<span class="hljs-string">&quot;100px&quot;</span> <span class="hljs-attr">height</span>=<span class="hljs-string">&quot;100px&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>b<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;div&quot;</span> <span class="hljs-attr">width</span>=<span class="hljs-string">&quot;100px&quot;</span> <span class="hljs-attr">height</span>=<span class="hljs-string">&quot;100px&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>h<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
+<span class="hljs-keyword">var</span> o= <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&quot;body&quot;</span>)
+    
+    o.onclick=<span class="hljs-function">(<span class="hljs-params">e</span>)=&gt;</span>{
+        <span class="hljs-built_in">console</span>.log(e);
+        <span class="hljs-built_in">console</span>.log(e.target);
+    }
+   
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</div></code></pre>
+<h2 id="常用鼠标事件">常用鼠标事件</h2>
+<table>
+<thead>
+<tr>
+<th>鼠标事件</th>
+<th style="text-align:left">触发条件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>onclick</code></td>
+<td style="text-align:left">鼠标点击左键触发</td>
+</tr>
+<tr>
+<td><code>onmouseover</code></td>
+<td style="text-align:left">鼠标经过触发</td>
+</tr>
+<tr>
+<td><code>onmousout</code></td>
+<td style="text-align:left">鼠标离开触发</td>
+</tr>
+<tr>
+<td><code>onfocus</code></td>
+<td style="text-align:left">获得鼠标焦点触发</td>
+</tr>
+<tr>
+<td><code>onblur</code></td>
+<td style="text-align:left">失去鼠标焦点触发</td>
+</tr>
+<tr>
+<td><code>onmousemove</code></td>
+<td style="text-align:left">鼠标移动触发</td>
+</tr>
+<tr>
+<td><code>onmouseup</code></td>
+<td style="text-align:left">鼠标弹起触发</td>
+</tr>
+<tr>
+<td><code>onmousedown</code></td>
+<td style="text-align:left">鼠标按下触发</td>
+</tr>
+</tbody>
+</table>
+<h3 id="获取鼠标坐标">获取鼠标坐标</h3>
+<table>
+<thead>
+<tr>
+<th>鼠标事件对象</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>e.clentX</code></td>
+<td>返回相对于浏览器可视区的x坐标</td>
+</tr>
+<tr>
+<td><code>e.clentY</code></td>
+<td>返回相对于浏览器可视区的y坐标</td>
+</tr>
+<tr>
+<td><code>e.pageX</code></td>
+<td>返回相对于页面的x坐标</td>
+</tr>
+<tr>
+<td><code>e.pageY</code></td>
+<td>返回相对于页面的y坐标</td>
+</tr>
+<tr>
+<td><code>e.creenX</code></td>
+<td>返回相对于电脑屏幕的x坐标</td>
+</tr>
+<tr>
+<td><code>e.creenY</code></td>
+<td>返回相对于电脑屏幕的x坐标</td>
+</tr>
+</tbody>
+</table>
+<h2 id="获得可视区域处于页面的那个位置">获得可视区域处于页面的那个位置</h2>
+<table>
+<thead>
+<tr>
+<th>事件对象</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>window.pageXOffset</code></td>
+<td>返回当前的X坐标</td>
+</tr>
+<tr>
+<td><code>window.pageYOffset</code></td>
+<td>返回当前的Y坐标</td>
+</tr>
+</tbody>
+</table>
+<h2 id="键盘事件">键盘事件</h2>
+<table>
+<thead>
+<tr>
+<th>事件对象</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>onkeydown</code></td>
+<td>当某个键弹起时触发</td>
+</tr>
+<tr>
+<td><code>onkeyup</code></td>
+<td>当某个键按下时触发</td>
+</tr>
+<tr>
+<td><code>onkeypress</code></td>
+<td>当某个键按下时触发 但是不触发功能键比如Ctrl</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>三个事件的触发顺序是 keydown -- keypress -- keyup</p>
+</blockquote>
+<h3 id="获取用户按下那个按键">获取用户按下那个按键</h3>
+<p>event.KeyCode 返回一个该键的<code>ASCII</code>值</p>
+<blockquote>
+<p>keyup 和 keydown 不区分字母大小写<br/>
+keypress 区分大小写</p>
+</blockquote>
+<h2 id="文本选中事件">文本选中事件</h2>
+<p><code>onselectstart</code>  当文本被选中的时候触发</p>
+<h3 id="获取选中的文本">获取选中的文本</h3>
+<blockquote>
+<p>获取选中的对象 <code>window.getSelection()</code>
+重点关注 该对象的</p>
+</blockquote>
+<pre><code class="language-js"><div><span class="hljs-comment">/* 以下数字位置 为偏移量 */</span>
+<span class="hljs-attr">anchorNode</span>: text
+<span class="hljs-attr">anchorOffset</span>: <span class="hljs-number">12</span>
+<span class="hljs-attr">baseNode</span>: text
+<span class="hljs-attr">baseOffset</span>: <span class="hljs-number">12</span>  <span class="hljs-comment">/* 开始的位置 字符串的下标 */</span>
+<span class="hljs-attr">extentNode</span>: text
+<span class="hljs-attr">extentOffset</span>: <span class="hljs-number">14</span> <span class="hljs-comment">/* 最后一个字符是第几个字符 */</span>
+<span class="hljs-attr">focusNode</span>: text
+<span class="hljs-attr">focusOffset</span>: <span class="hljs-number">14</span>
+<span class="hljs-attr">isCollapsed</span>: <span class="hljs-literal">false</span>
+<span class="hljs-attr">rangeCount</span>: <span class="hljs-number">1</span>
+<span class="hljs-attr">type</span>: <span class="hljs-string">&quot;Range&quot;</span>
+</div></code></pre>
+<blockquote>
+<p>window.getSelection().getRangeAt(0)</p>
+</blockquote>
+<pre><code class="language-js"><div>collapsed: <span class="hljs-literal">false</span>
+<span class="hljs-attr">commonAncestorContainer</span>: p <span class="hljs-comment">/* 总标签 */</span>
+<span class="hljs-attr">endContainer</span>: text   <span class="hljs-comment">/* 结束的文本节点 */</span>
+<span class="hljs-attr">endOffset</span>: <span class="hljs-number">2</span>          <span class="hljs-comment">/* 结束文本的字符串 字符位置 */</span>
+<span class="hljs-attr">startContainer</span>: text  <span class="hljs-comment">/* 开始的文本节点 */</span>
+<span class="hljs-attr">startOffset</span>: <span class="hljs-number">12</span>     <span class="hljs-comment">/* 开始文本节点的字符串下标 */</span>
+</div></code></pre>
+<blockquote>
+<p>新建选区</p>
+</blockquote>
+<pre><code class="language-js"><div><span class="hljs-comment">/* 创建空选区 */</span>
+<span class="hljs-keyword">const</span> newRange = <span class="hljs-built_in">document</span>.createRange()
+选中选区
+<span class="hljs-built_in">window</span>.getSelection().addRange(newRange)
+</div></code></pre>
+<h3 id="自定义-右键菜单">自定义 右键菜单</h3>
+<pre><code class="language-html"><div><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-meta-keyword">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;en&quot;</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Document<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="css">
+    * {
+      <span class="hljs-attribute">margin</span>: <span class="hljs-number">0</span>;
+      <span class="hljs-attribute">padding</span>: <span class="hljs-number">0</span>;
+    }
+    <span class="hljs-selector-class">.menu</span> {
+      <span class="hljs-attribute">width</span>: <span class="hljs-number">100px</span>;
+      <span class="hljs-attribute">border</span>: <span class="hljs-number">1px</span> solid <span class="hljs-number">#ccc</span>;
+      <span class="hljs-attribute">position</span>: absolute;
+      <span class="hljs-attribute">box-shadow</span>: <span class="hljs-number">2px</span> <span class="hljs-number">2px</span> <span class="hljs-number">8px</span> <span class="hljs-number">1px</span> <span class="hljs-built_in">rgba</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, .<span class="hljs-number">2</span>);
+      <span class="hljs-attribute">display</span>: none;
+    }
+    <span class="hljs-selector-class">.menu</span> <span class="hljs-selector-tag">li</span> {
+      <span class="hljs-attribute">list-style</span>: none;
+      <span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span>;
+    }
+    <span class="hljs-selector-class">.menu</span> <span class="hljs-selector-tag">li</span> <span class="hljs-selector-tag">span</span> {
+      <span class="hljs-attribute">display</span>: inline-block;
+      <span class="hljs-attribute">text-decoration</span>: none;
+      <span class="hljs-attribute">color</span>: <span class="hljs-number">#555</span>;
+      <span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span>;
+      <span class="hljs-attribute">padding</span>: <span class="hljs-number">10px</span> <span class="hljs-number">0</span>;
+      <span class="hljs-attribute">text-align</span>: center;
+      <span class="hljs-attribute">cursor</span>: pointer;
+    }
+    <span class="hljs-selector-class">.menu</span> <span class="hljs-selector-tag">li</span><span class="hljs-selector-pseudo">:first-of-type</span> {
+      <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">5px</span> <span class="hljs-number">5px</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span>;
+    }
+    <span class="hljs-selector-class">.menu</span> <span class="hljs-selector-tag">li</span> <span class="hljs-selector-tag">span</span><span class="hljs-selector-pseudo">:hover</span>{
+      <span class="hljs-attribute">background</span>: <span class="hljs-number">#eee</span>;
+      <span class="hljs-attribute">color</span>: <span class="hljs-number">#CC1A1A</span>;
+    }
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">ul</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;menu&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;menu&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span>复制<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span>粘贴<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span>刷新<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span>其他功能1<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span>其他功能2<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
+         <span class="hljs-built_in">window</span>.onload = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+      <span class="hljs-comment">// 获取节点</span>
+      <span class="hljs-keyword">var</span> menu = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">&#x27;menu&#x27;</span>);
+
+      <span class="hljs-comment">//获取可视区宽度,高度</span>
+      <span class="hljs-keyword">var</span> winWidth = <span class="hljs-built_in">document</span>.documentElement.clientWidth || <span class="hljs-built_in">document</span>.body.clientWidth;
+      <span class="hljs-keyword">var</span> winHeight = <span class="hljs-built_in">document</span>.documentElement.clientHeight || <span class="hljs-built_in">document</span>.body.clientHeight;
+
+      <span class="hljs-comment">// 点击空白区域 隐藏菜单</span>
+      <span class="hljs-built_in">document</span>.addEventListener(<span class="hljs-string">&#x27;click&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+        menu.style.display = <span class="hljs-string">&#x27;none&#x27;</span>;
+        menu.style.left = <span class="hljs-number">0</span> + <span class="hljs-string">&#x27;px&#x27;</span>;
+        menu.style.top = <span class="hljs-number">0</span> + <span class="hljs-string">&#x27;px&#x27;</span>;
+      })
+
+      <span class="hljs-comment">// 点击菜单</span>
+      menu.addEventListener(<span class="hljs-string">&#x27;click&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) </span>{
+        <span class="hljs-keyword">var</span> e = e || <span class="hljs-built_in">window</span>.event;
+        <span class="hljs-built_in">console</span>.log(e.target.innerText)
+      })
+
+      <span class="hljs-comment">//右键菜单</span>
+      <span class="hljs-built_in">document</span>.oncontextmenu = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) </span>{
+        <span class="hljs-keyword">var</span> e = e || <span class="hljs-built_in">window</span>.event;
+        menu.style.display = <span class="hljs-string">&#x27;block&#x27;</span>;
+        <span class="hljs-comment">// 获取鼠标坐标</span>
+        <span class="hljs-keyword">var</span> mouseX = e.clientX;
+        <span class="hljs-keyword">var</span> mouseY = e.clientY;
+
+        <span class="hljs-comment">// 判断边界值，防止菜单栏溢出可视窗口</span>
+        <span class="hljs-keyword">if</span> (mouseX &gt;= (winWidth - menu.offsetWidth)) {
+          mouseX = winWidth - menu.offsetWidth;
+        } <span class="hljs-keyword">else</span> {
+          mouseX = mouseX
+        }
+        <span class="hljs-keyword">if</span> (mouseY &gt; winHeight - menu.offsetHeight) {
+          mouseY = winHeight - menu.offsetHeight;
+        } <span class="hljs-keyword">else</span> {
+          mouseY = mouseY;
+        }
+        menu.style.left = mouseX + <span class="hljs-string">&#x27;px&#x27;</span>;
+        menu.style.top = mouseY + <span class="hljs-string">&#x27;px&#x27;</span>;
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+      }
+    }
+    </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span>
+</div></code></pre>
+<h2 id=""></h2>
+<h1 id="javascript-控制浏览器全屏">JavaScript 控制浏览器全屏</h1>
+<h2 id="开启全屏">开启全屏</h2>
+<p>HTML 5中的<code>fullscreen</code>，目前可以在除IE和opera外的浏览器中使用 ，有的时候用来做全屏API，游戏呀，等都很有用。先看常见的API</p>
+<blockquote>
+<p>element.requestFullScreen()   作用：请求某个元素element全屏</p>
+</blockquote>
+<h2 id="退出全屏">退出全屏</h2>
+<blockquote>
+<p>document.exitFullScreen()</p>
+</blockquote>
+<h2 id="全屏判断">全屏判断</h2>
+<blockquote>
+<p>document.fullscreen  ,如果用户在全屏模式下，则返回true
+<br/>document.fullscreenElement,返回当前处于全屏模式下的元素</p>
+</blockquote>
+<p><strong><code>注意</code></strong>:</p>
+<ol>
+<li>在HTML5中,W3C制定了关于全屏的API但是只能由用户事件触发，所以不能自动全屏；用户事件触发方可。</li>
+<li>新版本，浏览器都支持了全屏api，不需要带前缀，为兼容性可以带着。</li>
+</ol>
+<h2 id="全屏模式下控制css">全屏模式下控制css</h2>
+<pre><code class="language-css"><div>    <span class="hljs-selector-pseudo">:fullscreen</span> <span class="hljs-selector-tag">input</span>{
+            <span class="hljs-attribute">background</span>: hotpink;
+        }
+</div></code></pre>
+<p><strong>兼容性处理</strong><br/></p>
+<pre><code class="language-css"><div><span class="hljs-selector-tag">-webkit-full-screen</span> {
+ 
+ <span class="hljs-comment">/* properties */</span>
+}
+<span class="hljs-selector-pseudo">:-moz-full-screen</span> {
+ <span class="hljs-comment">/* properties */</span>
+}
+<span class="hljs-selector-pseudo">:-ms-fullscreen</span> {
+ <span class="hljs-comment">/* properties */</span>
+}
+<span class="hljs-selector-pseudo">:full-screen</span> { <span class="hljs-comment">/*pre-spec */</span>
+ <span class="hljs-comment">/* properties */</span>
+}
+<span class="hljs-selector-pseudo">:fullscreen</span> { <span class="hljs-comment">/* spec */</span>
+ <span class="hljs-comment">/* properties */</span>
+}
+<span class="hljs-comment">/* deeper elements */</span>
+<span class="hljs-selector-pseudo">:-webkit-full-screen</span> <span class="hljs-selector-tag">video</span> {
+ <span class="hljs-attribute">width</span>: %;
+ <span class="hljs-attribute">height</span>: %;
+}
+<span class="hljs-comment">/* styling the backdrop*/</span>
+<span class="hljs-selector-pseudo">::backdrop</span> {
+ <span class="hljs-comment">/* properties */</span>
+}
+<span class="hljs-selector-pseudo">::-ms-backdrop</span> {
+ <span class="hljs-comment">/* properties */</span>
+}
+</div></code></pre>
+<h1 id="clientheightoffsetheightscrollheight的区别">clientHeight、offsetHeight、scrollHeight的区别</h1>
+<p><img src="https://img.gejiba.com/images/5a4279db126b0bd3de896a3328cd78cc.jpg" alt="5a4279db126b0bd3de896a3328cd78cc.jpg"></p>
+<h2 id="clientheight">clientHeight</h2>
+<blockquote>
+<p><code>含义</code> : 元素的像素高度，包含元素的高度+内边距，不包含水平滚动条，边框和外边距
+<img src="https://img.gejiba.com/images/ec5d90fd555b9c513dce3717ddb65e96.jpg" alt="ec5d90fd555b9c513dce3717ddb65e96.jpg"></p>
+</blockquote>
+<h2 id="offsetheight">offsetHeight</h2>
+<blockquote>
+<p><code>含义</code> : 元素的像素高度 包含元素的垂直内边距和边框，水平滚动条的高度，且是一个整数<br/>
+<img src="https://img.gejiba.com/images/18b9a58d5f510e885ac36905a48d23a8.jpg" alt="18b9a58d5f510e885ac36905a48d23a8.jpg"></p>
+</blockquote>
+<h2 id="scrollheight">scrollHeight</h2>
+<blockquote>
+<p><code>含义</code> : 元素内容的高度，包括溢出的不可见内容
+<img src="https://img.gejiba.com/images/45824fc69735b66739cb14ed05a1c0d1.jpg" alt="45824fc69735b66739cb14ed05a1c0d1.jpg"></p>
+</blockquote>
+<h2 id="offsetleft">offsetLeft</h2>
+<blockquote>
+<p><code>含义</code> : 返回元素左上角相对于offsetParent的左边界的偏移像素值</p>
+</blockquote>
+<h2 id="注意点">注意点</h2>
+<blockquote>
+<ol>
+<li>对块级元素来说，offsetTop、offsetLeft、offsetWidth 及 offsetHeight 描述了元素相对于 offsetParent 的边界框。但是文本框不是如此.文本框的offsetLeft和offsetTop是第一个文本框的左偏移和上偏移.</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="2">
+<li>offsetParent元素指改元素的定位元素以及最近的table,td,th,body. 可见，offsetParent和position属性的包含块概念类似.大部分场景下可以通用.</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="3">
+<li>offsetTop和offsetLeft都是相对于其内边距边界的.</li>
+</ol>
+</blockquote>
+<h1 id="鼠标位置">鼠标位置</h1>
+<p>一.<code>PageX</code>和<code>clientX</code>
+<code>PageX</code>:鼠标在页面上的位置,从页面左上角开始,即是以页面为参考点,不随滑动条移动而变化
+<code>clientX</code>:鼠标在页面上可视区域的位置,从浏览器可视区域左上角开始,即是以浏览器滑动条此刻的滑动到的位置为参考点,随滑动条移而变化.</p>
+<p>二.<code>screenX</code>
+<code>screenX</code>:鼠标在屏幕上的位置,从屏幕左上角开始,这个没有任何争议</p>
+<p>三.<code>offsetX</code>和<code>layerX</code>
+<code>offsetX</code>:IE特有,鼠标相比较于触发事件的元素的位置,以元素盒子模型的内容区域的左上角为参考点,如果有boder,可能出现负值。</p>
+<p><code>layerX</code>:鼠标相比较于当前坐标系的位置,即如果触发元素没有设置绝对定位或相对定位,以页面为参考点,如果有,将改变参考坐标系,从触发元素盒子模型的border区域的左上角为参考点
+也就是当触发元素设置了相对或者绝对定位后。</p>
+<h1 id="web-api">Web API</h1>
+<h2 id="-1"></h2>
+<h1 id="arguments-关键字">arguments 关键字</h1>
+<p>用于获取形参列表</p>
+<p>在方法中直接使用<strong>arguments[参数]</strong> 可以直接操作形参</p>
+
+    </body>
+    </html>
