@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>es6</title>
+        <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+/* From extension ms-toolsai.jupyter */
+/* These classnames are inherited from bootstrap, but are present in most notebook renderers */
+
+.alert {
+    width: auto;
+    padding: 1em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+.alert > *:last-child {
+    margin-bottom: 0;
+}
+#preview > .alert:last-child {
+    /* Prevent this being set to zero by the default notebook stylesheet */
+    padding-bottom: 1em;
+}
+
+.alert-success {
+    /* Note there is no suitable color available, so we just copy "info" */
+    background-color: var(--theme-info-background);
+    color: var(--theme-info-foreground);
+}
+.alert-info {
+    background-color: var(--theme-info-background);
+    color: var(--theme-info-foreground);
+}
+.alert-warning {
+    background-color: var(--theme-warning-background);
+    color: var(--theme-warning-foreground);
+}
+.alert-danger {
+    background-color: var(--theme-error-background);
+    color: var(--theme-error-foreground);
+}
+
+</style>
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+        
+    </head>
+    <body class="vscode-body vscode-light">
+        <ul>
+<li><a href="#es6">es6</a>
+<ul>
+<li><a href="#%E9%BB%98%E8%AE%A4%E5%8F%82%E6%95%B0">默认参数</a></li>
+<li><a href="#%E5%89%A9%E4%BD%99%E5%8F%82%E6%95%B0">剩余参数</a></li>
+<li><a href="#%E5%B1%95%E5%BC%80%E8%BF%90%E7%AE%97%E7%AC%A6">展开运算符</a></li>
+<li><a href="#%E6%9A%B4%E9%9C%B2">暴露</a>
+<ul>
+<li><a href="#%E5%88%86%E5%88%AB%E6%9A%B4%E9%9C%B2">分别暴露</a></li>
+<li><a href="#%E7%BB%9F%E4%B8%80%E6%9A%B4%E9%9C%B2">统一暴露</a></li>
+<li><a href="#%E9%BB%98%E8%AE%A4%E6%9A%B4%E9%9C%B2">默认暴露</a></li>
+</ul>
+</li>
+<li><a href="#%E5%BC%95%E5%85%A5">引入</a>
+<ul>
+<li><a href="#%E9%80%9A%E7%94%A8%E5%BC%95%E5%85%A5">通用引入</a></li>
+<li><a href="#%E8%A7%A3%E6%9E%84%E8%B5%8B%E5%80%BC%E5%BD%A2%E5%BC%8F">解构赋值形式</a></li>
+<li><a href="#%E7%AE%80%E4%BE%BF%E5%BD%A2%E5%BC%8F%E9%92%88%E5%AF%B9%E4%BA%8E%E9%BB%98%E8%AE%A4%E6%9A%B4%E9%9C%B2">简便形式针对于默认暴露</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="es6">es6</h1>
+<h2 id="默认参数">默认参数</h2>
+<p>首先来看下ES5是怎么处理默认参数的</p>
+<pre><code class="language-js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">sum</span>(<span class="hljs-params">a, b</span>){
+    a = a || <span class="hljs-number">0</span> <span class="hljs-comment">//很巧妙的方法，虽然现在有了ES6了不用这样，但思想还是很重要的</span>
+    b = b || <span class="hljs-number">0</span>
+    <span class="hljs-keyword">return</span> a + b
+}
+</code></pre>
+<p>而ES6就终于和各大编程语言一样拥有了默认参数</p>
+<pre><code class="language-js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">sum</span>(<span class="hljs-params">a = <span class="hljs-number">0</span>, b = <span class="hljs-number">0</span></span>){
+    <span class="hljs-keyword">return</span> a + b
+}
+</code></pre>
+<h2 id="剩余参数">剩余参数</h2>
+<p>假如一个函数要传入的参数不知道有多少个怎么办呢？看看ES5是怎么解决的</p>
+<pre><code class="language-js"><span class="hljs-comment">//不传参数，通过arguments对象来解决</span>
+<span class="hljs-comment">//这个函数是用来自定义一个msg，然后输出和</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">sum</span>(<span class="hljs-params"></span>){
+    <span class="hljs-comment">//由于arguments是伪数组，要用办法将arguments变成数组</span>
+    <span class="hljs-comment">//1.var args = Array.prototype.slice.call(arguments)</span>
+    <span class="hljs-comment">//2.var args = Array.from(arguments)</span>
+    <span class="hljs-comment">//3.var args = [...arguments]</span>
+    <span class="hljs-keyword">var</span> args = [...<span class="hljs-variable language_">arguments</span>]
+    <span class="hljs-keyword">var</span> numbers = args.<span class="hljs-title function_">slice</span>(<span class="hljs-number">1</span>)
+    <span class="hljs-keyword">var</span> result = numbers.<span class="hljs-title function_">reduce</span>(<span class="hljs-function">(<span class="hljs-params">p, v</span>) =&gt;</span> p+v, <span class="hljs-number">0</span>)
+    <span class="hljs-keyword">return</span> msg + result
+}
+<span class="hljs-title function_">sum</span>(<span class="hljs-string">&quot;结果是&quot;</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>)
+</code></pre>
+<p>一切都是因为arguments是一个伪数组，数组的API都没有，处理起来很不方便，所以ES6出了剩余参数来代替arguments</p>
+<pre><code class="language-js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">sum2</span>(<span class="hljs-params">msg, ...nums</span>){<span class="hljs-comment">//值得注意的时候nums是一个数组</span>
+    <span class="hljs-keyword">let</span> result = numbers.<span class="hljs-title function_">reduce</span>(<span class="hljs-function">(<span class="hljs-params">p, v</span>) =&gt;</span> p+v, <span class="hljs-number">0</span>)
+    <span class="hljs-keyword">return</span> msg + result
+}
+<span class="hljs-title function_">sum2</span>(<span class="hljs-string">&quot;结果2是&quot;</span>, <span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>)
+<span class="hljs-title function_">sum2</span>(<span class="hljs-string">&quot;结果2是&quot;</span>, [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>])<span class="hljs-comment">//这样是不对的，因为在参数里就通过...把nums展开了，就应该是一堆数字</span>
+<span class="hljs-title function_">sum2</span>(<span class="hljs-string">&quot;结果2是&quot;</span>, ...[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>])<span class="hljs-comment">//这样也可以，...叫做展开运算符，下面会说，这里就是把[1,2,3,4,5,6]展开成了6个数字</span>
+</code></pre>
+<h2 id="展开运算符">展开运算符</h2>
+<p>顾名思义，就是把数组展开的，经常用于数组的初始化</p>
+<pre><code class="language-js"><span class="hljs-keyword">let</span> [...a] = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>]<span class="hljs-comment">//a = [1,2,3]</span>
+<span class="hljs-keyword">let</span> [a,...b] = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>]<span class="hljs-comment">//a = 1, b= [2,3]</span>
+</code></pre>
+<p>值得注意的是，展开运算符也可以用于对象，一般用于对象的浅拷贝和合并</p>
+<pre><code class="language-js">{<span class="hljs-comment">//对象的浅拷贝</span>
+    <span class="hljs-keyword">let</span> obj1 = {<span class="hljs-attr">name</span>: <span class="hljs-string">&quot;Tom&quot;</span>}
+    <span class="hljs-keyword">let</span> {...obj2} = obj1
+}
+{<span class="hljs-comment">//对象合并</span>
+    <span class="hljs-keyword">let</span> obj1 = {<span class="hljs-attr">a</span>: <span class="hljs-number">1</span>,<span class="hljs-attr">b</span>:<span class="hljs-number">2</span>}
+    <span class="hljs-keyword">let</span> obj2 = {<span class="hljs-attr">a</span>: <span class="hljs-number">11</span>,<span class="hljs-attr">c</span>:<span class="hljs-number">4</span>}
+    <span class="hljs-keyword">let</span> obj3 = {...obj1, ...obj2}<span class="hljs-comment">//{a:11,b:2,c:4}</span>
+}
+</code></pre>
+<h2 id="暴露">暴露</h2>
+<h3 id="分别暴露">分别暴露</h3>
+<pre><code class="language-js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">let</span> school = ‘杭电’
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">play</span>(<span class="hljs-params"></span>)
+{
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(“我会打游戏”)
+}
+</code></pre>
+<h3 id="统一暴露">统一暴露</h3>
+<pre><code class="language-js"><span class="hljs-keyword">let</span> school = ‘杭电’
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">play</span>(<span class="hljs-params"></span>){
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(“我会打游戏”)
+}
+<span class="hljs-keyword">export</span> {school,play}
+</code></pre>
+<h3 id="默认暴露">默认暴露</h3>
+<pre><code class="language-js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> {
+<span class="hljs-attr">school</span>:‘hangdian’,
+<span class="hljs-attr">change</span>:<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>){
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(‘change myself’)
+}
+}
+</code></pre>
+<h2 id="引入">引入</h2>
+<h3 id="通用引入">通用引入</h3>
+<pre><code class="language-js"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> m <span class="hljs-keyword">from</span> ‘{{路径名}}’ 全部存入对象m中
+</code></pre>
+<h3 id="解构赋值形式">解构赋值形式</h3>
+<pre><code class="language-js"><span class="hljs-keyword">import</span> {school,play} <span class="hljs-keyword">from</span> 路径名
+</code></pre>
+<h3 id="简便形式针对于默认暴露">简便形式针对于默认暴露</h3>
+<pre><code class="language-js"><span class="hljs-keyword">import</span> school <span class="hljs-keyword">from</span> 路径名
+</code></pre>
+
+        
+        
+    </body>
+    </html>

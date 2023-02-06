@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>1&period; &#x4ec0;&#x4e48;&#x662f;Ajax</title>
+        <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+/* From extension ms-toolsai.jupyter */
+/* These classnames are inherited from bootstrap, but are present in most notebook renderers */
+
+.alert {
+    width: auto;
+    padding: 1em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+.alert > *:last-child {
+    margin-bottom: 0;
+}
+#preview > .alert:last-child {
+    /* Prevent this being set to zero by the default notebook stylesheet */
+    padding-bottom: 1em;
+}
+
+.alert-success {
+    /* Note there is no suitable color available, so we just copy "info" */
+    background-color: var(--theme-info-background);
+    color: var(--theme-info-foreground);
+}
+.alert-info {
+    background-color: var(--theme-info-background);
+    color: var(--theme-info-foreground);
+}
+.alert-warning {
+    background-color: var(--theme-warning-background);
+    color: var(--theme-warning-foreground);
+}
+.alert-danger {
+    background-color: var(--theme-error-background);
+    color: var(--theme-error-foreground);
+}
+
+</style>
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+        
+    </head>
+    <body class="vscode-body vscode-light">
+        <h1 id="1-什么是ajax">1. 什么是Ajax</h1>
+<p>Ajax（Asynchronous JavaScript and XML的缩写）是一种异步请求数据的web开发技术，对于改善用户的体验和页面性能很有帮助。简单地说，在不需要重新刷新页面的情况下，Ajax 通过异步请求加载后台数据，并在网页上呈现出来。常见运用场景有表单验证是否登入成功、百度搜索下拉框提示和快递单号查询等等</p>
+<p><strong>Ajax目的：提高用户体验，较少网络数据的传输量</strong></p>
+<p><img src="https://gitee.com/krislin_zhao/IMGcloud/raw/master/img/20200605115538.png" alt=""></p>
+<h1 id="2-ajax例子">2. Ajax例子</h1>
+<p>“老师让班长叫小明过来解释下作业为什么没有交”</p>
+<p><img src="https://gitee.com/krislin_zhao/IMGcloud/raw/master/img/20200521134128.png" alt=""></p>
+<ol>
+<li>
+<p>客户端发起一个数据请求 (老师让班长去叫小明).</p>
+</li>
+<li>
+<p>客户端继续页面工作 (老师继续改作业).</p>
+</li>
+<li>
+<p>XMLHttpRequest向服务器请求数据 (班长去叫小明去老师办公室).</p>
+</li>
+<li>
+<p>服务器返回数据给XMLHttpRequest (班长领着小明前往老师办公室).</p>
+</li>
+<li>
+<p>XMLHttpRequest通知客户端(浏览器)接收数据 (班长告诉老师,小明来了).</p>
+</li>
+<li>
+<p>客户端(浏览器)接收XMLHttpRequest返回的数据,渲染页面 (小明向老师解释为什么作业没交).</p>
+</li>
+</ol>
+<h1 id="3-ajax的使用">3. Ajax的使用</h1>
+<h2 id="1-创建ajax核心对象xmlhttprequest">1. <strong>创建Ajax核心对象XMLHttpRequest</strong></h2>
+<pre><code class="language-javascript"><span class="hljs-comment">//Ajax例子</span>
+<span class="hljs-comment">//浏览器加载时</span>
+<span class="hljs-variable language_">window</span>.<span class="hljs-property">onload</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) {
+    <span class="hljs-keyword">var</span> xhl = <span class="hljs-literal">null</span>;
+    <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">window</span>.<span class="hljs-property">XMLHttpRequest</span>){
+        <span class="hljs-comment">// 兼容 IE7+, Firefox, Chrome, Opera, Safari</span>
+        xhl = <span class="hljs-keyword">new</span>  <span class="hljs-title class_">XMLHttpRequest</span>();
+    }
+    <span class="hljs-keyword">else</span> {
+        <span class="hljs-comment">// 兼容 IE6, IE5 </span>
+        xhl = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ActiveXObject</span>(<span class="hljs-string">&quot;Microsoft.XMLHTTP&quot;</span>);
+    }
+}
+</code></pre>
+<h2 id="2-向服务器发送请求">2. <strong>向服务器发送请求</strong></h2>
+<pre><code class="language-javascript">   语法: xhr.<span class="hljs-title function_">open</span>(method,url,<span class="hljs-keyword">async</span>);
+    
+    xhl.<span class="hljs-title function_">open</span>(<span class="hljs-string">&quot;GET&quot;</span>,<span class="hljs-string">&quot;url&quot;</span>,<span class="hljs-literal">true</span>);
+    xhl.<span class="hljs-title function_">send</span>(str);<span class="hljs-comment">//post请求时才使用字符串参数，否则不用带参数。</span>
+</code></pre>
+<p>method：请求的类型；GET 或 POST）</p>
+<p>url：文件在服务器上的位置 ）</p>
+<p>async：true（异步）或 false（同步）</p>
+<p><strong>注意：post请求一定要设置请求头的格式内容</strong></p>
+<pre><code class="language-javascript">xhr.<span class="hljs-title function_">open</span>(<span class="hljs-string">&quot;POST&quot;</span>,<span class="hljs-string">&quot;test.html&quot;</span>,<span class="hljs-literal">true</span>);  
+xhr.<span class="hljs-title function_">setRequestHeader</span>(<span class="hljs-string">&quot;Content-type&quot;</span>,<span class="hljs-string">&quot;application/x-www-form-urlencoded&quot;</span>);  
+xhr.<span class="hljs-title function_">send</span>(<span class="hljs-string">&quot;fname=Henry&amp;lname=Ford&quot;</span>);  <span class="hljs-comment">//post请求参数放在send里面，即请求体</span>
+</code></pre>
+<h2 id="3-服务器响应处理区分同步跟异步两种情况">3. <strong>服务器响应处理（区分同步跟异步两种情况）</strong></h2>
+<p><strong>responseText: 获得字符串形式的响应数据。</strong></p>
+<p><strong>responseXML: 获得XML 形式的响应数据。</strong></p>
+<h3 id="同步处理"><strong>①同步处理</strong></h3>
+<pre><code class="language-javascript">    <span class="hljs-number">1.</span> xhr.<span class="hljs-title function_">open</span>(<span class="hljs-string">&quot;GET&quot;</span>,<span class="hljs-string">&quot;info.txt&quot;</span>,<span class="hljs-literal">false</span>);  
+    <span class="hljs-number">2.</span> xhr.<span class="hljs-title function_">send</span>();  
+    <span class="hljs-number">3.</span> <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;myDiv&quot;</span>).<span class="hljs-property">innerHTML</span>=xhr.<span class="hljs-property">responseText</span>; <span class="hljs-comment">//获取数据直接显示在页面上</span>
+</code></pre>
+<h3 id="异步处理"><strong>②异步处理</strong></h3>
+<p>相对来说比较复杂，要在请求状态改变事件中处理。</p>
+<pre><code class="language-javascript">    <span class="hljs-number">1.</span>    xhr.<span class="hljs-property">onreadystatechange</span>=<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)  { 
+    <span class="hljs-number">2.</span>    <span class="hljs-keyword">if</span> (xhr.<span class="hljs-property">readyState</span>==<span class="hljs-number">4</span> &amp;&amp;xhr.<span class="hljs-property">status</span>==<span class="hljs-number">200</span>)  { 
+    <span class="hljs-number">3.</span>         <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;myDiv&quot;</span>).<span class="hljs-property">innerHTML</span>=xhr.<span class="hljs-property">res</span> ponseText;  
+    <span class="hljs-number">4.</span>      }
+    <span class="hljs-number">5.</span>    }  
+</code></pre>
+<p><strong>readyState:</strong></p>
+<p>0-（未初始化）还没有调用send()方法</p>
+<p>1-（载入）已调用send()方法，正在发送请求</p>
+<p>2-（载入完成）send()方法执行完成，已经接收到全部响应内容</p>
+<p>3-（交互）正在解析响应内容</p>
+<p>4-（完成）响应内容解析完成，可以在客户端调用了</p>
+<p><strong>status:</strong></p>
+<table>
+<thead>
+<tr>
+<th>---</th>
+<th>类别</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1xx</td>
+<td>informational</td>
+<td>接收的请求正在处理</td>
+</tr>
+<tr>
+<td>2xx</td>
+<td>Success (成功状态码)</td>
+<td>请求正常处理完毕</td>
+</tr>
+<tr>
+<td>3xx</td>
+<td>Redirection (重定向状态码)</td>
+<td>请求正常处理完毕</td>
+</tr>
+<tr>
+<td>4xx</td>
+<td>Client Error (客户端错误状态码)</td>
+<td>请求正常处理完毕</td>
+</tr>
+<tr>
+<td>5xx</td>
+<td>Server Error (服务器错误状态码)</td>
+<td>请求正常处理完毕</td>
+</tr>
+</tbody>
+</table>
+<h3 id="get和post请求数据区别"><strong>③GET和POST请求数据区别</strong></h3>
+<p>请求数据时的区别，详情见下面两张图：</p>
+<p><img src="https://gitee.com/krislin_zhao/IMGcloud/raw/master/img/20200605115628.png" alt=""></p>
+<p><img src="https://gitee.com/krislin_zhao/IMGcloud/raw/master/img/20200521134958.png" alt=""></p>
+<p>总而言之：</p>
+<ul>
+<li>GET请求的差数直接拼接在url上面</li>
+<li>POST请求的参数就不是放在url了，而是放在send里面，即请求体四、结束语</li>
+</ul>
+
+        
+        
+    </body>
+    </html>
