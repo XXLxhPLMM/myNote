@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>1&period; &#x4ec0;&#x4e48;&#x662f;&#x52a8;&#x6001;sql&#xff1f;</title>
+        <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+/* From extension ms-toolsai.jupyter */
+/* These classnames are inherited from bootstrap, but are present in most notebook renderers */
+
+.alert {
+    width: auto;
+    padding: 1em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+.alert > *:last-child {
+    margin-bottom: 0;
+}
+#preview > .alert:last-child {
+    /* Prevent this being set to zero by the default notebook stylesheet */
+    padding-bottom: 1em;
+}
+
+.alert-success {
+    /* Note there is no suitable color available, so we just copy "info" */
+    background-color: var(--theme-info-background);
+    color: var(--theme-info-foreground);
+}
+.alert-info {
+    background-color: var(--theme-info-background);
+    color: var(--theme-info-foreground);
+}
+.alert-warning {
+    background-color: var(--theme-warning-background);
+    color: var(--theme-warning-foreground);
+}
+.alert-danger {
+    background-color: var(--theme-error-background);
+    color: var(--theme-error-foreground);
+}
+
+</style>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+        
+    </head>
+    <body class="vscode-body vscode-light">
+        <h1 id="1-什么是动态sql">1. 什么是动态sql？</h1>
+<p>mybatis核心:对sql语句进行灵活操作，通过表达式进行判断，对sql进行灵活拼接、组装。</p>
+<h1 id="2-if判断">2. if判断</h1>
+<h2 id="21-usermapperxml">2.1 UserMapper.xml</h2>
+<pre><code class="language-xml"><span class="hljs-comment">&lt;!--用户综合查询--&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;findUserList&quot;</span> <span class="hljs-attr">parameterType</span>=<span class="hljs-string">&quot;cn.edu.wtu.po.UserQueryVo&quot;</span> <span class="hljs-attr">resultType</span>=<span class="hljs-string">&quot;cn.edu.wtu.po.UserCustom&quot;</span>&gt;</span>
+        select * from user
+        <span class="hljs-tag">&lt;<span class="hljs-name">where</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">if</span> <span class="hljs-attr">test</span>=<span class="hljs-string">&quot;userCustom!=null&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">if</span> <span class="hljs-attr">test</span>=<span class="hljs-string">&quot;userCustom.sex!=null and userCustom.sex!=&#x27;&#x27;&quot;</span>&gt;</span>
+                and user.sex = #{userCustom.sex}
+            <span class="hljs-tag">&lt;/<span class="hljs-name">if</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">if</span> <span class="hljs-attr">test</span>=<span class="hljs-string">&quot;userCustom.username!=null and userCustom.username!=&#x27;&#x27;&quot;</span>&gt;</span>
+                and user.username LIKE &#x27;%${userCustom.username}%&#x27;
+            <span class="hljs-tag">&lt;/<span class="hljs-name">if</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">if</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">where</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span>
+    <span class="hljs-comment">&lt;!--用户综合查询总数--&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;findUserCount&quot;</span> <span class="hljs-attr">parameterType</span>=<span class="hljs-string">&quot;cn.edu.wtu.po.UserQueryVo&quot;</span> <span class="hljs-attr">resultType</span>=<span class="hljs-string">&quot;java.lang.Integer&quot;</span>&gt;</span>
+                SELECT count(*) FROM user
+                <span class="hljs-tag">&lt;<span class="hljs-name">where</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">if</span> <span class="hljs-attr">test</span>=<span class="hljs-string">&quot;userCustom!=null&quot;</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">if</span> <span class="hljs-attr">test</span>=<span class="hljs-string">&quot;userCustom.sex!=null and userCustom.sex!=&#x27;&#x27;&quot;</span>&gt;</span>
+                            and user.sex = #{userCustom.sex}
+                        <span class="hljs-tag">&lt;/<span class="hljs-name">if</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">if</span> <span class="hljs-attr">test</span>=<span class="hljs-string">&quot;userCustom.username!=null and userCustom.username!=&#x27;&#x27;&quot;</span>&gt;</span>
+                            and user.username LIKE &#x27;%${userCustom.username}%&#x27;
+                        <span class="hljs-tag">&lt;/<span class="hljs-name">if</span>&gt;</span>
+                    <span class="hljs-tag">&lt;/<span class="hljs-name">if</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-name">where</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span>
+</code></pre>
+<h2 id="22-测试结果">2.2 测试结果</h2>
+<h3 id="1注释掉testfinduserlist方法中的usercustomsetusername张三">1.注释掉<code>testFindUserList()</code>方法中的<code>userCustom.setUsername(&quot;张三&quot;);</code></h3>
+<p>UserMapperTest.java</p>
+<pre><code class="language-java"><span class="hljs-comment">//由于这里使用动态sql，如果不设置某个值，条件不会拼接在sql中</span>
+userCustom.setSex(<span class="hljs-string">&quot;1&quot;</span>);
+<span class="hljs-comment">// userCustom.setUsername(&quot;晓明&quot;);</span>
+userQueryVo.setUserCustom(userCustom);
+</code></pre>
+<p>输出</p>
+<pre><code>DEBUG [main] - Created connection 1293618474.
+DEBUG [main] - Setting autocommit to false on JDBC Connection [com.mysql.jdbc.JDBC4Connection@4d1b0d2a]
+DEBUG [main] - ==&gt;  Preparing: select * from user WHERE user.sex = ? 
+DEBUG [main] - ==&gt; Parameters: 1(String)
+DEBUG [main] - &lt;==      Total: 9
+[id:10
+username:张三
+sex:1
+birthday:Wed Nov 06 00:00:00 CST 2019
+address:北京市, id:22
+username:张晓明
+sex:1
+birthday:Tue Nov 26 00:00:00 CST 2019
+address:天津, id:24
+username:陈晓明
+sex:1
+birthday:Tue Apr 04 00:00:00 CST 2017
+address:重庆, id:26
+username:小明
+sex:1
+birthday:Tue Jul 24 00:00:00 CST 2018
+address:武汉, id:28
+username:李梅梅
+sex:1
+birthday:Wed Jul 26 00:00:00 CST 2000
+address:西安, id:32
+username:江江
+sex:1
+birthday:Wed Jul 05 00:00:00 CST 2017
+address:宁夏, id:33
+username:红红
+sex:1
+birthday:Tue Jun 20 00:00:00 CST 2017
+address:广州, id:34
+username:木木
+sex:1
+birthday:Tue Apr 26 00:00:00 CST 2016
+address:河北, id:37
+username:陈晓明
+sex:1
+birthday:Wed Nov 27 00:00:00 CST 2019
+address:null]
+</code></pre>
+<p>可以看到sql语句为<code>reparing: SELECT * FROM user WHERE user.sex=? </code>，没有username的部分</p>
+<h3 id="2userqueryvo设为null则usercustom为null">2.<code>userQueryVo</code>设为null,则<code>userCustom</code>为null</h3>
+<pre><code class="language-java"><span class="hljs-comment">//List&lt;UserCustom&gt; list = userMapper.findUserList(userQueryVo);</span>
+List&lt;UserCustom&gt; list = userMapper.findUserList(<span class="hljs-literal">null</span>);
+</code></pre>
+<p>输出</p>
+<pre><code>DEBUG [main] - Created connection 1859039536.
+DEBUG [main] - Setting autocommit to false on JDBC Connection [com.mysql.jdbc.JDBC4Connection@6eceb130]
+DEBUG [main] - ==&gt;  Preparing: select * from user 
+DEBUG [main] - ==&gt; Parameters: 
+DEBUG [main] - &lt;==      Total: 15
+[id:1
+username:王五
+sex:2
+birthday:Tue Nov 05 00:00:00 CST 2019
+address:null, id:10
+username:张三
+sex:1
+birthday:Wed Nov 06 00:00:00 CST 2019
+address:北京市, id:22
+username:张晓明
+sex:1
+birthday:Tue Nov 26 00:00:00 CST 2019
+address:天津, id:24
+username:陈晓明
+sex:1
+birthday:Tue Apr 04 00:00:00 CST 2017
+address:重庆, id:26
+username:小明
+sex:1
+birthday:Tue Jul 24 00:00:00 CST 2018
+address:武汉, id:27
+username:宋江涛new2
+sex:男
+birthday:Sun Nov 03 00:00:00 CST 2019
+address:山西太原new, id:28
+username:李梅梅
+sex:1
+birthday:Wed Jul 26 00:00:00 CST 2000
+address:西安, id:29
+username:丽丽
+sex:2
+birthday:Tue Oct 29 00:00:00 CST 2019
+address:新疆, id:31
+username:涵涵
+sex:2
+birthday:Tue Jun 12 00:00:00 CST 2018
+address:西藏, id:32
+username:江江
+sex:1
+birthday:Wed Jul 05 00:00:00 CST 2017
+address:宁夏, id:33
+username:红红
+sex:1
+birthday:Tue Jun 20 00:00:00 CST 2017
+address:广州, id:34
+username:木木
+sex:1
+birthday:Tue Apr 26 00:00:00 CST 2016
+address:河北, id:35
+username:宋江涛
+sex:男
+birthday:Sun Nov 03 00:00:00 CST 2019
+address:山西, id:36
+username:张宇
+sex:2
+birthday:Sun Nov 03 00:00:00 CST 2019
+address:襄阳, id:37
+username:陈晓明
+sex:1
+birthday:Wed Nov 27 00:00:00 CST 2019
+address:null]
+</code></pre>
+<p>可以看到sql语句变为了<code>SELECT * FROM user</code></p>
+<h1 id="3-sql片段重点">3. sql片段(重点)</h1>
+<p>将上边实现的动态sql判断代码块抽取出来，组成一个sql片段。其它的statement中就可以引用sql片段。</p>
+<h2 id="31-定义sql片段">3.1 定义sql片段</h2>
+<pre><code class="language-xml"><span class="hljs-comment">&lt;!-- 定义sql片段
+id：sql片段的唯 一标识
+
+经验：是基于单表来定义sql片段，这样话这个sql片段可重用性才高
+在sql片段中不要包括 where
+ --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">sql</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;query_user_where&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">if</span> <span class="hljs-attr">test</span>=<span class="hljs-string">&quot;userCustom!=null&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">if</span> <span class="hljs-attr">test</span>=<span class="hljs-string">&quot;userCustom.sex!=null and userCustom.sex!=&#x27;&#x27;&quot;</span>&gt;</span>
+            AND user.sex = #{userCustom.sex}
+        <span class="hljs-tag">&lt;/<span class="hljs-name">if</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">if</span> <span class="hljs-attr">test</span>=<span class="hljs-string">&quot;userCustom.username!=null and userCustom.username!=&#x27;&#x27;&quot;</span>&gt;</span>
+            AND user.username LIKE &#x27;%${userCustom.username}%&#x27;
+        <span class="hljs-tag">&lt;/<span class="hljs-name">if</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">if</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">sql</span>&gt;</span>
+</code></pre>
+<h2 id="32-引用sql片段">3.2 引用sql片段</h2>
+<pre><code class="language-xml"><span class="hljs-comment">&lt;!-- 用户信息综合查询
+    #{userCustom.sex}:取出pojo包装对象中性别值
+    ${userCustom.username}：取出pojo包装对象中用户名称
+ --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;findUserList&quot;</span> <span class="hljs-attr">parameterType</span>=<span class="hljs-string">&quot;com.iot.mybatis.po.UserQueryVo&quot;</span>
+        <span class="hljs-attr">resultType</span>=<span class="hljs-string">&quot;com.iot.mybatis.po.UserCustom&quot;</span>&gt;</span>
+    SELECT * FROM user
+    <span class="hljs-comment">&lt;!--  where 可以自动去掉条件中的第一个and --&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">where</span>&gt;</span>
+        <span class="hljs-comment">&lt;!-- 引用sql片段 的id，如果refid指定的id不在本mapper文件中，需要前边加namespace --&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">include</span> <span class="hljs-attr">refid</span>=<span class="hljs-string">&quot;query_user_where&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">include</span>&gt;</span>
+        <span class="hljs-comment">&lt;!-- 在这里还可以引用其它的sql片段  --&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">where</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span>
+</code></pre>
+<h1 id="4-foreach标签">4. foreach标签</h1>
+<p>向sql传递数组或List，mybatis使用foreach解析</p>
+<p>在用户查询列表和查询总数的statement中增加多个id输入查询。两种方法，sql语句如下：</p>
+<ul>
+<li><code>SELECT * FROM USER WHERE id=1 OR id=10 OR id=16</code></li>
+<li><code>SELECT * FROM USER WHERE id IN(1,10,16)</code></li>
+</ul>
+<p>一个使用OR,一个使用IN</p>
+<h2 id="41-在输入参数类型中添加listinteger-ids传入多个id">4.1 在输入参数类型中添加<code>List&lt;Integer&gt; ids</code>传入多个id</h2>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">UserQueryVo</span> {
+
+    <span class="hljs-comment">//传入多个id</span>
+   <span class="hljs-keyword">private</span> List&lt;Integer&gt; ids;
+
+    <span class="hljs-keyword">public</span> List&lt;Integer&gt; <span class="hljs-title function_">getIds</span><span class="hljs-params">()</span> {
+        <span class="hljs-keyword">return</span> ids;
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setIds</span><span class="hljs-params">(List&lt;Integer&gt; ids)</span> {
+        <span class="hljs-built_in">this</span>.ids = ids;
+    }
+}
+</code></pre>
+<h2 id="42-修改mapperxml">4.2 修改mapper.xml</h2>
+<pre><code class="language-xml"> select * from user
+ <span class="hljs-tag">&lt;<span class="hljs-name">where</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">if</span> <span class="hljs-attr">test</span>=<span class="hljs-string">&quot;ids!=null&quot;</span>&gt;</span>
+        <span class="hljs-comment">&lt;!-- 使用 foreach遍历传入ids
+        collection：指定输入 对象中集合属性
+        item：每个遍历生成对象中
+        open：开始遍历时拼接的串
+        close：结束遍历时拼接的串
+        separator：遍历的两个对象中需要拼接的串
+        --&gt;</span>
+        <span class="hljs-comment">&lt;!-- 使用实现下边的sql拼接：
+        AND (id=1 OR id=10 OR id=16)
+        --&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">foreach</span> <span class="hljs-attr">collection</span>=<span class="hljs-string">&quot;ids&quot;</span> <span class="hljs-attr">item</span>=<span class="hljs-string">&quot;user_id&quot;</span> <span class="hljs-attr">open</span>=<span class="hljs-string">&quot;AND (&quot;</span> <span class="hljs-attr">close</span>=<span class="hljs-string">&quot;)&quot;</span> <span class="hljs-attr">separator</span>=<span class="hljs-string">&quot;or&quot;</span>&gt;</span>
+            <span class="hljs-comment">&lt;!-- 每个遍历需要拼接的串 --&gt;</span>
+            id=#{user_id}
+        <span class="hljs-tag">&lt;/<span class="hljs-name">foreach</span>&gt;</span>
+        
+        <span class="hljs-comment">&lt;!-- 实现  “ and id IN(1,10,16)”拼接 --&gt;</span>
+        <span class="hljs-comment">&lt;!-- &lt;foreach collection=&quot;ids&quot; item=&quot;user_id&quot; open=&quot;and id IN(&quot; close=&quot;)&quot; separator=&quot;,&quot;&gt;
+            每个遍历需要拼接的串
+            #{user_id}
+        &lt;/foreach&gt; --&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">if</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">where</span>&gt;</span>
+</code></pre>
+<h2 id="43-测试代码">4.3 测试代码</h2>
+<p>在<code>testFindUserList</code>中加入</p>
+<pre><code class="language-java"><span class="hljs-comment">//传入多个id</span>
+List&lt;Integer&gt; ids = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;Integer&gt;();
+ids.add(<span class="hljs-number">1</span>);
+ids.add(<span class="hljs-number">10</span>);
+ids.add(<span class="hljs-number">16</span>);
+<span class="hljs-comment">//将ids通过userQueryVo传入statement中</span>
+userQueryVo.setIds(ids);
+</code></pre>
+
+        <script async src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+        
+    </body>
+    </html>

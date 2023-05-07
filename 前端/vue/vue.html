@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>&ast;&ast;vue&ast;&ast;</title>
+        <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+/* From extension ms-toolsai.jupyter */
+/* These classnames are inherited from bootstrap, but are present in most notebook renderers */
+
+.alert {
+    width: auto;
+    padding: 1em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+.alert > *:last-child {
+    margin-bottom: 0;
+}
+#preview > .alert:last-child {
+    /* Prevent this being set to zero by the default notebook stylesheet */
+    padding-bottom: 1em;
+}
+
+.alert-success {
+    /* Note there is no suitable color available, so we just copy "info" */
+    background-color: var(--theme-info-background);
+    color: var(--theme-info-foreground);
+}
+.alert-info {
+    background-color: var(--theme-info-background);
+    color: var(--theme-info-foreground);
+}
+.alert-warning {
+    background-color: var(--theme-warning-background);
+    color: var(--theme-warning-foreground);
+}
+.alert-danger {
+    background-color: var(--theme-error-background);
+    color: var(--theme-error-foreground);
+}
+
+</style>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+        
+    </head>
+    <body class="vscode-body vscode-light">
+        <ul>
+<li><a href="#vue"><strong>vue</strong></a>
+<ul>
+<li><a href="#%E5%9F%BA%E6%9C%AC"><strong>基本</strong></a>
+<ul>
+<li><a href="#data-%E6%95%B0%E6%8D%AE"><em>data 数据</em></a></li>
+<li><a href="#vueset%E5%87%BD%E6%95%B0"><code>vue.set()</code>函数</a></li>
+<li><a href="#vuedelete%E5%87%BD%E6%95%B0"><code>vue.delete()</code>函数</a></li>
+<li><a href="#computed%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7"><em>computed计算属性</em></a></li>
+<li><a href="#watch%E7%9B%91%E5%90%AC"><em>watch监听</em></a></li>
+</ul>
+</li>
+<li><a href="#%E6%8C%87%E4%BB%A4"><strong>指令</strong></a>
+<ul>
+<li><a href="#v-pre"><code>v-pre</code></a></li>
+</ul>
+</li>
+<li><a href="#%E4%BA%8B%E4%BB%B6"><strong>事件</strong></a>
+<ul>
+<li><a href="#%E5%85%A8%E5%B1%80%E4%BA%8B%E4%BB%B6%E6%80%BB%E7%BA%BF">全局事件总线</a></li>
+</ul>
+</li>
+<li><a href="#%E6%8F%92%E4%BB%B6"><strong>插件</strong></a></li>
+<li><a href="#%E5%8A%A8%E7%94%BB"><strong>动画</strong></a>
+<ul>
+<li><a href="#vue%E6%8E%A7%E5%88%B6"><em>vue控制</em></a></li>
+<li><a href="#%E9%9B%86%E6%88%90%E7%AC%AC%E4%B8%89%E6%96%B9"><em>集成第三方</em></a></li>
+</ul>
+</li>
+<li><a href="#%E7%BB%84%E4%BB%B6"><strong>组件</strong></a></li>
+<li><a href="#%E5%8A%A8%E6%80%81%E7%BB%84%E4%BB%B6-iscomponent"><strong>动态组件 isComponent</strong></a></li>
+<li><a href="#%E6%B7%B7%E5%85%A5-mixin">混入 mixin</a></li>
+<li><a href="#%E6%8F%92%E6%A7%BD"><strong>插槽</strong></a>
+<ul>
+<li><a href="#%E9%BB%98%E8%AE%A4%E6%8F%92%E6%A7%BD"><em>默认插槽</em></a></li>
+<li><a href="#%E5%85%B7%E5%90%8D%E6%8F%92%E6%A7%BD"><em>具名插槽</em></a></li>
+</ul>
+</li>
+<li><a href="#%E8%B7%AF%E7%94%B1"><strong>路由</strong></a>
+<ul>
+<li><a href="#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><em>基本使用</em></a>
+<ul>
+<li><a href="#%E9%85%8D%E7%BD%AE">配置</a></li>
+<li><a href="#router-view"><code>router-view</code></a></li>
+<li><a href="#router-link"><code>router-link</code></a></li>
+</ul>
+</li>
+<li><a href="#%E5%91%BD%E5%90%8D%E8%B7%AF%E7%94%B1"><em>命名路由</em></a></li>
+<li><a href="#%E8%B7%AF%E7%94%B1%E4%BC%A0%E5%8F%82"><em>路由传参</em></a>
+<ul>
+<li><a href="#query%E5%8F%82%E6%95%B0"><code>query</code>参数</a></li>
+<li><a href="#params%E5%8F%82%E6%95%B0"><code>params</code>参数</a></li>
+</ul>
+</li>
+<li><a href="#replace"><code>replace</code></a></li>
+<li><a href="#%E7%BC%96%E7%A8%8B%E5%BC%8F%E8%B7%AF%E7%94%B1%E5%AF%BC%E8%88%AA"><em>编程式路由导航</em></a>
+<ul>
+<li><a href="#push"><code>push</code></a></li>
+<li><a href="#replace-1"><code>replace</code></a></li>
+<li><a href="#back"><code>back</code></a></li>
+<li><a href="#forward"><code>forward</code></a></li>
+<li><a href="#go"><code>go</code></a></li>
+</ul>
+</li>
+<li><a href="#%E8%B7%AF%E7%94%B1%E7%BB%84%E4%BB%B6%E7%BC%93%E5%AD%98"><em>路由组件缓存</em></a></li>
+<li><a href="#%E8%B7%AF%E7%94%B1%E5%AE%88%E5%8D%AB"><em>路由守卫</em></a>
+<ul>
+<li><a href="#%E5%89%8D%E7%BD%AE%E8%B7%AF%E7%94%B1%E5%AE%88%E5%8D%AB">前置路由守卫</a></li>
+<li><a href="#%E5%90%8E%E7%BD%AE%E8%B7%AF%E7%94%B1%E5%AE%88%E5%8D%AB">后置路由守卫</a></li>
+<li><a href="#%E7%BB%84%E4%BB%B6%E5%86%85%E8%B7%AF%E7%94%B1%E5%AE%88%E5%8D%AB">组件内路由守卫</a></li>
+</ul>
+</li>
+<li><a href="#%E8%B7%AF%E7%94%B1%E6%A8%A1%E5%BC%8F%E5%88%87%E6%8D%A2">路由模式切换</a></li>
+</ul>
+</li>
+<li><a href="#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><strong>生命周期</strong></a>
+<ul>
+<li><a href="#nexttick"><code>$nextTick</code></a></li>
+<li><a href="#%E8%B7%AF%E7%94%B1%E7%BB%84%E4%BB%B6%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F">路由组件生命周期</a>
+<ul>
+<li><a href="#activated-%E6%BF%80%E6%B4%BB"><code>activated</code> 激活</a></li>
+<li><a href="#deactivated-%E5%A4%B1%E6%B4%BB"><code>deactivated</code> 失活</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E4%BD%BF%E7%94%A8less">使用Less</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="vue"><strong>vue</strong></h1>
+<h2 id="基本"><strong>基本</strong></h2>
+<h3 id="data-数据"><em>data 数据</em></h3>
+<h3 id="vueset函数"><code>vue.set()</code>函数</h3>
+<blockquote>
+<p>vue.set(对象名,属性名,属性值)解决添加属性 页面不更新的问题  除此之外还有 this.$set()</p>
+</blockquote>
+<h3 id="vuedelete函数"><code>vue.delete()</code>函数</h3>
+<blockquote>
+<p>vue.delete(对象名,属性名) 解决删除属性不更新的问题</p>
+</blockquote>
+<h3 id="computed计算属性"><em>computed计算属性</em></h3>
+<pre><code class="language-js"><span class="hljs-comment">//在与 data() 同级出添加</span>
+ <span class="hljs-attr">computed</span>: {
+    <span class="hljs-comment">// 计算属性的 名字</span>
+    num () {
+      <span class="hljs-comment">// `this` 指向 vm 实例</span>
+      <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">xxx</span>
+    },
+    <span class="hljs-attr">num</span>:{
+      <span class="hljs-title function_">get</span>(<span class="hljs-params"></span>){},
+      <span class="hljs-title function_">set</span>(<span class="hljs-params">val</span>){
+      }
+    }
+</code></pre>
+<h3 id="watch监听"><em>watch监听</em></h3>
+<pre><code class="language-js">watch : {
+    <span class="hljs-title function_">watchData</span>(<span class="hljs-params">newValue, oldValue</span>) {
+      <span class="hljs-comment">//行为</span>
+    },
+    watchData : {
+      <span class="hljs-attr">immediate</span>:<span class="hljs-literal">true</span>,
+      keep : <span class="hljs-literal">true</span>,
+      <span class="hljs-title function_">handler</span>(<span class="hljs-params">newValue, oldValue</span>){
+        <span class="hljs-comment">//行为</span>
+      }
+    }
+  }
+</code></pre>
+<h2 id="指令"><strong>指令</strong></h2>
+<h3 id="v-pre"><code>v-pre</code></h3>
+<blockquote>
+<p>加上这个指令的 元素可以跳过vue 的编译 原来是什么样子 呈现到 页面上就是什么样子</p>
+</blockquote>
+<h2 id="事件"><strong>事件</strong></h2>
+<h3 id="全局事件总线">全局事件总线</h3>
+<p>安装全局事件总线</p>
+<pre><code class="language-js"><span class="hljs-comment">/* main.js 中使用beforeCreate */</span>
+<span class="hljs-title function_">beforeCreate</span>(<span class="hljs-params"></span>){
+    <span class="hljs-comment">/* 安装全局时间事件总线 */</span>
+    <span class="hljs-title class_">Vue</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">$bus</span>=<span class="hljs-variable language_">this</span>
+  },
+</code></pre>
+<h2 id="插件"><strong>插件</strong></h2>
+<h2 id="动画"><strong>动画</strong></h2>
+<h3 id="vue控制"><em>vue控制</em></h3>
+<h3 id="集成第三方"><em>集成第三方</em></h3>
+<h2 id="组件"><strong>组件</strong></h2>
+<h2 id="动态组件-iscomponent"><strong>动态组件 isComponent</strong></h2>
+<h2 id="混入-mixin">混入 mixin</h2>
+<h2 id="插槽"><strong>插槽</strong></h2>
+<h3 id="默认插槽"><em>默认插槽</em></h3>
+<h3 id="具名插槽"><em>具名插槽</em></h3>
+<h2 id="路由"><strong>路由</strong></h2>
+<h3 id="基本使用"><em>基本使用</em></h3>
+<h4 id="配置">配置</h4>
+<p>在src目录下创建router/index.js</p>
+<pre><code class="language-js"><span class="hljs-keyword">import</span> <span class="hljs-title class_">Vue</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;vue&quot;</span>;
+<span class="hljs-keyword">import</span> <span class="hljs-title class_">VueRouter</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;vue-router&quot;</span>;
+<span class="hljs-title class_">Vue</span>.<span class="hljs-title function_">use</span>(<span class="hljs-title class_">VueRouter</span>);
+
+<span class="hljs-keyword">const</span> routes = [
+  {
+    <span class="hljs-attr">path</span>: <span class="hljs-string">&quot;/&quot;</span>,<span class="hljs-comment">//路径</span>
+    <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;index&quot;</span>,<span class="hljs-comment">//命名路由</span>
+    <span class="hljs-attr">redirect</span>: <span class="hljs-string">&quot;/index&quot;</span><span class="hljs-comment">//重定向</span>
+  },
+  {
+    <span class="hljs-attr">path</span>: <span class="hljs-string">&quot;/index&quot;</span>,
+    <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;Index&quot;</span>,
+    <span class="hljs-attr">component</span>: <span class="hljs-title class_">Index</span>,<span class="hljs-comment">//路由组件</span>
+    <span class="hljs-attr">mate</span>:{<span class="hljs-attr">isAuth</span>:<span class="hljs-literal">true</span>},<span class="hljs-comment">// 存放一些数据</span>
+    <span class="hljs-attr">children</span>: [<span class="hljs-comment">//子路由</span>
+        {
+            <span class="hljs-attr">path</span>:<span class="hljs-string">&#x27;pay&#x27;</span><span class="hljs-comment">//子路由的path路径前面不用加/</span>
+        }
+    ]
+  },
+  {
+    <span class="hljs-attr">path</span>: <span class="hljs-string">&quot;/me&quot;</span>,
+    <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;Me&quot;</span>,
+    <span class="hljs-comment">// route level code-splitting</span>
+    <span class="hljs-comment">// this generates a separate chunk (about.[hash].js) for this route</span>
+    <span class="hljs-comment">// which is lazy-loaded when the route is visited. 懒加载</span>
+    <span class="hljs-attr">component</span>: <span class="hljs-function">() =&gt;</span>
+      <span class="hljs-title function_">import</span>(<span class="hljs-comment">/* webpackChunkName: &quot;about&quot; */</span> <span class="hljs-string">&quot;../views/Me.vue&quot;</span>),
+  },
+];
+
+<span class="hljs-keyword">const</span> router = <span class="hljs-keyword">new</span> <span class="hljs-title class_">VueRouter</span>({
+  routes,
+});
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> router;
+</code></pre>
+<h4 id="router-view"><code>router-view</code></h4>
+<blockquote>
+<p>标签<code>&lt;router-view/&gt;</code>用于显示路由组件</p>
+</blockquote>
+<h4 id="router-link"><code>router-link</code></h4>
+<blockquote>
+<p><code>&lt;router-link&gt;&lt;/router-link&gt;</code> 用于路由导航</p>
+</blockquote>
+<p>标签属性 to 用法</p>
+<pre><code class="language-html"><span class="hljs-comment">&lt;!-- 用法一 --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">router-link</span> <span class="hljs-attr">to</span>=<span class="hljs-string">&quot;路由器配置中的path多级路由要求写完整&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">router-link</span>&gt;</span>
+<span class="hljs-comment">&lt;!-- 用法二 --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">router-link</span> <span class="hljs-attr">:to</span>=<span class="hljs-string">&quot;{ path : &#x27;&#x27; }&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">router-link</span>&gt;</span>
+</code></pre>
+<h3 id="命名路由"><em>命名路由</em></h3>
+<blockquote>
+<p>有些时候path 可能太长 可以通过命名路由来缩短代码 简化路由的跳转</p>
+</blockquote>
+<p>配置</p>
+<pre><code class="language-js"><span class="hljs-comment">//在路由器 配置中</span>
+    {
+        <span class="hljs-attr">path</span>:<span class="hljs-string">&#x27;/index&#x27;</span>,
+        <span class="hljs-attr">name</span>:<span class="hljs-string">&#x27;index&#x27;</span>
+        <span class="hljs-attr">children</span>:[
+            {
+                <span class="hljs-attr">path</span>: <span class="hljs-string">&#x27;pay&#x27;</span>
+                <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;pay&#x27;</span>
+            }
+        ]
+    }
+</code></pre>
+<p>使用</p>
+<pre><code class="language-html">
+    //传参的时候 吧path 替换为 name
+    <span class="hljs-tag">&lt;<span class="hljs-name">router-link</span> <span class="hljs-attr">:to</span>=<span class="hljs-string">&quot;{name : &#x27;路由名称&#x27;}&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">router-link</span>&gt;</span>
+    
+</code></pre>
+<h3 id="路由传参"><em>路由传参</em></h3>
+<h4 id="query参数"><code>query</code>参数</h4>
+<p>传参数</p>
+<blockquote>
+<p>直接在to 中路径后面加上<code>?参数名=参数值&amp;参数名=参数值</code></p>
+</blockquote>
+<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">router-link</span> <span class="hljs-attr">to</span>=<span class="hljs-string">&quot;/路径?参数名=参数值&amp;参数名=参数值&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">router-link</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">router-link</span> <span class="hljs-attr">:to</span>=<span class="hljs-string">&quot;`/路径?参数名=${参数值}&amp;参数名=${参数值}`&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">router-link</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">router-link</span> <span class="hljs-attr">:to</span>=<span class="hljs-string">&quot;{
+    path:&#x27;路径&#x27;,
+    query: {
+        参数名:参数值,
+        参数名:参数值
+    }
+}&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">router-link</span>&gt;</span>
+</code></pre>
+<p>接收参数</p>
+<pre><code class="language-html">{{$route.query.参数名}}
+</code></pre>
+<h4 id="params参数"><code>params</code>参数</h4>
+<p>传参</p>
+<p><strong><code>注意：</code> params参数必须 使用 name作为配置项</strong></p>
+<pre><code class="language-js">{
+    <span class="hljs-attr">name</span>:<span class="hljs-string">&#x27;index&#x27;</span>,
+    <span class="hljs-attr">params</span>:{
+        参数名:参数值,
+        参数名:参数值
+    }
+}
+</code></pre>
+<p>接收参数</p>
+<pre><code class="language-html">{{$route.params.参数名}}
+</code></pre>
+<h3 id="replace"><code>replace</code></h3>
+<blockquote>
+<p>在<code>&lt;router-link replace&gt;</code> 加上这个属性 路由每次跳转的时候会覆盖当前路由 不会存在历史记录</p>
+</blockquote>
+<h3 id="编程式路由导航"><em>编程式路由导航</em></h3>
+<blockquote>
+<p>用于解决 不需要用户点击的路由跳转</p>
+</blockquote>
+<h4 id="push"><code>push</code></h4>
+<blockquote>
+<p>每操作一次就会留下一个 历史记录</p>
+</blockquote>
+<pre><code class="language-js"><span class="hljs-variable language_">this</span>.<span class="hljs-property">$router</span>.<span class="hljs-title function_">push</span>({
+    {
+    <span class="hljs-attr">name</span>:<span class="hljs-string">&#x27;index&#x27;</span>,
+    <span class="hljs-attr">params</span>:{
+        参数名:参数值,
+        参数名:参数值
+    }
+}
+})
+<span class="hljs-variable language_">this</span>.<span class="hljs-property">$router</span>.<span class="hljs-title function_">push</span>({
+    {
+    <span class="hljs-attr">path</span>:<span class="hljs-string">&#x27;index&#x27;</span>,
+    <span class="hljs-attr">query</span>:{
+        参数名:参数值,
+        参数名:参数值
+    }
+}
+})
+</code></pre>
+<h4 id="replace"><code>replace</code></h4>
+<blockquote>
+<p>每次操作只会覆盖上一个历史 只留下当前</p>
+</blockquote>
+<pre><code class="language-js"><span class="hljs-variable language_">this</span>.<span class="hljs-property">$router</span>.<span class="hljs-title function_">replace</span>({
+    {
+    <span class="hljs-attr">name</span>:<span class="hljs-string">&#x27;index&#x27;</span>,
+    <span class="hljs-attr">params</span>:{
+        参数名:参数值,
+        参数名:参数值
+    }
+}
+})
+<span class="hljs-variable language_">this</span>.<span class="hljs-property">$router</span>.<span class="hljs-title function_">replace</span>({
+    {
+    <span class="hljs-attr">path</span>:<span class="hljs-string">&#x27;index&#x27;</span>,
+    <span class="hljs-attr">query</span>:{
+        参数名:参数值,
+        参数名:参数值
+    }
+}
+})
+</code></pre>
+<h4 id="back"><code>back</code></h4>
+<blockquote>
+<p>回退</p>
+</blockquote>
+<pre><code class="language-js"><span class="hljs-variable language_">this</span>.<span class="hljs-property">$router</span>.<span class="hljs-title function_">back</span>()
+</code></pre>
+<h4 id="forward"><code>forward</code></h4>
+<blockquote>
+<p>前进</p>
+</blockquote>
+<pre><code class="language-js"><span class="hljs-variable language_">this</span>.<span class="hljs-property">$router</span>.<span class="hljs-title function_">forward</span>()
+</code></pre>
+<h4 id="go"><code>go</code></h4>
+<blockquote>
+<p>前进或者后退 取决于参数的值正负表示前进或后退 大小表示前进或后退多少</p>
+</blockquote>
+<pre><code class="language-js"><span class="hljs-variable language_">this</span>.<span class="hljs-property">$router</span>.<span class="hljs-title function_">go</span>(<span class="hljs-number">3</span>)<span class="hljs-comment">//前进3个</span>
+<span class="hljs-variable language_">this</span>.<span class="hljs-property">$router</span>.<span class="hljs-title function_">go</span>(-<span class="hljs-number">3</span>)<span class="hljs-comment">//后退3个</span>
+<span class="hljs-variable language_">this</span>.<span class="hljs-property">$router</span>.<span class="hljs-title function_">go</span>(<span class="hljs-number">1</span>)<span class="hljs-comment">//前进1个</span>
+</code></pre>
+<h3 id="路由组件缓存"><em>路由组件缓存</em></h3>
+<ol>
+<li>使用 <code>&lt;keep-alive&gt;&lt;/keep-alive&gt;</code>包裹<code>&lt;router-view&gt;&lt;/router-view&gt;</code></li>
+<li>在<code>keep-alive</code>标签上加上 <code>include</code>属性 决定缓存哪些组件，使用的是 <strong><code>组件名</code></strong> ，如果不加的话就缓存所有组件</li>
+</ol>
+<h3 id="路由守卫"><em>路由守卫</em></h3>
+<blockquote>
+<p>通过在 路由配置中设置的一系列回调函数</p>
+</blockquote>
+<h4 id="前置路由守卫">前置路由守卫</h4>
+<blockquote>
+<p>在每次路由切换之前调用</p>
+</blockquote>
+<ol>
+<li>全局前置路由守卫</li>
+</ol>
+<blockquote>
+<p>放到暴露前</p>
+</blockquote>
+<pre><code class="language-javascript">  router.<span class="hljs-title function_">baforeEach</span>(<span class="hljs-function">(<span class="hljs-params">to,<span class="hljs-keyword">from</span>,next</span>)=&gt;</span>{
+    <span class="hljs-comment">// to 去哪</span>
+    <span class="hljs-comment">// from 从哪来</span>
+    <span class="hljs-comment">// next 放行函数</span>
+    <span class="hljs-title function_">next</span>()
+  })
+</code></pre>
+<ol start="2">
+<li>独享路由守卫</li>
+</ol>
+<blockquote>
+<p>直接写到配置里 并且 独享路由守卫只有前置没有后置</p>
+</blockquote>
+<pre><code class="language-js">{
+  <span class="hljs-attr">path</span>:<span class="hljs-string">&#x27;/index&#x27;</span>,
+  <span class="hljs-attr">name</span>:<span class="hljs-string">&#x27;index&#x27;</span>,
+  <span class="hljs-attr">component</span>: <span class="hljs-title class_">Index</span>,
+  <span class="hljs-attr">children</span>:[],
+  <span class="hljs-attr">beforeEnter</span>: (<span class="hljs-function">(<span class="hljs-params">to,<span class="hljs-keyword">from</span>,next</span>)=&gt;</span>{
+    <span class="hljs-comment">// to 去哪</span>
+    <span class="hljs-comment">// from 从哪来</span>
+    <span class="hljs-comment">// next 放行函数</span>
+    <span class="hljs-title function_">next</span>()
+  })
+}
+</code></pre>
+<h4 id="后置路由守卫">后置路由守卫</h4>
+<blockquote>
+<p>在每次切换之后调用</p>
+</blockquote>
+<ol>
+<li>全局后置路由守卫</li>
+</ol>
+<pre><code class="language-javascript">  router.<span class="hljs-title function_">afterEach</span>(<span class="hljs-function">(<span class="hljs-params">to,<span class="hljs-keyword">from</span></span>)=&gt;</span>{
+    <span class="hljs-comment">// to 去哪</span>
+    <span class="hljs-comment">// from 从哪来</span>
+  })
+</code></pre>
+<h4 id="组件内路由守卫">组件内路由守卫</h4>
+<blockquote>
+<p>直接写到与组件生命周期同级的配置上类似于生命周期钩子</p>
+</blockquote>
+<ol>
+<li><code>beforeRouterEnter(to,from,next){}</code></li>
+<li><code>beforeRouterLeave(to,from,next){}</code></li>
+</ol>
+<h3 id="路由模式切换">路由模式切换</h3>
+<blockquote>
+<p>在路由配置中</p>
+</blockquote>
+<pre><code class="language-js">{
+  mode : <span class="hljs-string">&#x27;history&#x27;</span> <span class="hljs-comment">//或者 hash  一般情况 使用hash</span>
+}
+</code></pre>
+<h2 id="生命周期"><strong>生命周期</strong></h2>
+<h3 id="nexttick"><code>$nextTick</code></h3>
+<blockquote>
+<p>改变了页面数据 并且 vue把数据渲染到页面上了 之后执行的回调函数</p>
+</blockquote>
+<h3 id="路由组件生命周期">路由组件生命周期</h3>
+<p>当组件在 <code>keep-alive</code>中 被缓存的时候 的生命周期钩子</p>
+<h4 id="activated-激活"><code>activated</code> 激活</h4>
+<blockquote>
+<p>当组件展示出来的时候</p>
+</blockquote>
+<h4 id="deactivated-失活"><code>deactivated</code> 失活</h4>
+<blockquote>
+<p>当组件被隐藏的时候</p>
+</blockquote>
+<h2 id="使用less">使用Less</h2>
+<blockquote>
+<p>npm install -D less less-loader@7.3.0</p>
+</blockquote>
+
+        <script async src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+        
+    </body>
+    </html>

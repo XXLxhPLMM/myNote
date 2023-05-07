@@ -1,0 +1,85 @@
+# 使用控制台操作数据库
+
+## 1、服务连接
+
+> mysql -u root -p 
+>
+> 回车输入密码
+>
+> ---
+>
+> 连接远程主机的mysql
+> mysql -h xx.xx.xx.xx(远程主机的ip) -u root -p xxxxxx(密码）
+
+![image-20220427194352917](https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204271943960.png)
+
+## 2、数据库建立于删除
+
+​     select now(); 	    查看当前时间
+
+![](https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204271949038.png)
+
+​     show databases; 	查看数据库数量
+
+![image-20220427195006093](https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204271950122.png)
+
+​     create database database_name;    创建数据库
+
+![image-20220427195106768](https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204271951809.png)
+
+​     drop database databases_name;            删除数据库
+
+![image-20220427195143608](https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204271951641.png)
+
+​     use database_name;  		选择数据库-->(使用 show tables；可以查看改数据下的全部表)
+
+![image-20220427195224021](https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204271952063.png)
+
+## 3、数据库下的表创建
+
+> 在我们进行选择好数据库后，使用 show tables；可以查看全部的数据表。
+
+create table tab_test(v1 int(10),v2 varchar(50),...); 创建数据表
+
+![image-20220427200422555](https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204272004589.png)
+
+建好数据表后：进行查看表单中的字段：
+
+describe tal_test; 进行查看建的tal_test 数据表
+
+![image-20220427200647367](https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204272006402.png)
+
+进行删除数据表：
+
+drop table tal_test; 进行删除tal_test 表
+
+![image-20220427200812202](https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204272008231.png)
+
+> 我们需要进行添加数据和删除数据等操作，使用sql语句来进行操作。
+
+## 4、sql语句
+
+select   查询语句（查询全部）：
+
+![image-20220427201126671](https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204272011696.png)
+
+
+
+insert   添加数据：
+
+![image-20220427201318884](https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204272013917.png)
+
+update   进行修改：
+
+![image-20220427201527149](https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204272015177.png)
+
+> 修改  注意  若是带上后面的where条件，这样会把我们的数据表age 全部都改成7
+
+delete  进行删除：
+
+![image-20220427201657781](https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204272016808.png)
+
+> 删除  注意  需要带上条件，要不然可能我们的数据表可能会把全部的数据进行删除；
+
+> 上面只是一些简易的sql语句，需要学习更多，还是需要去查阅很多东西。
+

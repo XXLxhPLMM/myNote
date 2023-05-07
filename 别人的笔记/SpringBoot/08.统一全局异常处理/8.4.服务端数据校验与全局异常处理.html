@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>&#x4e00;&#x3001;&#x5f02;&#x5e38;&#x6821;&#x9a8c;&#x7684;&#x89c4;&#x8303;&#x53ca;&#x5e38;&#x7528;&#x6ce8;&#x89e3;</title>
+        <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+/* From extension ms-toolsai.jupyter */
+/* These classnames are inherited from bootstrap, but are present in most notebook renderers */
+
+.alert {
+    width: auto;
+    padding: 1em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+.alert > *:last-child {
+    margin-bottom: 0;
+}
+#preview > .alert:last-child {
+    /* Prevent this being set to zero by the default notebook stylesheet */
+    padding-bottom: 1em;
+}
+
+.alert-success {
+    /* Note there is no suitable color available, so we just copy "info" */
+    background-color: var(--theme-info-background);
+    color: var(--theme-info-foreground);
+}
+.alert-info {
+    background-color: var(--theme-info-background);
+    color: var(--theme-info-foreground);
+}
+.alert-warning {
+    background-color: var(--theme-warning-background);
+    color: var(--theme-warning-foreground);
+}
+.alert-danger {
+    background-color: var(--theme-error-background);
+    color: var(--theme-error-foreground);
+}
+
+</style>
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+        
+    </head>
+    <body class="vscode-body vscode-light">
+        <blockquote>
+<p>通常，服务端的数据校验通常不是面向用户的，提示信息还是应该以面向程序员和运维人员为主，在数据进入后台之前进行一道拦截。前端js的数据校验提示信息，是面向用户的，要更加的友好！</p>
+</blockquote>
+<h1 id="一异常校验的规范及常用注解">一、异常校验的规范及常用注解</h1>
+<p>在web开发时，对于请求参数，一般上都需要进行参数合法性校验的，原先的写法时一个个字段一个个去判断，这种方式太不通用了，所以java的JSR 303: Bean Validation规范就是解决这个问题的。
+JSR 303只是个规范，并没有具体的实现，目前通常都是才有hibernate-validator进行统一参数校验。</p>
+<p>JSR303定义的校验类型</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Constraint</th>
+<th style="text-align:left">详细信息</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">@Null</td>
+<td style="text-align:left">被注释的元素必须为 null</td>
+</tr>
+<tr>
+<td style="text-align:left">@NotNull</td>
+<td style="text-align:left">被注释的元素必须不为 null</td>
+</tr>
+<tr>
+<td style="text-align:left">@AssertTrue</td>
+<td style="text-align:left">被注释的元素必须为 true</td>
+</tr>
+<tr>
+<td style="text-align:left">@AssertFalse</td>
+<td style="text-align:left">被注释的元素必须为 false</td>
+</tr>
+<tr>
+<td style="text-align:left">@Min(value)</td>
+<td style="text-align:left">被注释的元素必须是一个数字，其值必须大于等于指定的最小值</td>
+</tr>
+<tr>
+<td style="text-align:left">@Max(value)</td>
+<td style="text-align:left">被注释的元素必须是一个数字，其值必须小于等于指定的最大值</td>
+</tr>
+<tr>
+<td style="text-align:left">@DecimalMin(value)</td>
+<td style="text-align:left">被注释的元素必须是一个数字，其值必须大于等于指定的最小值</td>
+</tr>
+<tr>
+<td style="text-align:left">@DecimalMax(value)</td>
+<td style="text-align:left">被注释的元素必须是一个数字，其值必须小于等于指定的最大值</td>
+</tr>
+<tr>
+<td style="text-align:left">@Size(max, min)</td>
+<td style="text-align:left">被注释的元素的大小必须在指定的范围内</td>
+</tr>
+<tr>
+<td style="text-align:left">@Digits (integer, fraction)</td>
+<td style="text-align:left">被注释的元素必须是一个数字，其值必须在可接受的范围内</td>
+</tr>
+<tr>
+<td style="text-align:left">@Past</td>
+<td style="text-align:left">被注释的元素必须是一个过去的日期</td>
+</tr>
+<tr>
+<td style="text-align:left">@Future</td>
+<td style="text-align:left">被注释的元素必须是一个将来的日期</td>
+</tr>
+<tr>
+<td style="text-align:left">@Pattern(value)</td>
+<td style="text-align:left">被注释的元素必须符合指定的正则表达式</td>
+</tr>
+</tbody>
+</table>
+<p>Hibernate Validator 附加的 constraint</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Constraint</th>
+<th style="text-align:left">详细信息</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">@Email</td>
+<td style="text-align:left">被注释的元素必须是电子邮箱地址</td>
+</tr>
+<tr>
+<td style="text-align:left">@Length</td>
+<td style="text-align:left">被注释的字符串的大小必须在指定的范围内</td>
+</tr>
+<tr>
+<td style="text-align:left">@NotEmpty</td>
+<td style="text-align:left">被注释的字符串的必须非空</td>
+</tr>
+<tr>
+<td style="text-align:left">@Range</td>
+<td style="text-align:left">被注释的元素必须在合适的范围内</td>
+</tr>
+</tbody>
+</table>
+<p><strong>用法:把以上注解加在ArticleVO的属性字段上，然后在参数校验的方法上加@Valid注解</strong>
+如:</p>
+<pre><code class="language-java"><span class="hljs-meta">@PutMapping(&quot;/article/{id}&quot;)</span>
+<span class="hljs-keyword">public</span> <span class="hljs-meta">@ResponseBody</span> AjaxResponse <span class="hljs-title function_">updateArticle</span><span class="hljs-params">(
+                                 <span class="hljs-meta">@Valid</span> <span class="hljs-meta">@RequestBody</span> ArticleVO article)</span> {
+        <span class="hljs-comment">//业务</span>
+    <span class="hljs-keyword">return</span> AjaxResponse.success();
+}
+</code></pre>
+<p>如果感觉以上的注解仍然不够用，可以自定义注解，参考：
+<a href="http://blog.lqdev.cn/2018/07/20/springboot/chapter-eight/">http://blog.lqdev.cn/2018/07/20/springboot/chapter-eight/</a></p>
+<h1 id="二友好的数据校验异常处理用户输入异常的全局处理">二、友好的数据校验异常处理（用户输入异常的全局处理）</h1>
+<p>我们已知当数据校验失败的时候，会抛出异常BindException或MethodArgumentNotValidException。所以我们对这两种异常做全局处理，防止程序员重复编码带来困扰。</p>
+<pre><code class="language-java"><span class="hljs-meta">@ExceptionHandler(MethodArgumentNotValidException.class)</span>
+<span class="hljs-meta">@ResponseBody</span>
+<span class="hljs-keyword">public</span> AjaxResponse <span class="hljs-title function_">handleBindException</span><span class="hljs-params">(MethodArgumentNotValidException ex)</span> {
+    <span class="hljs-type">FieldError</span> <span class="hljs-variable">fieldError</span> <span class="hljs-operator">=</span> ex.getBindingResult().getFieldError();
+    <span class="hljs-keyword">return</span> AjaxResponse.error(<span class="hljs-keyword">new</span> <span class="hljs-title class_">CustomException</span>(CustomExceptionType.USER_INPUT_ERROR,fieldError.getDefaultMessage()));
+}
+
+
+<span class="hljs-meta">@ExceptionHandler(BindException.class)</span>
+<span class="hljs-meta">@ResponseBody</span>
+<span class="hljs-keyword">public</span> AjaxResponse <span class="hljs-title function_">handleBindException</span><span class="hljs-params">(BindException ex)</span> {
+    <span class="hljs-type">FieldError</span> <span class="hljs-variable">fieldError</span> <span class="hljs-operator">=</span> ex.getBindingResult().getFieldError();
+    <span class="hljs-keyword">return</span> AjaxResponse.error(<span class="hljs-keyword">new</span> <span class="hljs-title class_">CustomException</span>(CustomExceptionType.USER_INPUT_ERROR,fieldError.getDefaultMessage()));
+}
+</code></pre>
+
+        
+        
+    </body>
+    </html>

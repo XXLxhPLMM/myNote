@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>&ast;&ast;Vue 3&ast;&ast;</title>
+        <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+/* From extension ms-toolsai.jupyter */
+/* These classnames are inherited from bootstrap, but are present in most notebook renderers */
+
+.alert {
+    width: auto;
+    padding: 1em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+.alert > *:last-child {
+    margin-bottom: 0;
+}
+#preview > .alert:last-child {
+    /* Prevent this being set to zero by the default notebook stylesheet */
+    padding-bottom: 1em;
+}
+
+.alert-success {
+    /* Note there is no suitable color available, so we just copy "info" */
+    background-color: var(--theme-info-background);
+    color: var(--theme-info-foreground);
+}
+.alert-info {
+    background-color: var(--theme-info-background);
+    color: var(--theme-info-foreground);
+}
+.alert-warning {
+    background-color: var(--theme-warning-background);
+    color: var(--theme-warning-foreground);
+}
+.alert-danger {
+    background-color: var(--theme-error-background);
+    color: var(--theme-error-foreground);
+}
+
+</style>
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+        
+    </head>
+    <body class="vscode-body vscode-light">
+        <ul>
+<li><a href="#vue-3"><strong>Vue 3</strong></a>
+<ul>
+<li><a href="#%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE"><strong>创建项目</strong></a>
+<ul>
+<li><a href="#%E4%BD%BF%E7%94%A8vue-cli"><em>使用vue-cli</em></a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8-vite"><em>使用 vite</em></a></li>
+</ul>
+</li>
+<li><a href="#%E8%B5%B7%E6%AD%A5"><strong>起步</strong></a>
+<ul>
+<li><a href="#setup"><strong><code>setup()</code></strong></a></li>
+<li><a href="#ref"><strong><code>ref()</code></strong></a></li>
+<li><a href="#reactive"><strong><code>reactive()</code></strong></a></li>
+<li><a href="#computed"><strong><code>computed()</code></strong></a></li>
+<li><a href="#watch"><strong><code>watch()</code></strong></a></li>
+<li><a href="#watcheffect"><strong><code>watchEffect()</code></strong></a></li>
+</ul>
+</li>
+<li><a href="#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><strong>生命周期</strong></a></li>
+<li><a href="#hook"><strong>hook</strong></a></li>
+<li><a href="#toref%E4%B8%8Etorefs"><strong>toRef</strong>与<strong>toRefs</strong></a></li>
+<li><a href="#shallowreactive%E4%B8%8Eshallowref"><strong>shallowReactive</strong>与<strong>shallowRef</strong></a></li>
+<li><a href="#readonly%E4%B8%8Eshallowreadonly"><strong>readonly</strong>与<strong>shallowReadonly</strong></a></li>
+<li><a href="#torow%E4%B8%8Emarkrow"><strong>toRow</strong>与<strong>markRow</strong></a></li>
+<li><a href="#teleport"><strong>teleport</strong></a></li>
+<li><a href="#vue3%E4%B8%AD%E7%9A%84%E5%85%B6%E5%AE%83%E6%94%B9%E5%8F%98"><strong>vue3</strong>中的其它改变</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="vue-3"><strong>Vue 3</strong></h1>
+<h2 id="创建项目"><strong>创建项目</strong></h2>
+<h3 id="使用vue-cli"><em>使用vue-cli</em></h3>
+<blockquote>
+<p>vue create</p>
+</blockquote>
+<h3 id="使用-vite"><em>使用 vite</em></h3>
+<blockquote>
+<p>npm init vite-app projectName</p>
+</blockquote>
+<h2 id="起步"><strong>起步</strong></h2>
+<p>创建app 的方式发生改变</p>
+<pre><code class="language-js"><span class="hljs-keyword">import</span> <span class="hljs-title class_">Vue</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;vue&#x27;</span>
+<span class="hljs-keyword">import</span> <span class="hljs-title class_">HelloVueApp</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;组件地址&#x27;</span>
+<span class="hljs-title class_">Vue</span>.<span class="hljs-title function_">createApp</span>(<span class="hljs-title class_">HelloVueApp</span>).<span class="hljs-title function_">mount</span>(<span class="hljs-string">&#x27;#hello-vue&#x27;</span>)
+<span class="hljs-comment">//HelloVueApp 是组件</span>
+
+</code></pre>
+<h3 id="setup"><strong><code>setup()</code></strong></h3>
+<blockquote>
+<p>组合式API 执行在create之前</p>
+</blockquote>
+<pre><code class="language-js"><span class="hljs-title function_">setup</span>(<span class="hljs-params">porpos,context</span>){
+
+}
+</code></pre>
+<h3 id="ref"><strong><code>ref()</code></strong></h3>
+<blockquote>
+<p>基本数据的 数据劫持</p>
+</blockquote>
+<pre><code class="language-js"><span class="hljs-keyword">import</span> { ref } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;vue&#x27;</span>
+<span class="hljs-keyword">let</span> data = <span class="hljs-title function_">ref</span>(<span class="hljs-string">&#x27;data&#x27;</span>)
+<span class="hljs-comment">//在组件中 读取的时候直接使用变量名</span>
+<span class="hljs-comment">//在 代码中读取和修改的时候需要在后面加上.value </span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(data.<span class="hljs-property">value</span>) 
+</code></pre>
+<p>如果 劫持对象类型的数据 <code>ref()</code> 会调用 <code>reactive()</code></p>
+<h3 id="reactive"><strong><code>reactive()</code></strong></h3>
+<blockquote>
+<p>对象数据的 数据劫持 使用前</p>
+</blockquote>
+<pre><code class="language-js"><span class="hljs-keyword">import</span> { reactive } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;vue&#x27;</span>
+
+<span class="hljs-keyword">let</span> data = <span class="hljs-title function_">reactive</span>({<span class="hljs-attr">a</span>:<span class="hljs-number">0</span>})
+<span class="hljs-comment">//读取的时候直接读取就行了 不用加.value</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(data.<span class="hljs-property">a</span>)
+</code></pre>
+<h3 id="computed"><strong><code>computed()</code></strong></h3>
+<blockquote>
+<p>计算属性API 使用前</p>
+</blockquote>
+<pre><code class="language-js"><span class="hljs-keyword">import</span> { computed } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;vue&#x27;</span>
+</code></pre>
+<h3 id="watch"><strong><code>watch()</code></strong></h3>
+<blockquote>
+<p>监听</p>
+</blockquote>
+<ol>
+<li>监听<code>ref()</code>一个数据
+<blockquote>
+<p>使用的时候不需要ref.value 传入的是refimpl对象</p>
+</blockquote>
+<pre><code class="language-js"> <span class="hljs-title function_">watch</span>(需要监听的值,<span class="hljs-function">(<span class="hljs-params"><span class="hljs-keyword">new</span>,old</span>)=&gt;</span>{
+  <span class="hljs-comment">//行为</span>
+ })
+</code></pre>
+</li>
+<li>监听<code>ref()</code>多个数据<pre><code class="language-js"> <span class="hljs-title function_">watch</span>([值,值],<span class="hljs-function">(<span class="hljs-params"><span class="hljs-keyword">new</span>,old</span>)=&gt;</span>{
+  <span class="hljs-comment">//行为</span>
+ })
+</code></pre>
+</li>
+<li>监听<code>对象</code>
+<blockquote>
+<p>无法正确的获取oldvalue 监听对象的时候不需要开启深度监视 并且关不掉 deep配置无效</p>
+</blockquote>
+<pre><code class="language-js"> <span class="hljs-title function_">watch</span>(对象,<span class="hljs-function">(<span class="hljs-params"><span class="hljs-keyword">new</span>,old</span>)=&gt;</span>{
+  <span class="hljs-comment">//行为</span>
+ })
+</code></pre>
+</li>
+<li>监听对象中某一个值
+<blockquote>
+<p><code>wacth()</code>函数的第一个参数要写成用函数返回的形式<code>()=&gt;需要监听的值</code>  这种情况下 深度监视就能够起效</p>
+</blockquote>
+<pre><code class="language-js"> <span class="hljs-title function_">watch</span>(<span class="hljs-function">()=&gt;</span>object.<span class="hljs-property">name</span>,<span class="hljs-function">(<span class="hljs-params"><span class="hljs-keyword">new</span>,old</span>)=&gt;</span>{
+  <span class="hljs-comment">//行为</span>
+ },{<span class="hljs-attr">deep</span>:<span class="hljs-literal">true</span>})
+</code></pre>
+</li>
+<li>监听对象中的多个值<pre><code class="language-js"> <span class="hljs-title function_">watch</span>([<span class="hljs-function">()=&gt;</span>object.<span class="hljs-property">name</span>,<span class="hljs-function">()=&gt;</span>object.<span class="hljs-property">name</span>],<span class="hljs-function">(<span class="hljs-params"><span class="hljs-keyword">new</span>,old</span>)=&gt;</span>{
+  <span class="hljs-comment">//行为</span>
+ })
+</code></pre>
+</li>
+</ol>
+<h3 id="watcheffect"><strong><code>watchEffect()</code></strong></h3>
+<blockquote>
+<p>监听 这个函数里面使用过的数据</p>
+</blockquote>
+<h2 id="生命周期"><strong>生命周期</strong></h2>
+<h2 id="hook"><strong>hook</strong></h2>
+<blockquote>
+<p>类似于 mixin</p>
+</blockquote>
+<h2 id="toref与torefs"><strong>toRef</strong>与<strong>toRefs</strong></h2>
+<ul>
+<li><strong>作用：</strong> 创建一个refimpl对象其value的值是另一个对象中某个值</li>
+<li><strong>语法：</strong> <code>const name = toRef(person,'name')</code></li>
+<li><strong>应用：</strong> 将响应式数据中的某个数据单独给外部使用</li>
+<li><strong>扩展：</strong> <code>toRefs</code>和<code>toRef</code>作用类似 不过 前者可以批量创建</li>
+</ul>
+<h2 id="shallowreactive与shallowref"><strong>shallowReactive</strong>与<strong>shallowRef</strong></h2>
+<ul>
+<li><em>shallowReactive</em> ：只对对象最外层进行响应式</li>
+<li><em>shallowRef</em> ：只对基本数据进行响应式</li>
+</ul>
+<h2 id="readonly与shallowreadonly"><strong>readonly</strong>与<strong>shallowReadonly</strong></h2>
+<ul>
+<li><em>readonly</em>：让响应式数据变为只读的(深只读)</li>
+<li><em>shallowReadonly</em>:让响应式数据变为只读的(浅只读)</li>
+</ul>
+<h2 id="torow与markrow"><strong>toRow</strong>与<strong>markRow</strong></h2>
+<ul>
+<li><em>toRow</em>：
+<ul>
+<li>作用 ：把一个由<code>recative</code>生成的响应式对象变为普通对象</li>
+<li>场景 ：读取响应式对象对应的普通对象 数据改变页面不会发生更新</li>
+</ul>
+</li>
+<li><em>markRow</em>：
+<ul>
+<li>作用 ：标记一个对象，这个对象永远不会变为响应式对象</li>
+</ul>
+</li>
+</ul>
+<h2 id="teleport"><strong>teleport</strong></h2>
+<blockquote>
+<p>把 组件传送到某一个html 元素里</p>
+</blockquote>
+<h2 id="vue3中的其它改变"><strong>vue3</strong>中的其它改变</h2>
+<ul>
+<li>移除过滤器</li>
+<li>不会再有生产提示</li>
+<li><code>Vue.mixin</code>,<code>Vue.use</code>,<code>Vue.component</code>,<code>Vue.directive</code>,<code>Vue.config.xxx</code>统统移植到<code>app.mixin</code>,<code>app.use</code>,<code>app.component</code>,<code>app.directive</code>,<code>app.config.xxx</code></li>
+<li>vue2 中的 <code>Vue.prototype</code> 在vue3中使用<code>app.config.globalProperties</code></li>
+<li>data选项应该始终被声明为一个函数</li>
+<li>移除KeyCode作为v-on的修饰</li>
+<li>移除v-on的native修饰</li>
+</ul>
+
+        
+        
+    </body>
+    </html>

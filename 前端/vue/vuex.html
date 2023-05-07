@@ -143,7 +143,7 @@ app.$mount()
 <h4 id="在组件中访问-state数据"><strong>在组件中访问 <code>state</code>数据</strong></h4>
 <p>方式一</p>
 <blockquote>
-<p>在差值表达式<code>{{}}</code> 中访问直接使用<code>{{$store.要使用的数据}}</code></p>
+<p>在差值表达式<code>{{}}</code> 中访问直接使用<code>{{$store.state.要使用的数据}}</code></p>
 </blockquote>
 <p>方式二</p>
 <blockquote>
@@ -154,7 +154,7 @@ app.$mount()
 <p><strong>同步方式</strong></p>
 <p>方式一</p>
 <blockquote>
-<p>直接修改 <code>this.$state.数据名 = 新数据</code>  可以这样用但是不推荐</p>
+<p>直接修改 <code>this.$state.state.数据名 = 新数据</code>  可以这样用但是不推荐</p>
 </blockquote>
 <p>方式二</p>
 <blockquote>

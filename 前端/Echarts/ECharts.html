@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>&#x914d;&#x7f6e;</title>
+        <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+/* From extension ms-toolsai.jupyter */
+/* These classnames are inherited from bootstrap, but are present in most notebook renderers */
+
+.alert {
+    width: auto;
+    padding: 1em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+.alert > *:last-child {
+    margin-bottom: 0;
+}
+#preview > .alert:last-child {
+    /* Prevent this being set to zero by the default notebook stylesheet */
+    padding-bottom: 1em;
+}
+
+.alert-success {
+    /* Note there is no suitable color available, so we just copy "info" */
+    background-color: var(--theme-info-background);
+    color: var(--theme-info-foreground);
+}
+.alert-info {
+    background-color: var(--theme-info-background);
+    color: var(--theme-info-foreground);
+}
+.alert-warning {
+    background-color: var(--theme-warning-background);
+    color: var(--theme-warning-foreground);
+}
+.alert-danger {
+    background-color: var(--theme-error-background);
+    color: var(--theme-error-foreground);
+}
+
+</style>
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+        
+    </head>
+    <body class="vscode-body vscode-light">
+        <h1 id="配置">配置</h1>
+<p>配置项</p>
+<pre><code class="language-js">theme = {
+    <span class="hljs-comment">// 全图默认背景</span>
+    <span class="hljs-comment">// backgroundColor: &#x27;rgba(0,0,0,0)&#x27;,</span>
+
+    <span class="hljs-comment">// 默认色板</span>
+    <span class="hljs-attr">color</span>: [<span class="hljs-string">&#x27;#ff7f50&#x27;</span>,<span class="hljs-string">&#x27;#87cefa&#x27;</span>,<span class="hljs-string">&#x27;#da70d6&#x27;</span>,<span class="hljs-string">&#x27;#32cd32&#x27;</span>,<span class="hljs-string">&#x27;#6495ed&#x27;</span>,
+            <span class="hljs-string">&#x27;#ff69b4&#x27;</span>,<span class="hljs-string">&#x27;#ba55d3&#x27;</span>,<span class="hljs-string">&#x27;#cd5c5c&#x27;</span>,<span class="hljs-string">&#x27;#ffa500&#x27;</span>,<span class="hljs-string">&#x27;#40e0d0&#x27;</span>,
+            <span class="hljs-string">&#x27;#1e90ff&#x27;</span>,<span class="hljs-string">&#x27;#ff6347&#x27;</span>,<span class="hljs-string">&#x27;#7b68ee&#x27;</span>,<span class="hljs-string">&#x27;#00fa9a&#x27;</span>,<span class="hljs-string">&#x27;#ffd700&#x27;</span>,
+            <span class="hljs-string">&#x27;#6699FF&#x27;</span>,<span class="hljs-string">&#x27;#ff6666&#x27;</span>,<span class="hljs-string">&#x27;#3cb371&#x27;</span>,<span class="hljs-string">&#x27;#b8860b&#x27;</span>,<span class="hljs-string">&#x27;#30e0e0&#x27;</span>],
+
+    <span class="hljs-comment">// 图表标题</span>
+    <span class="hljs-attr">title</span>: {
+        <span class="hljs-attr">x</span>: <span class="hljs-string">&#x27;left&#x27;</span>,                 <span class="hljs-comment">// 水平安放位置，默认为左对齐，可选为：</span>
+                                   <span class="hljs-comment">// &#x27;center&#x27; ¦ &#x27;left&#x27; ¦ &#x27;right&#x27;</span>
+                                   <span class="hljs-comment">// ¦ {number}（x坐标，单位px）</span>
+        <span class="hljs-attr">y</span>: <span class="hljs-string">&#x27;top&#x27;</span>,                  <span class="hljs-comment">// 垂直安放位置，默认为全图顶端，可选为：</span>
+                                   <span class="hljs-comment">// &#x27;top&#x27; ¦ &#x27;bottom&#x27; ¦ &#x27;center&#x27;</span>
+                                   <span class="hljs-comment">// ¦ {number}（y坐标，单位px）</span>
+        <span class="hljs-comment">//textAlign: null          // 水平对齐方式，默认根据x设置自动调整</span>
+        <span class="hljs-attr">backgroundColor</span>: <span class="hljs-string">&#x27;rgba(0,0,0,0)&#x27;</span>,
+        <span class="hljs-attr">borderColor</span>: <span class="hljs-string">&#x27;#ccc&#x27;</span>,       <span class="hljs-comment">// 标题边框颜色</span>
+        <span class="hljs-attr">borderWidth</span>: <span class="hljs-number">0</span>,            <span class="hljs-comment">// 标题边框线宽，单位px，默认为0（无边框）</span>
+        <span class="hljs-attr">padding</span>: <span class="hljs-number">5</span>,                <span class="hljs-comment">// 标题内边距，单位px，默认各方向内边距为5，</span>
+                                   <span class="hljs-comment">// 接受数组分别设定上右下左边距，同css</span>
+        <span class="hljs-attr">itemGap</span>: <span class="hljs-number">10</span>,               <span class="hljs-comment">// 主副标题纵向间隔，单位px，默认为10，</span>
+        <span class="hljs-attr">textStyle</span>: {
+            <span class="hljs-attr">fontSize</span>: <span class="hljs-number">18</span>,
+            <span class="hljs-attr">fontWeight</span>: <span class="hljs-string">&#x27;bolder&#x27;</span>,
+            <span class="hljs-attr">color</span>: <span class="hljs-string">&#x27;#333&#x27;</span>          <span class="hljs-comment">// 主标题文字颜色</span>
+        },
+        <span class="hljs-attr">subtextStyle</span>: {
+            <span class="hljs-attr">color</span>: <span class="hljs-string">&#x27;#aaa&#x27;</span>          <span class="hljs-comment">// 副标题文字颜色</span>
+        }
+    },
+
+    <span class="hljs-comment">// 图例</span>
+    <span class="hljs-attr">legend</span>: {
+        <span class="hljs-attr">orient</span>: <span class="hljs-string">&#x27;horizontal&#x27;</span>,      <span class="hljs-comment">// 布局方式，默认为水平布局，可选为：</span>
+                                   <span class="hljs-comment">// &#x27;horizontal&#x27; ¦ &#x27;vertical&#x27;</span>
+        <span class="hljs-attr">x</span>: <span class="hljs-string">&#x27;center&#x27;</span>,               <span class="hljs-comment">// 水平安放位置，默认为全图居中，可选为：</span>
+                                   <span class="hljs-comment">// &#x27;center&#x27; ¦ &#x27;left&#x27; ¦ &#x27;right&#x27;</span>
+                                   <span class="hljs-comment">// ¦ {number}（x坐标，单位px）</span>
+        <span class="hljs-attr">y</span>: <span class="hljs-string">&#x27;top&#x27;</span>,                  <span class="hljs-comment">// 垂直安放位置，默认为全图顶端，可选为：</span>
+                                   <span class="hljs-comment">// &#x27;top&#x27; ¦ &#x27;bottom&#x27; ¦ &#x27;center&#x27;</span>
+                                   <span class="hljs-comment">// ¦ {number}（y坐标，单位px）</span>
+        <span class="hljs-attr">backgroundColor</span>: <span class="hljs-string">&#x27;rgba(0,0,0,0)&#x27;</span>,
+        <span class="hljs-attr">borderColor</span>: <span class="hljs-string">&#x27;#ccc&#x27;</span>,       <span class="hljs-comment">// 图例边框颜色</span>
+        <span class="hljs-attr">borderWidth</span>: <span class="hljs-number">0</span>,            <span class="hljs-comment">// 图例边框线宽，单位px，默认为0（无边框）</span>
+        <span class="hljs-attr">padding</span>: <span class="hljs-number">5</span>,                <span class="hljs-comment">// 图例内边距，单位px，默认各方向内边距为5，</span>
+                                   <span class="hljs-comment">// 接受数组分别设定上右下左边距，同css</span>
+        <span class="hljs-attr">itemGap</span>: <span class="hljs-number">10</span>,               <span class="hljs-comment">// 各个item之间的间隔，单位px，默认为10，</span>
+                                   <span class="hljs-comment">// 横向布局时为水平间隔，纵向布局时为纵向间隔</span>
+        <span class="hljs-attr">itemWidth</span>: <span class="hljs-number">20</span>,             <span class="hljs-comment">// 图例图形宽度</span>
+        <span class="hljs-attr">itemHeight</span>: <span class="hljs-number">14</span>,            <span class="hljs-comment">// 图例图形高度</span>
+        <span class="hljs-attr">textStyle</span>: {
+            <span class="hljs-attr">color</span>: <span class="hljs-string">&#x27;#333&#x27;</span>          <span class="hljs-comment">// 图例文字颜色</span>
+        }
+    },
+
+    <span class="hljs-comment">// 值域</span>
+    <span class="hljs-attr">dataRange</span>: {
+        <span class="hljs-attr">orient</span>: <span class="hljs-string">&#x27;vertical&#x27;</span>,        <span class="hljs-comment">// 布局方式，默认为垂直布局，可选为：</span>
+                                   <span class="hljs-comment">// &#x27;horizontal&#x27; ¦ &#x27;vertical&#x27;</span>
+        <span class="hljs-attr">x</span>: <span class="hljs-string">&#x27;left&#x27;</span>,                 <span class="hljs-comment">// 水平安放位置，默认为全图左对齐，可选为：</span>
+                                   <span class="hljs-comment">// &#x27;center&#x27; ¦ &#x27;left&#x27; ¦ &#x27;right&#x27;</span>
+                                   <span class="hljs-comment">// ¦ {number}（x坐标，单位px）</span>
+        <span class="hljs-attr">y</span>: <span class="hljs-string">&#x27;bottom&#x27;</span>,               <span class="hljs-comment">// 垂直安放位置，默认为全图底部，可选为：</span>
+                                   <span class="hljs-comment">// &#x27;top&#x27; ¦ &#x27;bottom&#x27; ¦ &#x27;center&#x27;</span>
+                                   <span class="hljs-comment">// ¦ {number}（y坐标，单位px）</span>
+        <span class="hljs-attr">backgroundColor</span>: <span class="hljs-string">&#x27;rgba(0,0,0,0)&#x27;</span>,
+        <span class="hljs-attr">borderColor</span>: <span class="hljs-string">&#x27;#ccc&#x27;</span>,       <span class="hljs-comment">// 值域边框颜色</span>
+        <span class="hljs-attr">borderWidth</span>: <span class="hljs-number">0</span>,            <span class="hljs-comment">// 值域边框线宽，单位px，默认为0（无边框）</span>
+        <span class="hljs-attr">padding</span>: <span class="hljs-number">5</span>,                <span class="hljs-comment">// 值域内边距，单位px，默认各方向内边距为5，</span>
+                                   <span class="hljs-comment">// 接受数组分别设定上右下左边距，同css</span>
+        <span class="hljs-attr">itemGap</span>: <span class="hljs-number">10</span>,               <span class="hljs-comment">// 各个item之间的间隔，单位px，默认为10，</span>
+                                   <span class="hljs-comment">// 横向布局时为水平间隔，纵向布局时为纵向间隔</span>
+        <span class="hljs-attr">itemWidth</span>: <span class="hljs-number">20</span>,             <span class="hljs-comment">// 值域图形宽度，线性渐变水平布局宽度为该值 * 10</span>
+        <span class="hljs-attr">itemHeight</span>: <span class="hljs-number">14</span>,            <span class="hljs-comment">// 值域图形高度，线性渐变垂直布局高度为该值 * 10</span>
+        <span class="hljs-attr">splitNumber</span>: <span class="hljs-number">5</span>,            <span class="hljs-comment">// 分割段数，默认为5，为0时为线性渐变</span>
+        <span class="hljs-attr">color</span>:[<span class="hljs-string">&#x27;#1e90ff&#x27;</span>,<span class="hljs-string">&#x27;#f0ffff&#x27;</span>],<span class="hljs-comment">//颜色 </span>
+        <span class="hljs-comment">//text:[&#x27;高&#x27;,&#x27;低&#x27;],         // 文本，默认为数值文本</span>
+        <span class="hljs-attr">textStyle</span>: {
+            <span class="hljs-attr">color</span>: <span class="hljs-string">&#x27;#333&#x27;</span>          <span class="hljs-comment">// 值域文字颜色</span>
+        }
+    },
+
+    <span class="hljs-attr">toolbox</span>: {
+        <span class="hljs-attr">orient</span>: <span class="hljs-string">&#x27;horizontal&#x27;</span>,      <span class="hljs-comment">// 布局方式，默认为水平布局，可选为：</span>
+                                   <span class="hljs-comment">// &#x27;horizontal&#x27; ¦ &#x27;vertical&#x27;</span>
+        <span class="hljs-attr">x</span>: <span class="hljs-string">&#x27;right&#x27;</span>,                <span class="hljs-comment">// 水平安放位置，默认为全图右对齐，可选为：</span>
+                                   <span class="hljs-comment">// &#x27;center&#x27; ¦ &#x27;left&#x27; ¦ &#x27;right&#x27;</span>
+                                   <span class="hljs-comment">// ¦ {number}（x坐标，单位px）</span>
+        <span class="hljs-attr">y</span>: <span class="hljs-string">&#x27;top&#x27;</span>,                  <span class="hljs-comment">// 垂直安放位置，默认为全图顶端，可选为：</span>
+                                   <span class="hljs-comment">// &#x27;top&#x27; ¦ &#x27;bottom&#x27; ¦ &#x27;center&#x27;</span>
+                                   <span class="hljs-comment">// ¦ {number}（y坐标，单位px）</span>
+        color : [<span class="hljs-string">&#x27;#1e90ff&#x27;</span>,<span class="hljs-string">&#x27;#22bb22&#x27;</span>,<span class="hljs-string">&#x27;#4b0082&#x27;</span>,<span class="hljs-string">&#x27;#d2691e&#x27;</span>],
+        <span class="hljs-attr">backgroundColor</span>: <span class="hljs-string">&#x27;rgba(0,0,0,0)&#x27;</span>, <span class="hljs-comment">// 工具箱背景颜色</span>
+        <span class="hljs-attr">borderColor</span>: <span class="hljs-string">&#x27;#ccc&#x27;</span>,       <span class="hljs-comment">// 工具箱边框颜色</span>
+        <span class="hljs-attr">borderWidth</span>: <span class="hljs-number">0</span>,            <span class="hljs-comment">// 工具箱边框线宽，单位px，默认为0（无边框）</span>
+        <span class="hljs-attr">padding</span>: <span class="hljs-number">5</span>,                <span class="hljs-comment">// 工具箱内边距，单位px，默认各方向内边距为5，</span>
+                                   <span class="hljs-comment">// 接受数组分别设定上右下左边距，同css</span>
+        <span class="hljs-attr">itemGap</span>: <span class="hljs-number">10</span>,               <span class="hljs-comment">// 各个item之间的间隔，单位px，默认为10，</span>
+                                   <span class="hljs-comment">// 横向布局时为水平间隔，纵向布局时为纵向间隔</span>
+        <span class="hljs-attr">itemSize</span>: <span class="hljs-number">16</span>,              <span class="hljs-comment">// 工具箱图形宽度</span>
+        featureImageIcon : {},     <span class="hljs-comment">// 自定义图片icon</span>
+        featureTitle : {
+            mark : <span class="hljs-string">&#x27;辅助线开关&#x27;</span>,
+            markUndo : <span class="hljs-string">&#x27;删除辅助线&#x27;</span>,
+            markClear : <span class="hljs-string">&#x27;清空辅助线&#x27;</span>,
+            dataZoom : <span class="hljs-string">&#x27;区域缩放&#x27;</span>,
+            dataZoomReset : <span class="hljs-string">&#x27;区域缩放后退&#x27;</span>,
+            dataView : <span class="hljs-string">&#x27;数据视图&#x27;</span>,
+            lineChart : <span class="hljs-string">&#x27;折线图切换&#x27;</span>,
+            barChart : <span class="hljs-string">&#x27;柱形图切换&#x27;</span>,
+            restore : <span class="hljs-string">&#x27;还原&#x27;</span>,
+            saveAsImage : <span class="hljs-string">&#x27;保存为图片&#x27;</span>
+        }
+    },
+
+    <span class="hljs-comment">// 提示框</span>
+    <span class="hljs-attr">tooltip</span>: {
+        <span class="hljs-attr">trigger</span>: <span class="hljs-string">&#x27;item&#x27;</span>,           <span class="hljs-comment">// 触发类型，默认数据触发，见下图，可选为：&#x27;item&#x27; ¦ &#x27;axis&#x27;</span>
+        <span class="hljs-attr">showDelay</span>: <span class="hljs-number">20</span>,             <span class="hljs-comment">// 显示延迟，添加显示延迟可以避免频繁切换，单位ms</span>
+        <span class="hljs-attr">hideDelay</span>: <span class="hljs-number">100</span>,            <span class="hljs-comment">// 隐藏延迟，单位ms</span>
+        transitionDuration : <span class="hljs-number">0.4</span>,  <span class="hljs-comment">// 动画变换时间，单位s</span>
+        <span class="hljs-attr">backgroundColor</span>: <span class="hljs-string">&#x27;rgba(0,0,0,0.7)&#x27;</span>,     <span class="hljs-comment">// 提示背景颜色，默认为透明度为0.7的黑色</span>
+        <span class="hljs-attr">borderColor</span>: <span class="hljs-string">&#x27;#333&#x27;</span>,       <span class="hljs-comment">// 提示边框颜色</span>
+        <span class="hljs-attr">borderRadius</span>: <span class="hljs-number">4</span>,           <span class="hljs-comment">// 提示边框圆角，单位px，默认为4</span>
+        <span class="hljs-attr">borderWidth</span>: <span class="hljs-number">0</span>,            <span class="hljs-comment">// 提示边框线宽，单位px，默认为0（无边框）</span>
+        <span class="hljs-attr">padding</span>: <span class="hljs-number">5</span>,                <span class="hljs-comment">// 提示内边距，单位px，默认各方向内边距为5，</span>
+                                   <span class="hljs-comment">// 接受数组分别设定上右下左边距，同css</span>
+        axisPointer : {            <span class="hljs-comment">// 坐标轴指示器，坐标轴触发有效</span>
+            type : <span class="hljs-string">&#x27;line&#x27;</span>,         <span class="hljs-comment">// 默认为直线，可选为：&#x27;line&#x27; | &#x27;shadow&#x27;</span>
+            lineStyle : {          <span class="hljs-comment">// 直线指示器样式设置</span>
+                <span class="hljs-attr">color</span>: <span class="hljs-string">&#x27;#48b&#x27;</span>,
+                <span class="hljs-attr">width</span>: <span class="hljs-number">2</span>,
+                <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;solid&#x27;</span>
+            },
+            shadowStyle : {                       <span class="hljs-comment">// 阴影指示器样式设置</span>
+                <span class="hljs-attr">width</span>: <span class="hljs-string">&#x27;auto&#x27;</span>,                   <span class="hljs-comment">// 阴影大小</span>
+                <span class="hljs-attr">color</span>: <span class="hljs-string">&#x27;rgba(150,150,150,0.3)&#x27;</span>  <span class="hljs-comment">// 阴影颜色</span>
+            }
+        },
+        <span class="hljs-attr">textStyle</span>: {
+            <span class="hljs-attr">color</span>: <span class="hljs-string">&#x27;#fff&#x27;</span>
+        }
+    },
+
+    <span class="hljs-comment">// 区域缩放控制器</span>
+    <span class="hljs-attr">dataZoom</span>: {
+        <span class="hljs-attr">orient</span>: <span class="hljs-string">&#x27;horizontal&#x27;</span>,      <span class="hljs-comment">// 布局方式，默认为水平布局，可选为：</span>
+                                   <span class="hljs-comment">// &#x27;horizontal&#x27; ¦ &#x27;vertical&#x27;</span>
+        <span class="hljs-comment">// x: {number},            // 水平安放位置，默认为根据grid参数适配，可选为：</span>
+                                   <span class="hljs-comment">// {number}（x坐标，单位px）</span>
+        <span class="hljs-comment">// y: {number},            // 垂直安放位置，默认为根据grid参数适配，可选为：</span>
+                                   <span class="hljs-comment">// {number}（y坐标，单位px）</span>
+        <span class="hljs-comment">// width: {number},        // 指定宽度，横向布局时默认为根据grid参数适配</span>
+        <span class="hljs-comment">// height: {number},       // 指定高度，纵向布局时默认为根据grid参数适配</span>
+        <span class="hljs-attr">backgroundColor</span>: <span class="hljs-string">&#x27;rgba(0,0,0,0)&#x27;</span>,       <span class="hljs-comment">// 背景颜色</span>
+        <span class="hljs-attr">dataBackgroundColor</span>: <span class="hljs-string">&#x27;#eee&#x27;</span>,            <span class="hljs-comment">// 数据背景颜色</span>
+        <span class="hljs-attr">fillerColor</span>: <span class="hljs-string">&#x27;rgba(144,197,237,0.2)&#x27;</span>,   <span class="hljs-comment">// 填充颜色</span>
+        <span class="hljs-attr">handleColor</span>: <span class="hljs-string">&#x27;rgba(70,130,180,0.8)&#x27;</span>     <span class="hljs-comment">// 手柄颜色</span>
+    },
+
+    <span class="hljs-comment">// 网格</span>
+    <span class="hljs-attr">grid</span>: {
+        <span class="hljs-attr">x</span>: <span class="hljs-number">80</span>,
+        <span class="hljs-attr">y</span>: <span class="hljs-number">60</span>,
+        <span class="hljs-attr">x2</span>: <span class="hljs-number">80</span>,
+        <span class="hljs-attr">y2</span>: <span class="hljs-number">60</span>,
+        <span class="hljs-comment">// width: {totalWidth} - x - x2,</span>
+        <span class="hljs-comment">// height: {totalHeight} - y - y2,</span>
+        <span class="hljs-attr">backgroundColor</span>: <span class="hljs-string">&#x27;rgba(0,0,0,0)&#x27;</span>,
+        <span class="hljs-attr">borderWidth</span>: <span class="hljs-number">1</span>,
+        <span class="hljs-attr">borderColor</span>: <span class="hljs-string">&#x27;#ccc&#x27;</span>
+    },
+
+    <span class="hljs-comment">// 类目轴</span>
+    <span class="hljs-attr">categoryAxis</span>: {
+        <span class="hljs-attr">position</span>: <span class="hljs-string">&#x27;bottom&#x27;</span>,    <span class="hljs-comment">// 位置</span>
+        <span class="hljs-attr">nameLocation</span>: <span class="hljs-string">&#x27;end&#x27;</span>,   <span class="hljs-comment">// 坐标轴名字位置，支持&#x27;start&#x27; | &#x27;end&#x27;</span>
+        <span class="hljs-attr">boundaryGap</span>: <span class="hljs-literal">true</span>,     <span class="hljs-comment">// 类目起始和结束两端空白策略</span>
+        <span class="hljs-attr">axisLine</span>: {            <span class="hljs-comment">// 坐标轴线</span>
+            <span class="hljs-attr">show</span>: <span class="hljs-literal">true</span>,        <span class="hljs-comment">// 默认显示，属性show控制显示与否</span>
+            <span class="hljs-attr">lineStyle</span>: {       <span class="hljs-comment">// 属性lineStyle控制线条样式</span>
+                <span class="hljs-attr">color</span>: <span class="hljs-string">&#x27;#48b&#x27;</span>,
+                <span class="hljs-attr">width</span>: <span class="hljs-number">2</span>,
+                <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;solid&#x27;</span>
+            }
+        },
+        <span class="hljs-attr">axisTick</span>: {            <span class="hljs-comment">// 坐标轴小标记</span>
+            <span class="hljs-attr">show</span>: <span class="hljs-literal">true</span>,       <span class="hljs-comment">// 属性show控制显示与否，默认不显示</span>
+            <span class="hljs-attr">interval</span>: <span class="hljs-string">&#x27;auto&#x27;</span>,
+            <span class="hljs-comment">// onGap: null,</span>
+            inside : <span class="hljs-literal">false</span>,    <span class="hljs-comment">// 控制小标记是否在grid里 </span>
+            length :<span class="hljs-number">5</span>,         <span class="hljs-comment">// 属性length控制线长</span>
+            <span class="hljs-attr">lineStyle</span>: {       <span class="hljs-comment">// 属性lineStyle控制线条样式</span>
+                <span class="hljs-attr">color</span>: <span class="hljs-string">&#x27;#333&#x27;</span>,
+                <span class="hljs-attr">width</span>: <span class="hljs-number">1</span>
+            }
+        },
+        <span class="hljs-attr">axisLabel</span>: {           <span class="hljs-comment">// 坐标轴文本标签，详见axis.axisLabel</span>
+            <span class="hljs-attr">show</span>: <span class="hljs-literal">true</span>,
+            <span class="hljs-attr">interval</span>: <span class="hljs-string">&#x27;auto&#x27;</span>,
+            <span class="hljs-attr">rotate</span>: <span class="hljs-number">0</span>,
+            <span class="hljs-attr">margin</span>: <span class="hljs-number">8</span>,
+            <span class="hljs-comment">// formatter: null,</span>
+            <span class="hljs-attr">textStyle</span>: {       <span class="hljs-comment">// 其余属性默认使用全局文本样式，详见TEXTSTYLE</span>
+                <span class="hljs-attr">color</span>: <span class="hljs-string">&#x27;#333&#x27;</span>
+            }
+        },
+        <span class="hljs-attr">splitLine</span>: {           <span class="hljs-comment">// 分隔线</span>
+            <span class="hljs-attr">show</span>: <span class="hljs-literal">true</span>,        <span class="hljs-comment">// 默认显示，属性show控制显示与否</span>
+            <span class="hljs-comment">// onGap: null,</span>
+            <span class="hljs-attr">lineStyle</span>: {       <span class="hljs-comment">// 属性lineStyle（详见lineStyle）控制线条样式</span>
+                <span class="hljs-attr">color</span>: [<span class="hljs-string">&#x27;#ccc&#x27;</span>],
+                <span class="hljs-attr">width</span>: <span class="hljs-number">1</span>,
+                <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;solid&#x27;</span>
+            }
+        },
+        <span class="hljs-attr">splitArea</span>: {           <span class="hljs-comment">// 分隔区域</span>
+            <span class="hljs-attr">show</span>: <span class="hljs-literal">false</span>,       <span class="hljs-comment">// 默认不显示，属性show控制显示与否</span>
+            <span class="hljs-comment">// onGap: null,</span>
+            <span class="hljs-attr">areaStyle</span>: {       <span class="hljs-comment">// 属性areaStyle（详见areaStyle）控制区域样式</span>
+                <span class="hljs-attr">color</span>: [<span class="hljs-string">&#x27;rgba(250,250,250,0.3)&#x27;</span>,<span class="hljs-string">&#x27;rgba(200,200,200,0.3)&#x27;</span>]
+            }
+        }
+    },
+
+    <span class="hljs-comment">// 数值型坐标轴默认参数</span>
+    <span class="hljs-attr">valueAxis</span>: {
+        <span class="hljs-attr">position</span>: <span class="hljs-string">&#x27;left&#x27;</span>,      <span class="hljs-comment">// 位置</span>
+        <span class="hljs-attr">nameLocation</span>: <span class="hljs-string">&#x27;end&#x27;</span>,   <span class="hljs-comment">// 坐标轴名字位置，支持&#x27;start&#x27; | &#x27;end&#x27;</span>
+        <span class="hljs-attr">nameTextStyle</span>: {},     <span class="hljs-comment">// 坐标轴文字样式，默认取全局样式</span>
+        <span class="hljs-attr">boundaryGap</span>: [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>],   <span class="hljs-comment">// 数值起始和结束两端空白策略</span>
+        <span class="hljs-attr">splitNumber</span>: <span class="hljs-number">5</span>,        <span class="hljs-comment">// 分割段数，默认为5</span>
+        <span class="hljs-attr">axisLine</span>: {            <span class="hljs-comment">// 坐标轴线</span>
+            <span class="hljs-attr">show</span>: <span class="hljs-literal">true</span>,        <span class="hljs-comment">// 默认显示，属性show控制显示与否</span>
+            <span class="hljs-attr">lineStyle</span>: {       <span class="hljs-comment">// 属性lineStyle控制线条样式</span>
+                <span class="hljs-attr">color</span>: <span class="hljs-string">&#x27;#48b&#x27;</span>,
+                <span class="hljs-attr">width</span>: <span class="hljs-number">2</span>,
+                <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;solid&#x27;</span>
+            }
+        },
+        <span class="hljs-attr">axisTick</span>: {            <span class="hljs-comment">// 坐标轴小标记</span>
+            <span class="hljs-attr">show</span>: <span class="hljs-literal">false</span>,       <span class="hljs-comment">// 属性show控制显示与否，默认不显示</span>
+            inside : <span class="hljs-literal">false</span>,    <span class="hljs-comment">// 控制小标记是否在grid里 </span>
+            length :<span class="hljs-number">5</span>,         <span class="hljs-comment">// 属性length控制线长</span>
+            <span class="hljs-attr">lineStyle</span>: {       <span class="hljs-comment">// 属性lineStyle控制线条样式</span>
+                <span class="hljs-attr">color</span>: <span class="hljs-string">&#x27;#333&#x27;</span>,
+                <span class="hljs-attr">width</span>: <span class="hljs-number">1</span>
+            }
+        },
+        <span class="hljs-attr">axisLabel</span>: {           <span class="hljs-comment">// 坐标轴文本标签，详见axis.axisLabel</span>
+            <span class="hljs-attr">show</span>: <span class="hljs-literal">true</span>,
+            <span class="hljs-attr">rotate</span>: <span class="hljs-number">0</span>,
+            <span class="hljs-attr">margin</span>: <span class="hljs-number">8</span>,
+            <span class="hljs-comment">// formatter: null,</span>
+            <span class="hljs-attr">textStyle</span>: {       <span class="hljs-comment">// 其余属性默认使用全局文本样式，详见TEXTSTYLE</span>
+                <span class="hljs-attr">color</span>: <span class="hljs-string">&#x27;#333&#x27;</span>
+            }
+        },
+        <span class="hljs-attr">splitLine</span>: {           <span class="hljs-comment">// 分隔线</span>
+            <span class="hljs-attr">show</span>: <span class="hljs-literal">true</span>,        <span class="hljs-comment">// 默认显示，属性show控制显示与否</span>
+            <span class="hljs-attr">lineStyle</span>: {       <span class="hljs-comment">// 属性lineStyle（详见lineStyle）控制线条样式</span>
+                <span class="hljs-attr">color</span>: [<span class="hljs-string">&#x27;#ccc&#x27;</span>],
+                <span class="hljs-attr">width</span>: <span class="hljs-number">1</span>,
+                <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;solid&#x27;</span>
+            }
+        },
+        <span class="hljs-attr">splitArea</span>: {           <span class="hljs-comment">// 分隔区域</span>
+            <span class="hljs-attr">show</span>: <span class="hljs-literal">false</span>,       <span class="hljs-comment">// 默认不显示，属性show控制显示与否</span>
+            <span class="hljs-attr">areaStyle</span>: {       <span class="hljs-comment">// 属性areaStyle（详见areaStyle）控制区域样式</span>
+                <span class="hljs-attr">color</span>: [<span class="hljs-string">&#x27;rgba(250,250,250,0.3)&#x27;</span>,<span class="hljs-string">&#x27;rgba(200,200,200,0.3)&#x27;</span>]
+            }
+        }
+    },
+
+    polar : {
+        center : [<span class="hljs-string">&#x27;50%&#x27;</span>, <span class="hljs-string">&#x27;50%&#x27;</span>],    <span class="hljs-comment">// 默认全局居中</span>
+        radius : <span class="hljs-string">&#x27;75%&#x27;</span>,
+        startAngle : <span class="hljs-number">90</span>,
+        splitNumber : <span class="hljs-number">5</span>,
+        name : {
+            <span class="hljs-attr">show</span>: <span class="hljs-literal">true</span>,
+            <span class="hljs-attr">textStyle</span>: {       <span class="hljs-comment">// 其余属性默认使用全局文本样式，详见TEXTSTYLE</span>
+                <span class="hljs-attr">color</span>: <span class="hljs-string">&#x27;#333&#x27;</span>
+            }
+        },
+        <span class="hljs-attr">axisLine</span>: {            <span class="hljs-comment">// 坐标轴线</span>
+            <span class="hljs-attr">show</span>: <span class="hljs-literal">true</span>,        <span class="hljs-comment">// 默认显示，属性show控制显示与否</span>
+            <span class="hljs-attr">lineStyle</span>: {       <span class="hljs-comment">// 属性lineStyle控制线条样式</span>
+                <span class="hljs-attr">color</span>: <span class="hljs-string">&#x27;#ccc&#x27;</span>,
+                <span class="hljs-attr">width</span>: <span class="hljs-number">1</span>,
+                <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;solid&#x27;</span>
+            }
+        },
+        <span class="hljs-attr">axisLabel</span>: {           <span class="hljs-comment">// 坐标轴文本标签，详见axis.axisLabel</span>
+            <span class="hljs-attr">show</span>: <span class="hljs-literal">false</span>,
+            <span class="hljs-attr">textStyle</span>: {       <span class="hljs-comment">// 其余属性默认使用全局文本样式，详见TEXTSTYLE</span>
+                <span class="hljs-attr">color</span>: <span class="hljs-string">&#x27;#333&#x27;</span>
+            }
+        },
+        splitArea : {
+            show : <span class="hljs-literal">true</span>,
+            areaStyle : {
+                <span class="hljs-attr">color</span>: [<span class="hljs-string">&#x27;rgba(250,250,250,0.3)&#x27;</span>,<span class="hljs-string">&#x27;rgba(200,200,200,0.3)&#x27;</span>]
+            }
+        },
+        splitLine : {
+            show : <span class="hljs-literal">true</span>,
+            lineStyle : {
+                width : <span class="hljs-number">1</span>,
+                color : <span class="hljs-string">&#x27;#ccc&#x27;</span>
+            }
+        }
+    },
+
+    <span class="hljs-comment">// 柱形图默认参数</span>
+    <span class="hljs-attr">bar</span>: {
+        <span class="hljs-attr">barMinHeight</span>: <span class="hljs-number">0</span>,          <span class="hljs-comment">// 最小高度改为0</span>
+        <span class="hljs-comment">// barWidth: null,        // 默认自适应</span>
+        <span class="hljs-attr">barGap</span>: <span class="hljs-string">&#x27;30%&#x27;</span>,            <span class="hljs-comment">// 柱间距离，默认为柱形宽度的30%，可设固定值</span>
+        barCategoryGap : <span class="hljs-string">&#x27;20%&#x27;</span>,   <span class="hljs-comment">// 类目间柱形距离，默认为类目间距的20%，可设固定值</span>
+        <span class="hljs-attr">itemStyle</span>: {
+            <span class="hljs-attr">normal</span>: {
+                <span class="hljs-comment">// color: &#x27;各异&#x27;,</span>
+                <span class="hljs-attr">barBorderColor</span>: <span class="hljs-string">&#x27;#fff&#x27;</span>,       <span class="hljs-comment">// 柱条边线</span>
+                <span class="hljs-attr">barBorderRadius</span>: <span class="hljs-number">0</span>,           <span class="hljs-comment">// 柱条边线圆角，单位px，默认为0</span>
+                <span class="hljs-attr">barBorderWidth</span>: <span class="hljs-number">1</span>,            <span class="hljs-comment">// 柱条边线线宽，单位px，默认为1</span>
+                <span class="hljs-attr">label</span>: {
+                    <span class="hljs-attr">show</span>: <span class="hljs-literal">false</span>
+                    <span class="hljs-comment">// position: 默认自适应，水平布局为&#x27;top&#x27;，垂直布局为&#x27;right&#x27;，可选为</span>
+                    <span class="hljs-comment">//           &#x27;inside&#x27;|&#x27;left&#x27;|&#x27;right&#x27;|&#x27;top&#x27;|&#x27;bottom&#x27;</span>
+                    <span class="hljs-comment">// textStyle: null      // 默认使用全局文本样式，详见TEXTSTYLE</span>
+                }
+            },
+            <span class="hljs-attr">emphasis</span>: {
+                <span class="hljs-comment">// color: &#x27;各异&#x27;,</span>
+                <span class="hljs-attr">barBorderColor</span>: <span class="hljs-string">&#x27;rgba(0,0,0,0)&#x27;</span>,   <span class="hljs-comment">// 柱条边线</span>
+                <span class="hljs-attr">barBorderRadius</span>: <span class="hljs-number">0</span>,                <span class="hljs-comment">// 柱条边线圆角，单位px，默认为0</span>
+                <span class="hljs-attr">barBorderWidth</span>: <span class="hljs-number">1</span>,                 <span class="hljs-comment">// 柱条边线线宽，单位px，默认为1</span>
+                <span class="hljs-attr">label</span>: {
+                    <span class="hljs-attr">show</span>: <span class="hljs-literal">false</span>
+                    <span class="hljs-comment">// position: 默认自适应，水平布局为&#x27;top&#x27;，垂直布局为&#x27;right&#x27;，可选为</span>
+                    <span class="hljs-comment">//           &#x27;inside&#x27;|&#x27;left&#x27;|&#x27;right&#x27;|&#x27;top&#x27;|&#x27;bottom&#x27;</span>
+                    <span class="hljs-comment">// textStyle: null      // 默认使用全局文本样式，详见TEXTSTYLE</span>
+                }
+            }
+        }
+    },
+
+    <span class="hljs-comment">// 折线图默认参数</span>
+    <span class="hljs-attr">line</span>: {
+        <span class="hljs-attr">itemStyle</span>: {
+            <span class="hljs-attr">normal</span>: {
+                <span class="hljs-comment">// color: 各异,</span>
+                <span class="hljs-attr">label</span>: {
+                    <span class="hljs-attr">show</span>: <span class="hljs-literal">false</span>
+                    <span class="hljs-comment">// position: 默认自适应，水平布局为&#x27;top&#x27;，垂直布局为&#x27;right&#x27;，可选为</span>
+                    <span class="hljs-comment">//           &#x27;inside&#x27;|&#x27;left&#x27;|&#x27;right&#x27;|&#x27;top&#x27;|&#x27;bottom&#x27;</span>
+                    <span class="hljs-comment">// textStyle: null      // 默认使用全局文本样式，详见TEXTSTYLE</span>
+                },
+                <span class="hljs-attr">lineStyle</span>: {
+                    <span class="hljs-attr">width</span>: <span class="hljs-number">2</span>,
+                    <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;solid&#x27;</span>,
+                    shadowColor : <span class="hljs-string">&#x27;rgba(0,0,0,0)&#x27;</span>, <span class="hljs-comment">//默认透明</span>
+                    <span class="hljs-attr">shadowBlur</span>: <span class="hljs-number">5</span>,
+                    <span class="hljs-attr">shadowOffsetX</span>: <span class="hljs-number">3</span>,
+                    <span class="hljs-attr">shadowOffsetY</span>: <span class="hljs-number">3</span>
+                }
+            },
+            <span class="hljs-attr">emphasis</span>: {
+                <span class="hljs-comment">// color: 各异,</span>
+                <span class="hljs-attr">label</span>: {
+                    <span class="hljs-attr">show</span>: <span class="hljs-literal">false</span>
+                    <span class="hljs-comment">// position: 默认自适应，水平布局为&#x27;top&#x27;，垂直布局为&#x27;right&#x27;，可选为</span>
+                    <span class="hljs-comment">//           &#x27;inside&#x27;|&#x27;left&#x27;|&#x27;right&#x27;|&#x27;top&#x27;|&#x27;bottom&#x27;</span>
+                    <span class="hljs-comment">// textStyle: null      // 默认使用全局文本样式，详见TEXTSTYLE</span>
+                }
+            }
+        },
+        <span class="hljs-comment">//smooth : false,</span>
+        <span class="hljs-comment">//symbol: null,         // 拐点图形类型</span>
+        <span class="hljs-attr">symbolSize</span>: <span class="hljs-number">2</span>,          <span class="hljs-comment">// 拐点图形大小</span>
+        <span class="hljs-comment">//symbolRotate : null,  // 拐点图形旋转控制</span>
+        <span class="hljs-attr">showAllSymbol</span>: <span class="hljs-literal">false</span>    <span class="hljs-comment">// 标志图形默认只有主轴显示（随主轴标签间隔隐藏策略）</span>
+    },
+
+    <span class="hljs-comment">// K线图默认参数</span>
+    <span class="hljs-attr">k</span>: {
+        <span class="hljs-comment">// barWidth : null          // 默认自适应</span>
+        <span class="hljs-comment">// barMaxWidth : null       // 默认自适应 </span>
+        <span class="hljs-attr">itemStyle</span>: {
+            <span class="hljs-attr">normal</span>: {
+                <span class="hljs-attr">color</span>: <span class="hljs-string">&#x27;#fff&#x27;</span>,          <span class="hljs-comment">// 阳线填充颜色</span>
+                <span class="hljs-attr">color0</span>: <span class="hljs-string">&#x27;#00aa11&#x27;</span>,      <span class="hljs-comment">// 阴线填充颜色</span>
+                <span class="hljs-attr">lineStyle</span>: {
+                    <span class="hljs-attr">width</span>: <span class="hljs-number">1</span>,
+                    <span class="hljs-attr">color</span>: <span class="hljs-string">&#x27;#ff3200&#x27;</span>,   <span class="hljs-comment">// 阳线边框颜色</span>
+                    <span class="hljs-attr">color0</span>: <span class="hljs-string">&#x27;#00aa11&#x27;</span>   <span class="hljs-comment">// 阴线边框颜色</span>
+                }
+            },
+            <span class="hljs-attr">emphasis</span>: {
+                <span class="hljs-comment">// color: 各异,</span>
+                <span class="hljs-comment">// color0: 各异</span>
+            }
+        }
+    },
+
+    <span class="hljs-comment">// 散点图默认参数</span>
+    <span class="hljs-attr">scatter</span>: {
+        <span class="hljs-comment">//symbol: null,      // 图形类型</span>
+        <span class="hljs-attr">symbolSize</span>: <span class="hljs-number">4</span>,       <span class="hljs-comment">// 图形大小，半宽（半径）参数，当图形为方向或菱形则总宽度为symbolSize * 2</span>
+        <span class="hljs-comment">//symbolRotate : null,  // 图形旋转控制</span>
+        <span class="hljs-attr">large</span>: <span class="hljs-literal">false</span>,        <span class="hljs-comment">// 大规模散点图</span>
+        <span class="hljs-attr">largeThreshold</span>: <span class="hljs-number">2000</span>,<span class="hljs-comment">// 大规模阀值，large为true且数据量&gt;largeThreshold才启用大规模模式</span>
+        <span class="hljs-attr">itemStyle</span>: {
+            <span class="hljs-attr">normal</span>: {
+                <span class="hljs-comment">// color: 各异,</span>
+                <span class="hljs-attr">label</span>: {
+                    <span class="hljs-attr">show</span>: <span class="hljs-literal">false</span>
+                    <span class="hljs-comment">// position: 默认自适应，水平布局为&#x27;top&#x27;，垂直布局为&#x27;right&#x27;，可选为</span>
+                    <span class="hljs-comment">//           &#x27;inside&#x27;|&#x27;left&#x27;|&#x27;right&#x27;|&#x27;top&#x27;|&#x27;bottom&#x27;</span>
+                    <span class="hljs-comment">// textStyle: null      // 默认使用全局文本样式，详见TEXTSTYLE</span>
+                }
+            },
+            <span class="hljs-attr">emphasis</span>: {
+                <span class="hljs-comment">// color: &#x27;各异&#x27;</span>
+                <span class="hljs-attr">label</span>: {
+                    <span class="hljs-attr">show</span>: <span class="hljs-literal">false</span>
+                    <span class="hljs-comment">// position: 默认自适应，水平布局为&#x27;top&#x27;，垂直布局为&#x27;right&#x27;，可选为</span>
+                    <span class="hljs-comment">//           &#x27;inside&#x27;|&#x27;left&#x27;|&#x27;right&#x27;|&#x27;top&#x27;|&#x27;bottom&#x27;</span>
+                    <span class="hljs-comment">// textStyle: null      // 默认使用全局文本样式，详见TEXTSTYLE</span>
+                }
+            }
+        }
+    },
+
+    <span class="hljs-comment">// 雷达图默认参数</span>
+    radar : {
+        <span class="hljs-attr">itemStyle</span>: {
+            <span class="hljs-attr">normal</span>: {
+                <span class="hljs-comment">// color: 各异,</span>
+                <span class="hljs-attr">label</span>: {
+                    <span class="hljs-attr">show</span>: <span class="hljs-literal">false</span>
+                },
+                <span class="hljs-attr">lineStyle</span>: {
+                    <span class="hljs-attr">width</span>: <span class="hljs-number">2</span>,
+                    <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;solid&#x27;</span>
+                }
+            },
+            <span class="hljs-attr">emphasis</span>: {
+                <span class="hljs-comment">// color: 各异,</span>
+                <span class="hljs-attr">label</span>: {
+                    <span class="hljs-attr">show</span>: <span class="hljs-literal">false</span>
+                }
+            }
+        },
+        <span class="hljs-comment">//symbol: null,         // 拐点图形类型</span>
+        <span class="hljs-attr">symbolSize</span>: <span class="hljs-number">2</span>           <span class="hljs-comment">// 可计算特性参数，空数据拖拽提示图形大小</span>
+        <span class="hljs-comment">//symbolRotate : null,  // 图形旋转控制</span>
+    },
+
+    <span class="hljs-comment">// 饼图默认参数</span>
+    <span class="hljs-attr">pie</span>: {
+        center : [<span class="hljs-string">&#x27;50%&#x27;</span>, <span class="hljs-string">&#x27;50%&#x27;</span>],    <span class="hljs-comment">// 默认全局居中</span>
+        radius : [<span class="hljs-number">0</span>, <span class="hljs-string">&#x27;75%&#x27;</span>],
+        clockWise : <span class="hljs-literal">false</span>,          <span class="hljs-comment">// 默认逆时针</span>
+        <span class="hljs-attr">startAngle</span>: <span class="hljs-number">90</span>,
+        <span class="hljs-attr">minAngle</span>: <span class="hljs-number">0</span>,                <span class="hljs-comment">// 最小角度改为0</span>
+        <span class="hljs-attr">selectedOffset</span>: <span class="hljs-number">10</span>,         <span class="hljs-comment">// 选中是扇区偏移量</span>
+        <span class="hljs-attr">itemStyle</span>: {
+            <span class="hljs-attr">normal</span>: {
+                <span class="hljs-comment">// color: 各异,</span>
+                <span class="hljs-attr">borderColor</span>: <span class="hljs-string">&#x27;#fff&#x27;</span>,
+                <span class="hljs-attr">borderWidth</span>: <span class="hljs-number">1</span>,
+                <span class="hljs-attr">label</span>: {
+                    <span class="hljs-attr">show</span>: <span class="hljs-literal">true</span>,
+                    <span class="hljs-attr">position</span>: <span class="hljs-string">&#x27;outer&#x27;</span>
+                    <span class="hljs-comment">// textStyle: null      // 默认使用全局文本样式，详见TEXTSTYLE</span>
+                },
+                <span class="hljs-attr">labelLine</span>: {
+                    <span class="hljs-attr">show</span>: <span class="hljs-literal">true</span>,
+                    <span class="hljs-attr">length</span>: <span class="hljs-number">20</span>,
+                    <span class="hljs-attr">lineStyle</span>: {
+                        <span class="hljs-comment">// color: 各异,</span>
+                        <span class="hljs-attr">width</span>: <span class="hljs-number">1</span>,
+                        <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;solid&#x27;</span>
+                    }
+                }
+            },
+            <span class="hljs-attr">emphasis</span>: {
+                <span class="hljs-comment">// color: 各异,</span>
+                <span class="hljs-attr">borderColor</span>: <span class="hljs-string">&#x27;rgba(0,0,0,0)&#x27;</span>,
+                <span class="hljs-attr">borderWidth</span>: <span class="hljs-number">1</span>,
+                <span class="hljs-attr">label</span>: {
+                    <span class="hljs-attr">show</span>: <span class="hljs-literal">false</span>
+                    <span class="hljs-comment">// position: &#x27;outer&#x27;</span>
+                    <span class="hljs-comment">// textStyle: null      // 默认使用全局文本样式，详见TEXTSTYLE</span>
+                },
+                <span class="hljs-attr">labelLine</span>: {
+                    <span class="hljs-attr">show</span>: <span class="hljs-literal">false</span>,
+                    <span class="hljs-attr">length</span>: <span class="hljs-number">20</span>,
+                    <span class="hljs-attr">lineStyle</span>: {
+                        <span class="hljs-comment">// color: 各异,</span>
+                        <span class="hljs-attr">width</span>: <span class="hljs-number">1</span>,
+                        <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;solid&#x27;</span>
+                    }
+                }
+            }
+        }
+    },
+
+    <span class="hljs-attr">map</span>: {
+        <span class="hljs-attr">mapType</span>: <span class="hljs-string">&#x27;china&#x27;</span>,   <span class="hljs-comment">// 各省的mapType暂时都用中文</span>
+        <span class="hljs-attr">mapLocation</span>: {
+            x : <span class="hljs-string">&#x27;center&#x27;</span>,
+            y : <span class="hljs-string">&#x27;center&#x27;</span>
+            <span class="hljs-comment">// width    // 自适应</span>
+            <span class="hljs-comment">// height   // 自适应</span>
+        },
+        showLegendSymbol : <span class="hljs-literal">true</span>,       <span class="hljs-comment">// 显示图例颜色标识（系列标识的小圆点），存在legend时生效</span>
+        <span class="hljs-attr">itemStyle</span>: {
+            <span class="hljs-attr">normal</span>: {
+                <span class="hljs-comment">// color: 各异,</span>
+                <span class="hljs-attr">borderColor</span>: <span class="hljs-string">&#x27;#fff&#x27;</span>,
+                <span class="hljs-attr">borderWidth</span>: <span class="hljs-number">1</span>,
+                <span class="hljs-attr">areaStyle</span>: {
+                    <span class="hljs-attr">color</span>: <span class="hljs-string">&#x27;#ccc&#x27;</span><span class="hljs-comment">//rgba(135,206,250,0.8)</span>
+                },
+                <span class="hljs-attr">label</span>: {
+                    <span class="hljs-attr">show</span>: <span class="hljs-literal">false</span>,
+                    <span class="hljs-attr">textStyle</span>: {
+                        <span class="hljs-attr">color</span>: <span class="hljs-string">&#x27;rgba(139,69,19,1)&#x27;</span>
+                    }
+                }
+            },
+            <span class="hljs-attr">emphasis</span>: {                 <span class="hljs-comment">// 也是选中样式</span>
+                <span class="hljs-comment">// color: 各异,</span>
+                <span class="hljs-attr">borderColor</span>: <span class="hljs-string">&#x27;rgba(0,0,0,0)&#x27;</span>,
+                <span class="hljs-attr">borderWidth</span>: <span class="hljs-number">1</span>,
+                <span class="hljs-attr">areaStyle</span>: {
+                    <span class="hljs-attr">color</span>: <span class="hljs-string">&#x27;rgba(255,215,0,0.8)&#x27;</span>
+                },
+                <span class="hljs-attr">label</span>: {
+                    <span class="hljs-attr">show</span>: <span class="hljs-literal">false</span>,
+                    <span class="hljs-attr">textStyle</span>: {
+                        <span class="hljs-attr">color</span>: <span class="hljs-string">&#x27;rgba(139,69,19,1)&#x27;</span>
+                    }
+                }
+            }
+        }
+    },
+
+    force : {
+        <span class="hljs-comment">// 数据map到圆的半径的最小值和最大值</span>
+        minRadius : <span class="hljs-number">10</span>,
+        maxRadius : <span class="hljs-number">20</span>,
+        density : <span class="hljs-number">1.0</span>,
+        attractiveness : <span class="hljs-number">1.0</span>,
+        <span class="hljs-comment">// 初始化的随机大小位置</span>
+        initSize : <span class="hljs-number">300</span>,
+        <span class="hljs-comment">// 向心力因子，越大向心力越大</span>
+        centripetal : <span class="hljs-number">1</span>,
+        <span class="hljs-comment">// 冷却因子</span>
+        coolDown : <span class="hljs-number">0.99</span>,
+        <span class="hljs-comment">// 分类里如果有样式会覆盖节点默认样式</span>
+        <span class="hljs-attr">itemStyle</span>: {
+            <span class="hljs-attr">normal</span>: {
+                <span class="hljs-comment">// color: 各异,</span>
+                <span class="hljs-attr">label</span>: {
+                    <span class="hljs-attr">show</span>: <span class="hljs-literal">false</span>
+                    <span class="hljs-comment">// textStyle: null      // 默认使用全局文本样式，详见TEXTSTYLE</span>
+                },
+                nodeStyle : {
+                    brushType : <span class="hljs-string">&#x27;both&#x27;</span>,
+                    color : <span class="hljs-string">&#x27;#f08c2e&#x27;</span>,
+                    strokeColor : <span class="hljs-string">&#x27;#5182ab&#x27;</span>
+                },
+                linkStyle : {
+                    strokeColor : <span class="hljs-string">&#x27;#5182ab&#x27;</span>
+                }
+            },
+            <span class="hljs-attr">emphasis</span>: {
+                <span class="hljs-comment">// color: 各异,</span>
+                <span class="hljs-attr">label</span>: {
+                    <span class="hljs-attr">show</span>: <span class="hljs-literal">false</span>
+                    <span class="hljs-comment">// textStyle: null      // 默认使用全局文本样式，详见TEXTSTYLE</span>
+                },
+                nodeStyle : {},
+                linkStyle : {}
+            }
+        }
+    },
+
+    chord : {
+        radius : [<span class="hljs-string">&#x27;65%&#x27;</span>, <span class="hljs-string">&#x27;75%&#x27;</span>],
+        center : [<span class="hljs-string">&#x27;50%&#x27;</span>, <span class="hljs-string">&#x27;50%&#x27;</span>],
+        padding : <span class="hljs-number">2</span>,
+        sort : <span class="hljs-string">&#x27;none&#x27;</span>, <span class="hljs-comment">// can be &#x27;none&#x27;, &#x27;ascending&#x27;, &#x27;descending&#x27;</span>
+        sortSub : <span class="hljs-string">&#x27;none&#x27;</span>, <span class="hljs-comment">// can be &#x27;none&#x27;, &#x27;ascending&#x27;, &#x27;descending&#x27;</span>
+        startAngle : <span class="hljs-number">90</span>,
+        clockWise : <span class="hljs-literal">false</span>,
+        showScale : <span class="hljs-literal">false</span>,
+        showScaleText : <span class="hljs-literal">false</span>,
+        itemStyle : {
+            normal : {
+                label : {
+                    show : <span class="hljs-literal">true</span>
+                    <span class="hljs-comment">// textStyle: null      // 默认使用全局文本样式，详见TEXTSTYLE</span>
+                },
+                lineStyle : {
+                    width : <span class="hljs-number">0</span>,
+                    color : <span class="hljs-string">&#x27;#000&#x27;</span>
+                },
+                chordStyle : {
+                    lineStyle : {
+                        width : <span class="hljs-number">1</span>,
+                        color : <span class="hljs-string">&#x27;#666&#x27;</span>
+                    }
+                }
+            },
+            emphasis : {
+                lineStyle : {
+                    width : <span class="hljs-number">0</span>,
+                    color : <span class="hljs-string">&#x27;#000&#x27;</span>
+                },
+                chordStyle : {
+                    lineStyle : {
+                        width : <span class="hljs-number">2</span>,
+                        color : <span class="hljs-string">&#x27;#333&#x27;</span>
+                    }
+                }
+            }
+        }
+    },
+
+    <span class="hljs-attr">island</span>: {
+        <span class="hljs-attr">r</span>: <span class="hljs-number">15</span>,
+        <span class="hljs-attr">calculateStep</span>: <span class="hljs-number">0.1</span>  <span class="hljs-comment">// 滚轮可计算步长 0.1 = 10%</span>
+    },
+
+    markPoint : {
+        <span class="hljs-attr">symbol</span>: <span class="hljs-string">&#x27;pin&#x27;</span>,         <span class="hljs-comment">// 标注类型</span>
+        <span class="hljs-attr">symbolSize</span>: <span class="hljs-number">10</span>,        <span class="hljs-comment">// 标注大小，半宽（半径）参数，当图形为方向或菱形则总宽度为symbolSize * 2</span>
+        <span class="hljs-comment">//symbolRotate : null, // 标注旋转控制</span>
+        <span class="hljs-attr">itemStyle</span>: {
+            <span class="hljs-attr">normal</span>: {
+                <span class="hljs-comment">// color: 各异，</span>
+                <span class="hljs-comment">// borderColor: 各异,     // 标注边线颜色，优先于color </span>
+                <span class="hljs-attr">borderWidth</span>: <span class="hljs-number">2</span>,            <span class="hljs-comment">// 标注边线线宽，单位px，默认为1</span>
+                <span class="hljs-attr">label</span>: {
+                    <span class="hljs-attr">show</span>: <span class="hljs-literal">true</span>,
+                    <span class="hljs-attr">position</span>: <span class="hljs-string">&#x27;inside&#x27;</span> <span class="hljs-comment">// 可选为&#x27;left&#x27;|&#x27;right&#x27;|&#x27;top&#x27;|&#x27;bottom&#x27;</span>
+                    <span class="hljs-comment">// textStyle: null      // 默认使用全局文本样式，详见TEXTSTYLE</span>
+                }
+            },
+            <span class="hljs-attr">emphasis</span>: {
+                <span class="hljs-comment">// color: 各异</span>
+                <span class="hljs-attr">label</span>: {
+                    <span class="hljs-attr">show</span>: <span class="hljs-literal">true</span>
+                    <span class="hljs-comment">// position: &#x27;inside&#x27;  // &#x27;left&#x27;|&#x27;right&#x27;|&#x27;top&#x27;|&#x27;bottom&#x27;</span>
+                    <span class="hljs-comment">// textStyle: null     // 默认使用全局文本样式，详见TEXTSTYLE</span>
+                }
+            }
+        }
+    },
+
+    markLine : {
+        <span class="hljs-comment">// 标线起始和结束的symbol介绍类型，如果都一样，可以直接传string</span>
+        <span class="hljs-attr">symbol</span>: [<span class="hljs-string">&#x27;circle&#x27;</span>, <span class="hljs-string">&#x27;arrow&#x27;</span>],  
+        <span class="hljs-comment">// 标线起始和结束的symbol大小，半宽（半径）参数，当图形为方向或菱形则总宽度为symbolSize * 2</span>
+        <span class="hljs-attr">symbolSize</span>: [<span class="hljs-number">2</span>, <span class="hljs-number">4</span>],
+        <span class="hljs-comment">// 标线起始和结束的symbol旋转控制</span>
+        <span class="hljs-comment">//symbolRotate : null,</span>
+        <span class="hljs-attr">itemStyle</span>: {
+            <span class="hljs-attr">normal</span>: {
+                <span class="hljs-comment">// color: 各异,           // 标线主色，线色，symbol主色</span>
+                <span class="hljs-comment">// borderColor: 随color,     // 标线symbol边框颜色，优先于color </span>
+                <span class="hljs-attr">borderWidth</span>: <span class="hljs-number">2</span>,          <span class="hljs-comment">// 标线symbol边框线宽，单位px，默认为2</span>
+                <span class="hljs-attr">label</span>: {
+                    <span class="hljs-attr">show</span>: <span class="hljs-literal">false</span>,
+                    <span class="hljs-comment">// 可选为 &#x27;start&#x27;|&#x27;end&#x27;|&#x27;left&#x27;|&#x27;right&#x27;|&#x27;top&#x27;|&#x27;bottom&#x27;</span>
+                    <span class="hljs-attr">position</span>: <span class="hljs-string">&#x27;inside&#x27;</span>,  
+                    <span class="hljs-attr">textStyle</span>: {         <span class="hljs-comment">// 默认使用全局文本样式，详见TEXTSTYLE</span>
+                        <span class="hljs-attr">color</span>: <span class="hljs-string">&#x27;#333&#x27;</span>
+                    }
+                },
+                <span class="hljs-attr">lineStyle</span>: {
+                    <span class="hljs-comment">// color: 随borderColor, // 主色，线色，优先级高于borderColor和color</span>
+                    <span class="hljs-comment">// width: 随borderWidth, // 优先于borderWidth</span>
+                    <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;solid&#x27;</span>,
+                    shadowColor : <span class="hljs-string">&#x27;rgba(0,0,0,0)&#x27;</span>, <span class="hljs-comment">//默认透明</span>
+                    <span class="hljs-attr">shadowBlur</span>: <span class="hljs-number">5</span>,
+                    <span class="hljs-attr">shadowOffsetX</span>: <span class="hljs-number">3</span>,
+                    <span class="hljs-attr">shadowOffsetY</span>: <span class="hljs-number">3</span>
+                }
+            },
+            <span class="hljs-attr">emphasis</span>: {
+                <span class="hljs-comment">// color: 各异</span>
+                <span class="hljs-attr">label</span>: {
+                    <span class="hljs-attr">show</span>: <span class="hljs-literal">false</span>
+                    <span class="hljs-comment">// position: &#x27;inside&#x27; // &#x27;left&#x27;|&#x27;right&#x27;|&#x27;top&#x27;|&#x27;bottom&#x27;</span>
+                    <span class="hljs-comment">// textStyle: null    // 默认使用全局文本样式，详见TEXTSTYLE</span>
+                },
+                lineStyle : {}
+            }
+        }
+    },
+
+    <span class="hljs-attr">textStyle</span>: {
+        <span class="hljs-attr">decoration</span>: <span class="hljs-string">&#x27;none&#x27;</span>,
+        <span class="hljs-attr">fontFamily</span>: <span class="hljs-string">&#x27;Arial, Verdana, sans-serif&#x27;</span>,
+        <span class="hljs-attr">fontFamily2</span>: <span class="hljs-string">&#x27;微软雅黑&#x27;</span>,    <span class="hljs-comment">// IE8- 字体模糊并且不支持不同字体混排，额外指定一份</span>
+        <span class="hljs-attr">fontSize</span>: <span class="hljs-number">12</span>,
+        <span class="hljs-attr">fontStyle</span>: <span class="hljs-string">&#x27;normal&#x27;</span>,
+        <span class="hljs-attr">fontWeight</span>: <span class="hljs-string">&#x27;normal&#x27;</span>
+    },
+
+    <span class="hljs-comment">// 默认标志图形类型列表</span>
+    symbolList : [
+      <span class="hljs-string">&#x27;circle&#x27;</span>, <span class="hljs-string">&#x27;rectangle&#x27;</span>, <span class="hljs-string">&#x27;triangle&#x27;</span>, <span class="hljs-string">&#x27;diamond&#x27;</span>,
+      <span class="hljs-string">&#x27;emptyCircle&#x27;</span>, <span class="hljs-string">&#x27;emptyRectangle&#x27;</span>, <span class="hljs-string">&#x27;emptyTriangle&#x27;</span>, <span class="hljs-string">&#x27;emptyDiamond&#x27;</span>
+    ],
+    loadingText : <span class="hljs-string">&#x27;Loading...&#x27;</span>,
+    <span class="hljs-comment">// 可计算特性配置，孤岛，提示颜色</span>
+    <span class="hljs-attr">calculable</span>: <span class="hljs-literal">false</span>,              <span class="hljs-comment">// 默认关闭可计算特性</span>
+    <span class="hljs-attr">calculableColor</span>: <span class="hljs-string">&#x27;rgba(255,165,0,0.6)&#x27;</span>,       <span class="hljs-comment">// 拖拽提示边框颜色</span>
+    <span class="hljs-attr">calculableHolderColor</span>: <span class="hljs-string">&#x27;#ccc&#x27;</span>, <span class="hljs-comment">// 可计算占位提示颜色</span>
+    <span class="hljs-attr">nameConnector</span>: <span class="hljs-string">&#x27; &amp; &#x27;</span>,
+    <span class="hljs-attr">valueConnector</span>: <span class="hljs-string">&#x27; : &#x27;</span>,
+    <span class="hljs-attr">animation</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">animationThreshold</span>: <span class="hljs-number">2500</span>,       <span class="hljs-comment">// 动画元素阀值，产生的图形原素超过2500不出动画</span>
+    <span class="hljs-attr">addDataAnimation</span>: <span class="hljs-literal">true</span>,         <span class="hljs-comment">// 动态数据接口是否开启动画效果</span>
+    <span class="hljs-attr">animationDuration</span>: <span class="hljs-number">2000</span>,
+    <span class="hljs-attr">animationEasing</span>: <span class="hljs-string">&#x27;ExponentialOut&#x27;</span>    <span class="hljs-comment">//BounceOut</span>
+}
+</code></pre>
+
+        
+        
+    </body>
+    </html>
