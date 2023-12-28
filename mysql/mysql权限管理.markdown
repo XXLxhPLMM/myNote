@@ -128,6 +128,8 @@ mysqladmin -u root -p 123 password 'new_password'
 -- 方法二：
 alter user 'root'@'localhost' identified by 'new_pssword';
 -- 方法三：
+/* 较早版本的mysql */
+SET PASSWORD FOR 'root'@'localhost' = PASSWORD('new_password');
 SET PASSWORD=password(‘new_password’);
 ```
 > root 修改其他用户密码

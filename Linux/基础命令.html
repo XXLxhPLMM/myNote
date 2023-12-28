@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>&#x4f7f;&#x7528;xshell&#x6765;&#x64cd;&#x4f5c;&#x865a;&#x62df;&#x673a;</title>
+        <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+        
+    </head>
+    <body class="vscode-body vscode-light">
+        <h1 id="使用xshell来操作虚拟机">使用xshell来操作虚拟机</h1>
+<h2 id="1连接虚拟机">1.连接虚拟机</h2>
+<h3 id="1首先获取虚拟机的ip地址">1.首先获取虚拟机的ip地址</h3>
+<p>​	进入虚拟机后可以进入终端，在里面输入ifconfig命令，可以获取到虚拟机的IP地址和一些网关信息；</p>
+<p><img src="https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204191340326.png" alt="image-20220419134042196">在获取到虚拟机的ip后；</p>
+<h3 id="2使用xshell连接虚拟机">2.使用Xshell连接虚拟机</h3>
+<p>在进入Xshell后，进入新建：</p>
+<p><img src="https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204191343462.png" alt="image-20220419134339410"></p>
+<p>还需进行选择用户身份验证：</p>
+<p><img src="https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204191346309.png" alt="image-20220419134649251"></p>
+<p>连接成功后，Xshell给出提示：</p>
+<p><img src="https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204191347184.png" alt="image-20220419134741157"></p>
+<h2 id="2命令操作">2.命令操作</h2>
+<h3 id="1su--用户的切换"><a href="http://1.su">1.su</a>  用户的切换</h3>
+<ol>
+<li>从普通用户切换到root用户：直接使用 <strong>su</strong>  进入输入root的密码，这个密码不进行回显:</li>
+<li>从root用户切换到普通用户使用  su qinfeng （su 加空格 加上普通用户名）</li>
+</ol>
+<p><img src="https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204191352967.png" alt="image-20220419135236924"></p>
+<h3 id="2ls-可以查看当前下面的所有目录"><a href="http://2.ls">2.ls</a> 可以查看当前下面的所有目录</h3>
+<ol>
+<li>使用 ls 可以查看全部目录（不包括隐藏目录）</li>
+</ol>
+<p><img src="https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204192001880.png" alt="image-20220419200126812"></p>
+<ol start="2">
+<li>使用 ls -a 可以查看隐藏文件
+<img src="https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204192024151.png" alt="image-20220419202410126"></li>
+<li>使用 ls -l （可以简写为 &quot;ll&quot;）可以查看全部目录的详细信息（不包括隐藏目录）</li>
+</ol>
+<p><img src="https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204192003429.png" alt="image-20220419200348395"></p>
+<ol start="3">
+<li>使用 ls -all 可以查看全部内容的详细信息</li>
+</ol>
+<p><img src="https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204192004806.png" alt="image-20220419200426772"></p>
+<h3 id="3使用-tree-可以查看其文件结构">3.使用 tree 可以查看其文件结构</h3>
+<p><img src="https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204192008200.png" alt="image-20220419200837169"></p>
+<blockquote>
+<p>若是无法使用tree指令，可以在root用户下使用 <code>yum -y install tree</code>命令进行安装tree工具。</p>
+</blockquote>
+<ol>
+<li>查看文件 （<strong>绝对路径</strong>）</li>
+</ol>
+<p><img src="https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204192012852.png" alt="image-20220419201228823"></p>
+<blockquote>
+<p>注意：文件或目录名的大小写</p>
+</blockquote>
+<p>查看当前目录的绝对路径  <strong>pwd</strong>：</p>
+<p><img src="https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204192014146.png" alt="image-20220419201436121"></p>
+<ol start="2">
+<li>
+<p><strong>相对路径</strong>
+可以使用  cd ../main 表示从当前的目录下去到上一级目录下的main目录下</p>
+<blockquote>
+<p>&quot;..&quot; 表示当前目录的上层目录； “.” 表示当前目录</p>
+</blockquote>
+</li>
+<li>
+<p>cd 切换目录</p>
+</li>
+</ol>
+<p>如果直接使用 cd 命令可以直接返回root目录，可以使用 cd - 返回到上一级目录下。</p>
+<p><img src="https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204192027480.png" alt="image-20220419202710453"></p>
+<h3 id="4clear-进行清屏">4.clear 进行清屏</h3>
+<p>​	在输入clear 进行回车就可以把页面上的全部进行清空。</p>
+<h3 id="5history-查看前面使用过的命令">5.history 查看前面使用过的命令</h3>
+<p><img src="https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204192030464.png" alt="image-20220419203020419"></p>
+<blockquote>
+<p>查看前面使用过的前几条命令 ；看上五条 history 5</p>
+<p><img src="https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204192031599.png" alt="image-20220419203128574"></p>
+</blockquote>
+<h3 id="6mkdir进行创建空白目录">6.mkdir进行创建空白目录</h3>
+<p>使用 mkdir 进行创建一个空白目录</p>
+<p><img src="https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204192034607.png" alt="image-20220419203437570"></p>
+<h3 id="7rmdir-进行删除目录">7.rmdir 进行删除目录</h3>
+<p><img src="https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204192035595.png" alt=""></p>
+<blockquote>
+<p>使用rmdir命令只能删除空白目录；</p>
+<p>使用 <code>rmdir -p test/test1</code>表示把test1空白目录删除的同时也把test空白目录进行删除。</p>
+</blockquote>
+<hr>
+<h3 id="8touch-进行创建文件">8.touch 进行创建文件</h3>
+<p>使用 touch 命令可以进行创建文件</p>
+<p><img src="https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204192041998.png" alt="image-20220419204124972"></p>
+<ol>
+<li>查看文件属性 <code>ll test.txt</code>命令可以查看创建的文件的详细信息</li>
+</ol>
+<p><img src="https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204192043925.png" alt="image-20220419204302895"></p>
+<ol start="2">
+<li>使用 echo 可以进行写入新内容到文件中</li>
+<li>使用 cat 可以查看文件（可以查看文件内容较少的文件）</li>
+</ol>
+<p><img src="https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204192045241.png" alt="image-20220419204552214"></p>
+<blockquote>
+<p>cat 命令可以查看内容较少的文件，使用 cat test.txt -n 可以显示行数 ；cat test.txt -A 可以显示不可显示控制字符（换行符/制表符）：<img src="https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204192049242.png" alt="image-20220419204947198"></p>
+</blockquote>
+<ol start="4">
+<li>使用 more 可以查看文件（适用于内容较多，较长的文件）</li>
+</ol>
+<blockquote>
+<p>通过逐行显示文件的内容，使用空格键 先下翻页，b键 向上翻页</p>
+</blockquote>
+<ol start="5">
+<li>使用 less 进行查看内容</li>
+</ol>
+<blockquote>
+<p>可以用pageup、pagedown与键盘方向键来上下翻看文件，查看文件内容比more 更容易，最后按 q 键退出 查看内容。</p>
+</blockquote>
+<ol start="6">
+<li>使用 head 可以查看文件内容的先几行</li>
+</ol>
+<blockquote>
+<p>直接使用 head 加文件可以显示全部内容</p>
+<p>使用<code>head -2</code> 查看前两行</p>
+</blockquote>
+<ol start="7">
+<li>使用 tail 查看文件后几行</li>
+</ol>
+<blockquote>
+<p>使用<code>tail -l</code>可以查看全部文件</p>
+<p>添加 -n 参数显示文件的后n行，</p>
+<p>添加 -f 可以查看动态文件</p>
+</blockquote>
+<ol start="8">
+<li>使用grep可以进行搜索</li>
+</ol>
+<p><img src="https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204192107010.png" alt="image-20220419210741837"></p>
+<h3 id="9cat-查看文件内容morelessheadtailgrep">9.cat 查看文件内容（more，less，head，tail，grep）</h3>
+<ol>
+<li>使用cat 命令可以查看文件的内容</li>
+</ol>
+<p><img src="https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204201950223.png" alt="image-20220420195007157"></p>
+<blockquote>
+<p>使用cat进行查看文件内容，适合查看内容较少的文件，这样查看文件内容是通过上下滚动进行翻阅，有时来不及的阅读就到达底部了</p>
+</blockquote>
+<ol start="2">
+<li>more命令进行查看</li>
+</ol>
+<p><img src="https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204201954441.png" alt="image-20220420195452392"></p>
+<blockquote>
+<p>使用空格键向下翻页 ，b键向上翻页。</p>
+</blockquote>
+<ol start="3">
+<li>less查看</li>
+</ol>
+<p><img src="https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204201957426.png" alt="image-20220420195718398"></p>
+<blockquote>
+<p>通过使用pageup，pagedown与键盘上的上下键进行翻看文件，查看文件内容比more更加容易，最后按q退出</p>
+</blockquote>
+<ol start="4">
+<li>head 查看前几行</li>
+</ol>
+<p><img src="https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204202002642.png" alt="image-20220420200229606"></p>
+<blockquote>
+<p>进行查看文件的前几行，添加“-n”参数显示文件前几行</p>
+</blockquote>
+<ol start="5">
+<li>tail 查看后几行</li>
+</ol>
+<p><img src="https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204202005693.png" alt="image-20220420200523646"></p>
+<blockquote>
+<p>添加“-f”可以查看动态文件</p>
+</blockquote>
+<ol start="6">
+<li>grep进行查找过滤</li>
+</ol>
+<p><img src="https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204202013172.png" alt="image-20220420201314135"></p>
+<blockquote>
+<p>在文件中进行检索ssh的字段。</p>
+</blockquote>
+<ul>
+<li>显示开头以是...的行</li>
+</ul>
+<p><img src="https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204202015604.png" alt="image-20220420201554564"></p>
+<blockquote>
+<p>grep '^检索内容' 文件</p>
+</blockquote>
+<ul>
+<li>查找以什么结尾的行</li>
+</ul>
+<p><img src="https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204202016304.png" alt="image-20220420201642261"></p>
+<blockquote>
+<p>grep '检索内容$' 文件</p>
+</blockquote>
+<h3 id="10cp进行复制文件">10.cp进行复制文件</h3>
+<p><img src="https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204202010729.png" alt="image-20220420201027695"></p>
+<h3 id="11使用mv移动文件">11.使用mv移动文件</h3>
+<p><img src="https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204202020456.png" alt="image-20220420202017421"></p>
+<blockquote>
+<p>若是源文件（test.txt）移动到的位置另一个文件如qinfeng.txt中，后把qinfeng.txt文件中内容进行覆盖。</p>
+</blockquote>
+<p><img src="https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204202026622.png" alt="image-20220420202608580"></p>
+<p><img src="https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204202029693.png" alt="image-20220420202907661"></p>
+<h3 id="12rm-删除文件">12.rm 删除文件</h3>
+<p><img src="https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204202030391.png" alt="image-20220420203008365"></p>
+<blockquote>
+<p>上面可以看出可以成功的删除文件；</p>
+<p>注意：rmdir 命令是进行删除空白目录的，不能进行删除文件。</p>
+<p>而是用<code>rm -r</code>可以删除目录：</p>
+<p><img src="https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204202033205.png" alt="image-20220420203324172"></p>
+<p>是用参数 -f 可以跳过验证直接进行删除操作。</p>
+<p><strong>使用<code>rm -rf</code>需要异常小心，建议一般不要是用，这样可以避免误删</strong></p>
+</blockquote>
+<h2 id="3vim编辑器">3.Vim编辑器</h2>
+<p>进行编辑文件是用Vi，但是使用Vim可以对Vi进行增强。</p>
+<p><img src="https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204202041418.png" alt="image-20220420204103389"></p>
+<p>如果没有进行安装，可以使用：<code>yum -y install vim-enhanced</code>进行下载安装</p>
+<p>​    Vim编辑器有三种模式：命令模式，编辑模式，末行模式（扩展命令模式）</p>
+<ul>
+<li>
+<p>命令模式：控制光标，对文件进行复制，粘贴，删除，查询等操作</p>
+</li>
+<li>
+<p>编辑模式：进行文本录入于更改</p>
+</li>
+<li>
+<p>末行模式：文档保存于退出，设置编辑器环境</p>
+<p>打开 Vim编辑器，使用命令<code>vim 文件</code></p>
+</li>
+</ul>
+<p><img src="https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204202047447.png" alt="image-20220420204742365"></p>
+<p>进入后，按 i 进行插入编辑，按 esc 命令返回命令模式在按 :  键，在 ：后面进行输入命令。进行保存退出 wq。</p>
+<p><img src="https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204202054912.png" alt="image-20220420205452511"></p>
+<h3 id="常用命令">常用命令：</h3>
+<p><img src="https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204202055581.png" alt="image-20220420205537946"></p>
+<p><img src="https://qinfeng-typora-img.oss-cn-chengdu.aliyuncs.com/img/202204202056446.jpg" alt="IMG_20220420_205212"></p>
+<blockquote>
+<p>使用vim 文件 进入后需要按 i 进行编辑模式（按i后会进入文件第一行第一个位置进行编辑；若是按 o 则进文件内容的最后一行下），下面会出现“ --插入--”，可以随意输入文本内容。需要保存，需要先按ESC 在按 : 进命令模式输入wq（使用 q! 进行强转退出而不保存编辑后内容）进行写入退出（保存退出）。</p>
+</blockquote>
+
+        <script async src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+        
+    </body>
+    </html>

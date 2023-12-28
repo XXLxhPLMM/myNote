@@ -1,3 +1,24 @@
+- [Linux的基础操作](#linux的基础操作)
+  - [cd  ls  ll mkdir rmkir](#cd--ls--ll-mkdir-rmkir)
+  - [cat  more less](#cat--more-less)
+  - [rm cp mv](#rm-cp-mv)
+  - [打包或解压 tar](#打包或解压-tar)
+  - [查找文件find和grep以及查看下载软件rpm](#查找文件find和grep以及查看下载软件rpm)
+  - [pwd  touch  clear](#pwd--touch--clear)
+  - [重定向  \>（进行覆盖）和 \>\>（进行追加）](#重定向--进行覆盖和-进行追加)
+  - [关闭进行 kill](#关闭进行-kill)
+  - [管道 |  结合着ps -ef](#管道---结合着ps--ef)
+  - [资源重新加载 source](#资源重新加载-source)
+- [Linux的权限](#linux的权限)
+  - [权限修改 chmod 777 xxx](#权限修改-chmod-777-xxx)
+- [Linux上常用网络操作](#linux上常用网络操作)
+  - [1、主机名配置 hostname](#1主机名配置-hostname)
+  - [2、ip地址  ifconfig](#2ip地址--ifconfig)
+  - [3、域名映射](#3域名映射)
+  - [4、网络服务器管理](#4网络服务器管理)
+
+
+
 # Linux的基础操作
 
 ​	常用命名：

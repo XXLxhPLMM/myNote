@@ -15,41 +15,6 @@
 	display: none;
 }
 
-/* From extension ms-toolsai.jupyter */
-/* These classnames are inherited from bootstrap, but are present in most notebook renderers */
-
-.alert {
-    width: auto;
-    padding: 1em;
-    margin-top: 1em;
-    margin-bottom: 1em;
-}
-.alert > *:last-child {
-    margin-bottom: 0;
-}
-#preview > .alert:last-child {
-    /* Prevent this being set to zero by the default notebook stylesheet */
-    padding-bottom: 1em;
-}
-
-.alert-success {
-    /* Note there is no suitable color available, so we just copy "info" */
-    background-color: var(--theme-info-background);
-    color: var(--theme-info-foreground);
-}
-.alert-info {
-    background-color: var(--theme-info-background);
-    color: var(--theme-info-foreground);
-}
-.alert-warning {
-    background-color: var(--theme-warning-background);
-    color: var(--theme-warning-foreground);
-}
-.alert-danger {
-    background-color: var(--theme-error-background);
-    color: var(--theme-error-foreground);
-}
-
 </style>
         
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
@@ -232,6 +197,8 @@ mysqladmin <span class="hljs-operator">-</span>u root <span class="hljs-operator
 <span class="hljs-comment">-- 方法二：</span>
 <span class="hljs-keyword">alter</span> <span class="hljs-keyword">user</span> <span class="hljs-string">&#x27;root&#x27;</span>@<span class="hljs-string">&#x27;localhost&#x27;</span> identified <span class="hljs-keyword">by</span> <span class="hljs-string">&#x27;new_pssword&#x27;</span>;
 <span class="hljs-comment">-- 方法三：</span>
+<span class="hljs-comment">/* 较早版本的mysql */</span>
+<span class="hljs-keyword">SET</span> PASSWORD <span class="hljs-keyword">FOR</span> <span class="hljs-string">&#x27;root&#x27;</span>@<span class="hljs-string">&#x27;localhost&#x27;</span> <span class="hljs-operator">=</span> PASSWORD(<span class="hljs-string">&#x27;new_password&#x27;</span>);
 <span class="hljs-keyword">SET</span> PASSWORD<span class="hljs-operator">=</span>password(‘new_password’);
 </code></pre>
 <blockquote>
